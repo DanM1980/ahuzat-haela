@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useLanguage } from '../../context/LanguageContext';
 
 const HeroSection = styled.section`
   min-height: 100vh;
-  background: linear-gradient(135deg, #2c5530 0%, #4a7c59 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -12,14 +11,28 @@ const HeroSection = styled.section`
   overflow: hidden;
 `;
 
-const HeroBackground = styled.div`
+const HeroBackgroundContainer = styled.div`
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse"><path d="M 50 0 L 0 0 0 50" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
-  opacity: 0.3;
+  z-index: 1;
+`;
+
+const HeroBackground = styled.div<{ imageUrl: string; isActive: boolean }>`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url(${props => props.imageUrl});
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: brightness(0.6);
+  opacity: ${props => props.isActive ? 1 : 0};
+  transition: opacity 2s ease-in-out;
 `;
 
 const HeroContent = styled.div<{ isRTL: boolean }>`
@@ -90,6 +103,8 @@ const ScrollIndicator = styled.div`
   color: white;
   opacity: 0.7;
   animation: bounce 2s infinite;
+  z-index: 2;
+  cursor: pointer;
   
   @keyframes bounce {
     0%, 20%, 50%, 80%, 100% {
@@ -108,6 +123,35 @@ const Hero: React.FC = () => {
   const { t, language } = useLanguage();
   const isRTL = language === 'he';
 
+  // Array of background images
+  const backgroundImages = [
+    '/hero/DJI_0011_10.jpg',
+    '/hero/DJI_0011_13.jpg',
+    '/hero/GX010233_stabilized.mp4_snapshot_00.44.705~2.jpg'
+  ];
+
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  // Change image every 5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsTransitioning(true);
+      
+      // Change the image immediately when transition starts
+      setCurrentImageIndex((prevIndex) => 
+        (prevIndex + 1) % backgroundImages.length
+      );
+      
+      // Reset transition state after animation completes
+      setTimeout(() => {
+        setIsTransitioning(false);
+      }, 2000); // Match transition duration
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [backgroundImages.length]);
+
   const scrollToNext = () => {
     const aboutSection = document.getElementById('about');
     if (aboutSection) {
@@ -115,9 +159,22 @@ const Hero: React.FC = () => {
     }
   };
 
+  const nextImageIndex = (currentImageIndex + 1) % backgroundImages.length;
+
   return (
     <HeroSection id="hero">
-      <HeroBackground />
+      <HeroBackgroundContainer>
+        <HeroBackground 
+          key={`current-${currentImageIndex}`}
+          imageUrl={backgroundImages[currentImageIndex]}
+          isActive={!isTransitioning}
+        />
+        <HeroBackground 
+          key={`next-${nextImageIndex}`}
+          imageUrl={backgroundImages[nextImageIndex]}
+          isActive={isTransitioning}
+        />
+      </HeroBackgroundContainer>
       <HeroContent isRTL={isRTL}>
         <HeroTitle>{t('hero.title')}</HeroTitle>
         <HeroSubtitle>{t('hero.subtitle')}</HeroSubtitle>

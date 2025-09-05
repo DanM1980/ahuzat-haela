@@ -8,10 +8,14 @@ const HeaderContainer = styled.header<{ isScrolled: boolean }>`
   left: 0;
   right: 0;
   z-index: 1000;
-  background: ${props => props.isScrolled ? 'rgba(255, 255, 255, 0.95)' : 'transparent'};
-  backdrop-filter: ${props => props.isScrolled ? 'blur(10px)' : 'none'};
+  background: ${props => props.isScrolled ? 'rgba(255, 255, 255, 0.5)' : 'rgba(255, 255, 255, 0.9)'};
+  backdrop-filter: ${props => props.isScrolled ? 'blur(5px)' : 'blur(10px)'};
   transition: all 0.3s ease;
-  padding: 1rem 0;
+  padding: ${props => props.isScrolled ? '0.2rem 0' : '1rem 0'};
+  border: ${props => props.isScrolled ? '1px solid rgba(44, 85, 48, 0.1)' : '2px solid rgba(44, 85, 48, 0.2)'};
+  border-radius: ${props => props.isScrolled ? '0 0 10px 10px' : '0 0 20px 20px'};
+  box-shadow: ${props => props.isScrolled ? '0 2px 10px rgba(44, 85, 48, 0.05)' : '0 4px 20px rgba(44, 85, 48, 0.1)'};
+  width: 100%;
 `;
 
 const HeaderContent = styled.div`
@@ -19,32 +23,86 @@ const HeaderContent = styled.div`
   margin: 0 auto;
   padding: 0 2rem;
   display: flex;
-  justify-content: space-between;
+  width: 100%;
   align-items: center;
+  justify-content: space-between;
+  position: relative;
 `;
 
-const Logo = styled.div`
-  font-size: 1.8rem;
+const LogoSection = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  
+  &:hover {
+    transform: scale(1.02);
+  }
+`;
+
+const LogoContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const LogoImage = styled.img<{ isScrolled: boolean }>`
+  width: ${props => props.isScrolled ? '90px' : '150px'};
+  height: ${props => props.isScrolled ? '90px' : '150px'};
+  object-fit: contain;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: scale(1.05);
+  }
+`;
+
+const SiteName = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const SiteNameHebrew = styled.div<{ isScrolled: boolean }>`
+  font-size: ${props => props.isScrolled ? '1.3rem' : '2.2rem'};
   font-weight: bold;
   color: #2c5530;
-  text-decoration: none;
+  line-height: 1.2;
+  font-family: 'Arial', sans-serif;
+  transition: all 0.3s ease;
 `;
 
-const Nav = styled.nav`
+const SiteNameEnglish = styled.div<{ isScrolled: boolean }>`
+  font-size: ${props => props.isScrolled ? '1.3rem' : '2.2rem'};
+  font-weight: bold;
+  color: #2c5530;
+  line-height: 1.2;
+  font-family: 'Arial', sans-serif;
+  transition: all 0.3s ease;
+`;
+
+const Nav = styled.nav<{ isRTL: boolean }>`
   display: flex;
   align-items: center;
   gap: 2rem;
+  justify-self: center;
+
+  ${props => props.isRTL && `
+    direction: rtl;
+  `}
 `;
 
-const NavLink = styled.a<{ isRTL: boolean }>`
+const NavLink = styled.a<{ isRTL: boolean; isScrolled: boolean }>`
   color: #333;
   text-decoration: none;
   font-weight: 500;
-  transition: color 0.3s ease;
+  font-size: ${props => props.isScrolled ? '1rem' : '1.7rem'};
+  transition: all 0.3s ease;
   cursor: pointer;
   
   &:hover {
     color: #2c5530;
+    transform: scale(1.1);
   }
   
   ${props => props.isRTL && `
@@ -54,23 +112,32 @@ const NavLink = styled.a<{ isRTL: boolean }>`
 
 const LanguageSwitcher = styled.div`
   display: flex;
-  gap: 0.5rem;
+  align-items: center;
 `;
 
-const LanguageButton = styled.button<{ isActive: boolean }>`
-  background: ${props => props.isActive ? '#2c5530' : 'transparent'};
-  color: ${props => props.isActive ? 'white' : '#333'};
-  border: 1px solid #2c5530;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
+const LanguageButton = styled.button`
+  background: transparent;
+  color: #333;
+  border: none;
+  padding: 0.5rem;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-size: 0.9rem;
+  font-size: 1rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
   
   &:hover {
-    background: #2c5530;
-    color: white;
+    color: #2c5530;
+    transform: scale(1.05);
   }
+`;
+
+const GlobeIcon = styled.svg`
+  width: 1.1rem;
+  height: 1.1rem;
+  fill: #2c5530;
 `;
 
 const WhatsAppButton = styled.a`
@@ -145,88 +212,96 @@ const Header: React.FC = () => {
     setIsMobileMenuOpen(false);
   };
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setIsMobileMenuOpen(false);
+  };
+
   const isRTL = language === 'he';
 
   return (
     <HeaderContainer isScrolled={isScrolled}>
       <HeaderContent>
-        <Logo>אחוזת האלה</Logo>
+        {/* Language Switcher - Left */}
+        <LanguageSwitcher>
+          <LanguageButton
+            onClick={() => setLanguage(language === 'he' ? 'en' : 'he')}
+          >
+            {language === 'he' ? 'English' : 'עברית'}
+            <GlobeIcon viewBox="0 0 24 24">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+            </GlobeIcon>
+          </LanguageButton>
+        </LanguageSwitcher>
         
-        <Nav>
+        {/* Navigation - Center */}
+        <Nav isRTL={isRTL}>
           <NavLink 
             isRTL={isRTL}
-            onClick={() => scrollToSection('hero')}
-          >
-            {t('nav.home')}
-          </NavLink>
-          <NavLink 
-            isRTL={isRTL}
-            onClick={() => scrollToSection('about')}
-          >
-            {t('nav.about')}
-          </NavLink>
-          <NavLink 
-            isRTL={isRTL}
+            isScrolled={isScrolled}
             onClick={() => scrollToSection('gallery')}
           >
             {t('nav.gallery')}
           </NavLink>
+
           <NavLink 
             isRTL={isRTL}
+            isScrolled={isScrolled}
+            onClick={() => scrollToSection('about')}
+          >
+            {t('nav.about')}
+          </NavLink>
+
+          <NavLink 
+            isRTL={isRTL}
+            isScrolled={isScrolled}
             onClick={() => scrollToSection('contact')}
           >
             {t('nav.contact')}
           </NavLink>
-          
-          <WhatsAppButton 
-            href="https://wa.me/972501234567" 
-            target="_blank" 
-            rel="noopener noreferrer"
-          >
-            💬 {t('contact.whatsapp')}
-          </WhatsAppButton>
-          
-          <LanguageSwitcher>
-            <LanguageButton
-              isActive={language === 'he'}
-              onClick={() => setLanguage('he')}
-            >
-              עברית
-            </LanguageButton>
-            <LanguageButton
-              isActive={language === 'en'}
-              onClick={() => setLanguage('en')}
-            >
-              English
-            </LanguageButton>
-          </LanguageSwitcher>
-          
+
           <MobileMenuButton onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
             ☰
           </MobileMenuButton>
         </Nav>
         
+        {/* Logo and Site Name - Right */}
+        <LogoSection onClick={scrollToTop}>
+          <SiteName>
+            <SiteNameHebrew isScrolled={isScrolled}>אחוזת האלה</SiteNameHebrew>
+            <SiteNameEnglish isScrolled={isScrolled}>Ella Estate</SiteNameEnglish>
+          </SiteName>
+          <LogoContainer>
+            <LogoImage 
+              isScrolled={isScrolled}
+              src="/logo.png" 
+              alt="אחוזת האלה - Ella Estate"
+              onError={(e) => {
+                // Fallback to logo-bw.png if logo.png fails
+                e.currentTarget.src = "/logo-bw.png";
+              }}
+            />
+          </LogoContainer>
+        </LogoSection>
+        
         <MobileMenu isOpen={isMobileMenuOpen}>
           <NavLink 
             isRTL={isRTL}
-            onClick={() => scrollToSection('hero')}
-          >
-            {t('nav.home')}
-          </NavLink>
-          <NavLink 
-            isRTL={isRTL}
-            onClick={() => scrollToSection('about')}
-          >
-            {t('nav.about')}
-          </NavLink>
-          <NavLink 
-            isRTL={isRTL}
+            isScrolled={isScrolled}
             onClick={() => scrollToSection('gallery')}
           >
             {t('nav.gallery')}
           </NavLink>
           <NavLink 
             isRTL={isRTL}
+            isScrolled={isScrolled}
+            onClick={() => scrollToSection('about')}
+          >
+            {t('nav.about')}
+          </NavLink>
+          <NavLink 
+            isRTL={isRTL}
+            isScrolled={isScrolled}
             onClick={() => scrollToSection('contact')}
           >
             {t('nav.contact')}

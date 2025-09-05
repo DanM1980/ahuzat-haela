@@ -174,6 +174,7 @@ const ImageOverlay = styled.div`
 const OverlayIcon = styled.div`
   color: white;
   font-size: 2rem;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 `;
 
 const GalleryInfo = styled.div`
@@ -204,7 +205,8 @@ const Modal = styled.div<{ isOpen: boolean }>`
   align-items: center;
   justify-content: center;
   z-index: 2000;
-  padding: 2rem;
+  padding: 1rem;
+  overflow: hidden;
 `;
 
 const ModalContent = styled.div`
@@ -212,41 +214,52 @@ const ModalContent = styled.div`
   max-height: 90vh;
   position: relative;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
-const ModalImageContainer = styled.div<{ currentIndex: number }>`
+const ModalImageContainer = styled.div`
   display: flex;
-  width: ${props => props.currentIndex !== null ? cottages.length * 100 : 100}%;
-  transform: translateX(${props => props.currentIndex !== null ? -props.currentIndex * (100 / cottages.length) : 0}%);
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
 `;
 
 const ModalImage = styled.img`
   max-width: 100%;
-  max-height: 100%;
+  max-height: 90vh;
   object-fit: contain;
   border-radius: 10px;
-  width: ${props => 100 / cottages.length}%;
-  flex-shrink: 0;
+  transition: opacity 0.3s ease-in-out;
 `;
 
 const CloseButton = styled.button`
-  position: absolute;
-  top: -50px;
-  right: 0;
-  background: none;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.7);
   border: none;
   color: white;
   font-size: 2rem;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2001;
+  transition: background-color 0.3s ease;
   
   &:hover {
-    opacity: 0.7;
+    background: rgba(0, 0, 0, 0.9);
   }
 `;
 
 const NavigationButton = styled.button`
-  position: absolute;
+  position: fixed;
   top: 50%;
   transform: translateY(-50%);
   background: rgba(0, 0, 0, 0.5);
@@ -260,15 +273,27 @@ const NavigationButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
+  z-index: 2001;
   
   &:hover {
     background: rgba(0, 0, 0, 0.7);
+    transform: translateY(-50%) scale(1.1);
+  }
+  
+  &:active {
+    transform: translateY(-50%) scale(0.95);
   }
   
   &:disabled {
     opacity: 0.3;
     cursor: not-allowed;
+    transform: translateY(-50%);
+    
+    &:hover {
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.5);
+    }
   }
 `;
 
@@ -281,7 +306,7 @@ const NextButton = styled(NavigationButton)`
 `;
 
 const ImageCounter = styled.div`
-  position: absolute;
+  position: fixed;
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
@@ -290,81 +315,147 @@ const ImageCounter = styled.div`
   padding: 0.5rem 1rem;
   border-radius: 20px;
   font-size: 0.9rem;
+  z-index: 2001;
 `;
 
-// Sample cottage data
+const LoadingSpinner = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  height: 50px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top: 3px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  
+  @keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+`;
+
+// Gallery images data
 const cottages = [
   {
     id: 1,
     title: 'צימר משפחתי',
     titleEn: 'Family Cottage',
-    image: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=500&h=300&fit=crop'
+    thumbnail: '/gallery/thumbnails/_DSC5126-1.jpg',
+    fullImage: '/gallery/_DSC5126-1.jpg'
   },
   {
     id: 2,
     title: 'צימר זוגי רומנטי',
     titleEn: 'Romantic Couple Cottage',
-    image: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=500&h=300&fit=crop'
+    thumbnail: '/gallery/thumbnails/_DSC5139-HDR-1.jpg',
+    fullImage: '/gallery/_DSC5139-HDR-1.jpg'
   },
   {
     id: 3,
     title: 'צימר לקבוצות',
     titleEn: 'Group Cottage',
-    image: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=500&h=300&fit=crop'
+    thumbnail: '/gallery/thumbnails/_DSC5143-1.jpg',
+    fullImage: '/gallery/_DSC5143-1.jpg'
   },
   {
     id: 4,
     title: 'צימר עם נוף',
     titleEn: 'Scenic View Cottage',
-    image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=500&h=300&fit=crop'
+    thumbnail: '/gallery/thumbnails/_DSC5145-2.jpg',
+    fullImage: '/gallery/_DSC5145-2.jpg'
   },
   {
     id: 5,
     title: 'צימר ליד הים',
     titleEn: 'Beachside Cottage',
-    image: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=500&h=300&fit=crop'
+    thumbnail: '/gallery/thumbnails/_DSC5146-1.jpg',
+    fullImage: '/gallery/_DSC5146-1.jpg'
   },
   {
     id: 6,
     title: 'צימר כפרי',
     titleEn: 'Country Cottage',
-    image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=500&h=300&fit=crop'
+    thumbnail: '/gallery/thumbnails/_DSC5152-HDR-1.jpg',
+    fullImage: '/gallery/_DSC5152-HDR-1.jpg'
   },
   {
     id: 7,
     title: 'צימר עם בריכה',
     titleEn: 'Cottage with Pool',
-    image: 'https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=500&h=300&fit=crop'
+    thumbnail: '/gallery/thumbnails/_DSC5159-1.jpg',
+    fullImage: '/gallery/_DSC5159-1.jpg'
   },
   {
     id: 8,
     title: 'צימר עם ג\'קוזי',
     titleEn: 'Cottage with Jacuzzi',
-    image: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=500&h=300&fit=crop'
+    thumbnail: '/gallery/thumbnails/_DSC5160-2.jpg',
+    fullImage: '/gallery/_DSC5160-2.jpg'
   },
   {
     id: 9,
     title: 'צימר עם מרפסת',
     titleEn: 'Cottage with Balcony',
-    image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=500&h=300&fit=crop'
+    thumbnail: '/gallery/thumbnails/_DSC5164-1.jpg',
+    fullImage: '/gallery/_DSC5164-1.jpg'
   },
   {
     id: 10,
     title: 'צימר עם גינה',
     titleEn: 'Cottage with Garden',
-    image: 'https://images.unsplash.com/photo-1581578731548-c6a0c3f2fcc0?w=500&h=300&fit=crop'
+    thumbnail: '/gallery/thumbnails/_DSC5167-1.jpg',
+    fullImage: '/gallery/_DSC5167-1.jpg'
   },
   {
     id: 11,
     title: 'צימר עם ברביקיו',
     titleEn: 'Cottage with BBQ',
-    image: 'https://images.unsplash.com/photo-1581578731548-c6a0c3f2fcc0?w=500&h=300&fit=crop'
+    thumbnail: '/gallery/thumbnails/_DSC5188-HDR-1.jpg',
+    fullImage: '/gallery/_DSC5188-HDR-1.jpg'
   },
   {
     id: 12,
     title: 'צימר עם נוף הרים',
     titleEn: 'Cottage with Mountain View',
-    image: 'https://images.unsplash.com/photo-1581578731548-c6a0c3f2fcc0?w=500&h=300&fit=crop'
+    thumbnail: '/gallery/thumbnails/_DSC5201-1.jpg',
+    fullImage: '/gallery/_DSC5201-1.jpg'
+  },
+  {
+    id: 13,
+    title: 'צימר עם נוף פנורמי',
+    titleEn: 'Cottage with Panoramic View',
+    thumbnail: '/gallery/thumbnails/_DSC5203-1.jpg',
+    fullImage: '/gallery/_DSC5203-1.jpg'
+  },
+  {
+    id: 14,
+    title: 'צימר עם מרפסת פרטית',
+    titleEn: 'Cottage with Private Balcony',
+    thumbnail: '/gallery/thumbnails/_DSC5204-1.jpg',
+    fullImage: '/gallery/_DSC5204-1.jpg'
+  },
+  {
+    id: 15,
+    title: 'צימר עם גינה פרטית',
+    titleEn: 'Cottage with Private Garden',
+    thumbnail: '/gallery/thumbnails/_DSC5207-1.jpg',
+    fullImage: '/gallery/_DSC5207-1.jpg'
+  },
+  {
+    id: 16,
+    title: 'צימר עם נוף לים',
+    titleEn: 'Cottage with Sea View',
+    thumbnail: '/gallery/thumbnails/_DSC5212-1.jpg',
+    fullImage: '/gallery/_DSC5212-1.jpg'
+  },
+  {
+    id: 17,
+    title: 'צימר עם נוף להרים',
+    titleEn: 'Cottage with Mountain View',
+    thumbnail: '/gallery/thumbnails/_DSC5213-1.jpg',
+    fullImage: '/gallery/_DSC5213-1.jpg'
   }
 ];
 
@@ -372,6 +463,7 @@ const Gallery: React.FC = () => {
   const { t, language } = useLanguage();
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
   const [currentPage, setCurrentPage] = useState(0);
+  const [isImageLoading, setIsImageLoading] = useState(false);
   const isRTL = language === 'he';
 
   const imagesPerPage = 6;
@@ -393,14 +485,24 @@ const Gallery: React.FC = () => {
 
   const goToPrevious = () => {
     if (selectedImageIndex !== null && selectedImageIndex > 0) {
+      setIsImageLoading(true);
       setSelectedImageIndex(selectedImageIndex - 1);
     }
   };
 
   const goToNext = () => {
     if (selectedImageIndex !== null && selectedImageIndex < cottages.length - 1) {
+      setIsImageLoading(true);
       setSelectedImageIndex(selectedImageIndex + 1);
     }
+  };
+
+  const handleImageLoad = () => {
+    setIsImageLoading(false);
+  };
+
+  const handleImageError = () => {
+    setIsImageLoading(false);
   };
 
   const scrollToPrevious = () => {
@@ -463,9 +565,14 @@ const Gallery: React.FC = () => {
               <GalleryGrid key={pageIndex}>
                 {pageImages.map((cottage, index) => (
                   <GalleryItem key={cottage.id} onClick={() => openModal(index)}>
-                    <GalleryImage imageUrl={cottage.image}>
+                    <GalleryImage imageUrl={cottage.thumbnail}>
                       <ImageOverlay>
-                        <OverlayIcon>🔍</OverlayIcon>
+                        <OverlayIcon>
+                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.35-4.35"></path>
+                          </svg>
+                        </OverlayIcon>
                       </ImageOverlay>
                     </GalleryImage>
                   </GalleryItem>
@@ -477,6 +584,7 @@ const Gallery: React.FC = () => {
           <NextScrollButton 
             onClick={scrollToNext} 
             disabled={currentPage === totalPages - 1}
+            style={{ display: currentPage === totalPages - 1 ? 'none' : 'flex' }}
           >
             ›
           </NextScrollButton>
@@ -506,14 +614,20 @@ const Gallery: React.FC = () => {
                 ‹
               </PrevButton>
               
-              <ModalImageContainer currentIndex={selectedImageIndex}>
-                {cottages.map((cottage, index) => (
-                  <ModalImage 
-                    key={cottage.id}
-                    src={cottage.image} 
-                    alt={language === 'he' ? cottage.title : cottage.titleEn} 
-                  />
-                ))}
+              <ModalImageContainer>
+                {selectedImageIndex !== null && (
+                  <>
+                    {isImageLoading && <LoadingSpinner />}
+                    <ModalImage 
+                      key={selectedImageIndex}
+                      src={cottages[selectedImageIndex].fullImage} 
+                      alt={language === 'he' ? cottages[selectedImageIndex].title : cottages[selectedImageIndex].titleEn}
+                      onLoad={handleImageLoad}
+                      onError={handleImageError}
+                      style={{ opacity: isImageLoading ? 0 : 1 }}
+                    />
+                  </>
+                )}
               </ModalImageContainer>
               
               <NextButton 
