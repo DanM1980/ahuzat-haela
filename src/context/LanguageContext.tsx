@@ -21,7 +21,7 @@ const translations = {
     // Hero section
     'hero.title': 'אחוזת האלה',
     'hero.subtitle': 'מתחם אירוח בדרום רמת הגולן',
-    'hero.description': '4 יחידות אירוח עם ג\'קוזי, בריכה מחוממת וסאונה יבשה בנאות גולן',
+    'hero.description': 'ארבע יחידות אירוח עם ג\'קוזי, בריכה מחוממת וסאונה יבשה בנאות גולן',
     'hero.cta': 'גלה עוד',
     
     

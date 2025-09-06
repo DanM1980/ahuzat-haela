@@ -5,7 +5,7 @@ const ScrollButton = styled.button<{ isVisible: boolean }>`
   position: fixed;
   bottom: 2rem;
   right: 2rem;
-  background: #2c5530;
+  background: #a16207;
   color: white;
   border: none;
   width: 50px;
@@ -18,10 +18,10 @@ const ScrollButton = styled.button<{ isVisible: boolean }>`
   visibility: ${props => props.isVisible ? 'visible' : 'hidden'};
   transition: all 0.3s ease;
   z-index: 1000;
-  box-shadow: 0 4px 15px rgba(44, 85, 48, 0.3);
+  box-shadow: 0 4px 15px rgba(161, 98, 7, 0.3);
 
   &:hover {
-    background: #4a7c59;
+    background: #8a5206;
     transform: translateY(-2px);
   }
 

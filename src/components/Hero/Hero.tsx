@@ -31,8 +31,9 @@ const HeroBackground = styled.div<{ imageUrl: string; scrollY: number }>`
   background-position: center;
   background-repeat: no-repeat;
   filter: brightness(0.6);
-  transform: translateY(${props => props.scrollY * 0.5}px);
+  transform: translate3d(0, ${props => props.scrollY * 0.5}px, 0);
   will-change: transform;
+  backface-visibility: hidden;
   z-index: 1;
 `;
 
@@ -42,10 +43,99 @@ const HeroContent = styled.div<{ isRTL: boolean }>`
   z-index: 2;
   max-width: 800px;
   padding: 0 2rem;
+  margin-top: 2rem;
   
   ${props => props.isRTL && `
     direction: rtl;
   `}
+`;
+
+const HeroLogoSection = styled.div<{ scrollY: number }>`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: 0;
+  text-align: center;
+  margin-left: 1rem;
+  opacity: ${props => props.scrollY > 50 ? 0 : 1};
+  visibility: ${props => props.scrollY > 50 ? 'hidden' : 'visible'};
+  transition: all 0.3s ease;
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 0;
+    margin-left: 0;
+  }
+`;
+
+const HeroSiteName = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+`;
+
+const HeroSiteNameHebrew = styled.div`
+  font-size: 3rem;
+  font-weight: bold;
+  color: white;
+  line-height: 1.2;
+  font-family: "Inter", "Heebo", sans-serif !important;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  margin-bottom: 0.3rem;
+  
+  @media (max-width: 768px) {
+    font-size: 2.5rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 2rem;
+  }
+`;
+
+const HeroSiteNameEnglish = styled.div`
+  font-size: 3rem;
+  font-weight: bold;
+  color: white;
+  line-height: 1.2;
+  font-family: "Inter", "Heebo", sans-serif !important;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  
+  @media (max-width: 768px) {
+    font-size: 2.5rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 2rem;
+  }
+`;
+
+const HeroLogoContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: -2rem;
+`;
+
+const HeroLogoImage = styled.img`
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+  
+  @media (max-width: 768px) {
+    width: 150px;
+    height: 150px;
+  }
+  
+  @media (max-width: 480px) {
+    width: 120px;
+    height: 120px;
+  }
 `;
 
 const HeroTitle = styled.h1`
@@ -102,7 +192,7 @@ const HeroDescription = styled.p`
 
 const CTAButton = styled.button`
   background: white;
-  color: #2c5530;
+  color: rgb(41 37 36 / 1);
   border: none;
   padding: 1.2rem 2.5rem;
   font-size: 1.3rem;
@@ -190,20 +280,28 @@ const Hero: React.FC = () => {
   const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
+    let ticking = false;
+
     const handleScroll = () => {
-      setScrollY(window.scrollY);
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          setScrollY(window.scrollY);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
 
 
   const scrollToNext = () => {
-    const aboutSection = document.getElementById('about');
-    if (aboutSection) {
-      aboutSection.scrollIntoView({ behavior: 'smooth' });
+    const gallerySection = document.getElementById('gallery');
+    if (gallerySection) {
+      gallerySection.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -213,7 +311,22 @@ const Hero: React.FC = () => {
         <HeroBackground imageUrl={selectedImage} scrollY={scrollY} />
       </HeroBackgroundContainer>
       <HeroContent isRTL={isRTL}>
-        <HeroTitle>{t('hero.title')}</HeroTitle>
+        <HeroLogoSection scrollY={scrollY}>
+          <HeroLogoContainer>
+            <HeroLogoImage 
+              src="/logo.png" 
+              alt="אחוזת האלה - Ella Estate"
+              onError={(e) => {
+                // Fallback to logo-bw.png if logo.png fails
+                e.currentTarget.src = "/logo-bw.png";
+              }}
+            />
+          </HeroLogoContainer>
+          <HeroSiteName>
+            <HeroSiteNameHebrew>אחוזת האלה</HeroSiteNameHebrew>
+            <HeroSiteNameEnglish>Ella Estate</HeroSiteNameEnglish>
+          </HeroSiteName>
+        </HeroLogoSection>
         <HeroSubtitle>{t('hero.subtitle')}</HeroSubtitle>
         <HeroDescription>{t('hero.description')}</HeroDescription>
         <CTAButton onClick={scrollToNext}>

@@ -17,7 +17,7 @@ const Container = styled.div`
 const SectionTitle = styled.h2<{ isRTL: boolean }>`
   text-align: center;
   font-size: 2.5rem;
-  color: #2c5530;
+  color: rgb(41 37 36 / 1);
   margin-bottom: 3rem;
   font-family: "Inter", "Heebo", sans-serif !important;
   
@@ -107,7 +107,7 @@ const Features: React.FC = () => {
     {
       icon: <Wifi />,
       title: language === 'he' ? 'מתקנים מהשורה הראשונה' : 'First-class Facilities',
-      description: language === 'he' ? 'בריכה מחוממת, סאונה וג\'קוזי בכל חדר' : 'Heated pool, sauna and jacuzzi in every room'
+      description: language === 'he' ? 'בריכה מחוממת וסאונה, ג\'קוזי בכל חדר' : 'Heated pool, sauna and jacuzzi in every room'
     },
     {
       icon: <MapPin />,
@@ -116,7 +116,7 @@ const Features: React.FC = () => {
     },
     {
       icon: <Star />,
-      title: language === 'he' ? '4 יחידות אירוח יוקרה' : '4 Luxury Accommodation Units',
+      title: language === 'he' ? 'ארבע יחידות אירוח יוקרתיות' : '4 Luxury Accommodation Units',
       description: language === 'he' ? 'יחידות אירוח כפריות משולבות עץ ואבן' : 'Rural accommodation units combining wood and stone'
     }
   ];

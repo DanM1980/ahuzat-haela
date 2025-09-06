@@ -32,7 +32,7 @@ const Container = styled.div`
 const SectionTitle = styled.h2<{ isRTL: boolean }>`
   text-align: center;
   font-size: 2.5rem;
-  color: #2c5530;
+  color: rgb(41 37 36 / 1);
   margin-bottom: 1rem;
   font-family: ${props => props.isRTL ? '"Heebo", sans-serif' : '"Playfair Display", serif'} !important;
   font-weight: 600;
@@ -92,7 +92,7 @@ const SwiperContainer = styled.div`
   
   .swiper-button-next,
   .swiper-button-prev {
-    color: #2c5530 !important;
+    color: rgb(41 37 36 / 1) !important;
     background: rgba(255, 255, 255, 0.9) !important;
     width: 50px !important;
     height: 50px !important;
@@ -153,7 +153,7 @@ const SwiperContainer = styled.div`
     transition: background-color 0.3s ease;
     
     &.swiper-pagination-bullet-active {
-      background: #2c5530;
+      background: rgb(41 37 36 / 1);
     }
     
     &:hover {

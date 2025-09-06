@@ -22,10 +22,10 @@ const HeaderContent = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 2rem;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   width: 100%;
   align-items: center;
-  justify-content: space-between;
   position: relative;
 `;
 
@@ -34,6 +34,8 @@ const LogoSection = styled.div`
   align-items: center;
   cursor: pointer;
   transition: transform 0.3s ease;
+  justify-self: end;
+  grid-column: 3;
   
   &:hover {
     transform: scale(1.02);
@@ -52,9 +54,16 @@ const LogoImage = styled.img<{ isScrolled: boolean }>`
   height: ${props => props.isScrolled ? '90px' : '150px'};
   object-fit: contain;
   transition: all 0.3s ease;
+  opacity: ${props => props.isScrolled ? 1 : 0};
+  visibility: ${props => props.isScrolled ? 'visible' : 'hidden'};
   
   &:hover {
     transform: scale(1.05);
+  }
+  
+  @media (max-width: 768px) {
+    opacity: 1;
+    visibility: visible;
   }
 `;
 
@@ -67,19 +76,33 @@ const SiteName = styled.div`
 const SiteNameHebrew = styled.div<{ isScrolled: boolean }>`
   font-size: ${props => props.isScrolled ? '1.3rem' : '2.2rem'};
   font-weight: bold;
-  color: #2c5530;
+  color: rgb(41 37 36 / 1);
   line-height: 1.2;
   font-family: "Inter", "Heebo", sans-serif !important;
   transition: all 0.3s ease;
+  opacity: ${props => props.isScrolled ? 1 : 0};
+  visibility: ${props => props.isScrolled ? 'visible' : 'hidden'};
+  
+  @media (max-width: 768px) {
+    opacity: 1;
+    visibility: visible;
+  }
 `;
 
 const SiteNameEnglish = styled.div<{ isScrolled: boolean }>`
   font-size: ${props => props.isScrolled ? '1.3rem' : '2.2rem'};
   font-weight: bold;
-  color: #2c5530;
+  color: rgb(41 37 36 / 1);
   line-height: 1.2;
   font-family: "Inter", "Heebo", sans-serif !important;
   transition: all 0.3s ease;
+  opacity: ${props => props.isScrolled ? 1 : 0};
+  visibility: ${props => props.isScrolled ? 'visible' : 'hidden'};
+  
+  @media (max-width: 768px) {
+    opacity: 1;
+    visibility: visible;
+  }
 `;
 
 const Nav = styled.nav<{ isRTL: boolean }>`
@@ -87,6 +110,7 @@ const Nav = styled.nav<{ isRTL: boolean }>`
   align-items: center;
   gap: 2rem;
   justify-self: center;
+  grid-column: 2;
 
   ${props => props.isRTL && `
     direction: rtl;
@@ -97,13 +121,13 @@ const NavLink = styled.a<{ isRTL: boolean; isScrolled: boolean }>`
   color: #333;
   text-decoration: none;
   font-weight: 500;
-  font-size: ${props => props.isScrolled ? '1rem' : '1.7rem'};
+  font-size: ${props => props.isScrolled ? '1.3rem' : '1.7rem'};
   font-family: "Inter", "Heebo", sans-serif !important;
   transition: all 0.3s ease;
   cursor: pointer;
   
   &:hover {
-    color: #2c5530;
+    color: rgb(41 37 36 / 1);
     transform: scale(1.1);
   }
   
@@ -117,14 +141,14 @@ const LanguageSwitcher = styled.div`
   align-items: center;
 `;
 
-const LanguageButton = styled.button`
+const LanguageButton = styled.button<{ isScrolled: boolean }>`
   background: transparent;
   color: #333;
   border: none;
   padding: 0.5rem;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-size: 1rem;
+  font-size: ${props => props.isScrolled ? '1.2rem' : '1.5rem'};
   font-weight: 500;
   font-family: "Inter", "Heebo", sans-serif !important;
   display: flex;
@@ -132,7 +156,7 @@ const LanguageButton = styled.button`
   gap: 0.3rem;
   
   &:hover {
-    color: #2c5530;
+    color: rgb(41 37 36 / 1);
     transform: scale(1.05);
   }
 `;
@@ -140,7 +164,7 @@ const LanguageButton = styled.button`
 const GlobeIcon = styled.svg`
   width: 1.1rem;
   height: 1.1rem;
-  fill: #2c5530;
+  fill: rgb(41 37 36 / 1);
 `;
 
 const WhatsAppButton = styled.a`
@@ -228,6 +252,7 @@ const Header: React.FC = () => {
         {/* Language Switcher - Left */}
         <LanguageSwitcher>
           <LanguageButton
+            isScrolled={isScrolled}
             onClick={() => setLanguage(language === 'he' ? 'en' : 'he')}
           >
             {language === 'he' ? 'English' : 'עברית'}

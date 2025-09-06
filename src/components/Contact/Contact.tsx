@@ -4,7 +4,7 @@ import { useLanguage } from '../../context/LanguageContext';
 
 const ContactSection = styled.section`
   padding: 6rem 0;
-  background: linear-gradient(135deg, #ff8c00, #ffa500);
+  background: linear-gradient(135deg, #a16207, #8a5206);
   text-align: center;
 `;
 
@@ -86,7 +86,7 @@ const PhoneButton = styled.a`
   align-items: center;
   gap: 1rem;
   background: white;
-  color: #333;
+  color: #a16207;
   padding: 1.2rem 2.5rem;
   border-radius: 50px;
   text-decoration: none;

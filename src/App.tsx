@@ -45,7 +45,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #2c5530;
+    background: rgb(41 37 36 / 1);
     border-radius: 4px;
   }
 
@@ -55,12 +55,12 @@ const GlobalStyle = createGlobalStyle`
 
   /* Selection color */
   ::selection {
-    background: #2c5530;
+    background: rgb(41 37 36 / 1);
     color: white;
   }
 
   ::-moz-selection {
-    background: #2c5530;
+    background: rgb(41 37 36 / 1);
     color: white;
   }
 `;
