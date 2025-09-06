@@ -20,7 +20,7 @@ const HeroBackgroundContainer = styled.div`
   z-index: 1;
 `;
 
-const HeroBackground = styled.div<{ imageUrl: string; isActive: boolean }>`
+const HeroBackground = styled.div<{ imageUrl: string; scrollY: number }>`
   position: absolute;
   top: 0;
   left: 0;
@@ -31,8 +31,9 @@ const HeroBackground = styled.div<{ imageUrl: string; isActive: boolean }>`
   background-position: center;
   background-repeat: no-repeat;
   filter: brightness(0.6);
-  opacity: ${props => props.isActive ? 1 : 0};
-  transition: opacity 2s ease-in-out;
+  transform: translateY(${props => props.scrollY * 0.5}px);
+  will-change: transform;
+  z-index: 1;
 `;
 
 const HeroContent = styled.div<{ isRTL: boolean }>`
@@ -48,27 +49,53 @@ const HeroContent = styled.div<{ isRTL: boolean }>`
 `;
 
 const HeroTitle = styled.h1`
-  font-size: 3.5rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
+  font-size: 5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
   line-height: 1.2;
+  font-family: "Heebo", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
   
   @media (max-width: 768px) {
-    font-size: 2.5rem;
+    font-size: 3.5rem;
   }
   
   @media (max-width: 480px) {
-    font-size: 2rem;
+    font-size: 2.8rem;
   }
 `;
 
 const HeroSubtitle = styled.p`
-  font-size: 1.3rem;
-  margin-bottom: 2rem;
+  font-size: 2rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
   opacity: 0.9;
   line-height: 1.6;
+  color: #FFD700;
+  font-family: "Heebo", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
   
   @media (max-width: 768px) {
+    font-size: 1.6rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 1.4rem;
+  }
+`;
+
+const HeroDescription = styled.p`
+  font-size: 1.4rem;
+  font-weight: 400;
+  margin-bottom: 2.5rem;
+  opacity: 0.8;
+  line-height: 1.6;
+  color: #E0E0E0;
+  font-family: "Heebo", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
+  
+  @media (max-width: 768px) {
+    font-size: 1.2rem;
+  }
+  
+  @media (max-width: 480px) {
     font-size: 1.1rem;
   }
 `;
@@ -77,13 +104,14 @@ const CTAButton = styled.button`
   background: white;
   color: #2c5530;
   border: none;
-  padding: 1rem 2rem;
-  font-size: 1.1rem;
+  padding: 1.2rem 2.5rem;
+  font-size: 1.3rem;
   font-weight: 600;
   border-radius: 50px;
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  font-family: "Heebo", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
   
   &:hover {
     transform: translateY(-2px);
@@ -92,6 +120,11 @@ const CTAButton = styled.button`
   
   &:active {
     transform: translateY(0);
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 1.2rem;
+    padding: 1rem 2rem;
   }
 `;
 
@@ -130,27 +163,42 @@ const Hero: React.FC = () => {
     '/hero/GX010233_stabilized.mp4_snapshot_00.44.705~2.jpg'
   ];
 
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
+  // Select next image based on cookie
+  const [selectedImage] = useState(() => {
+    // Get last image index from cookie
+    const getCookie = (name: string) => {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop()?.split(';').shift();
+      return null;
+    };
 
-  // Change image every 5 seconds
+    const lastImageIndex = getCookie('lastHeroImage');
+    let nextIndex = 0;
+    
+    if (lastImageIndex !== null && lastImageIndex !== undefined) {
+      nextIndex = (parseInt(lastImageIndex) + 1) % backgroundImages.length;
+    }
+
+    // Save new index to cookie
+    document.cookie = `lastHeroImage=${nextIndex}; path=/; max-age=${60 * 60 * 24 * 365}`; // 1 year
+
+    return backgroundImages[nextIndex];
+  });
+
+  // Parallax scroll effect
+  const [scrollY, setScrollY] = useState(0);
+
   useEffect(() => {
-    const interval = setInterval(() => {
-      setIsTransitioning(true);
-      
-      // Change the image immediately when transition starts
-      setCurrentImageIndex((prevIndex) => 
-        (prevIndex + 1) % backgroundImages.length
-      );
-      
-      // Reset transition state after animation completes
-      setTimeout(() => {
-        setIsTransitioning(false);
-      }, 2000); // Match transition duration
-    }, 5000);
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
 
-    return () => clearInterval(interval);
-  }, [backgroundImages.length]);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+
 
   const scrollToNext = () => {
     const aboutSection = document.getElementById('about');
@@ -159,25 +207,15 @@ const Hero: React.FC = () => {
     }
   };
 
-  const nextImageIndex = (currentImageIndex + 1) % backgroundImages.length;
-
   return (
     <HeroSection id="hero">
       <HeroBackgroundContainer>
-        <HeroBackground 
-          key={`current-${currentImageIndex}`}
-          imageUrl={backgroundImages[currentImageIndex]}
-          isActive={!isTransitioning}
-        />
-        <HeroBackground 
-          key={`next-${nextImageIndex}`}
-          imageUrl={backgroundImages[nextImageIndex]}
-          isActive={isTransitioning}
-        />
+        <HeroBackground imageUrl={selectedImage} scrollY={scrollY} />
       </HeroBackgroundContainer>
       <HeroContent isRTL={isRTL}>
         <HeroTitle>{t('hero.title')}</HeroTitle>
         <HeroSubtitle>{t('hero.subtitle')}</HeroSubtitle>
+        <HeroDescription>{t('hero.description')}</HeroDescription>
         <CTAButton onClick={scrollToNext}>
           {t('hero.cta')}
         </CTAButton>

@@ -38,7 +38,7 @@ const SectionSubtitle = styled.p<{ isRTL: boolean }>`
 const GalleryContainer = styled.div`
   position: relative;
   margin-bottom: 3rem;
-  overflow: visible;
+  overflow: hidden;
   padding: 0 4rem;
 `;
 

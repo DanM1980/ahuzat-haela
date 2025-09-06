@@ -20,8 +20,9 @@ const translations = {
     'nav.contact': 'צור קשר',
     
     // Hero section
-    'hero.title': 'אחוזת האלה - צימרים לאירוח',
-    'hero.subtitle': 'חופשה מושלמת למשפחות וקבוצות',
+    'hero.title': 'אחוזת האלה',
+    'hero.subtitle': 'מתחם אירוח בדרום רמת הגולן',
+    'hero.description': '4 יחידות אירוח עם ג\'קוזי, בריכה מחוממת וסאונה יבשה בנאות גולן',
     'hero.cta': 'גלה עוד',
     
     // About section
@@ -61,8 +62,9 @@ const translations = {
     'nav.contact': 'Contact',
     
     // Hero section
-    'hero.title': 'Ahuzat HaEla - Cottages for Accommodation',
-    'hero.subtitle': 'Perfect vacation for families and groups',
+    'hero.title': 'Ahuzat HaEla',
+    'hero.subtitle': 'Accommodation Complex in Southern Golan Heights',
+    'hero.description': '4 accommodation units with jacuzzi, heated pool and dry sauna in Neot Golan',
     'hero.cta': 'Learn More',
     
     // About section

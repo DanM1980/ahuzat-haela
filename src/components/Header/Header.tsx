@@ -32,7 +32,6 @@ const HeaderContent = styled.div`
 const LogoSection = styled.div`
   display: flex;
   align-items: center;
-  gap: 1rem;
   cursor: pointer;
   transition: transform 0.3s ease;
   
@@ -45,6 +44,7 @@ const LogoContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-left: -1.5rem;
 `;
 
 const LogoImage = styled.img<{ isScrolled: boolean }>`
@@ -61,6 +61,7 @@ const LogoImage = styled.img<{ isScrolled: boolean }>`
 const SiteName = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
 `;
 
 const SiteNameHebrew = styled.div<{ isScrolled: boolean }>`
@@ -68,7 +69,7 @@ const SiteNameHebrew = styled.div<{ isScrolled: boolean }>`
   font-weight: bold;
   color: #2c5530;
   line-height: 1.2;
-  font-family: 'Arial', sans-serif;
+  font-family: "Heebo", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
   transition: all 0.3s ease;
 `;
 
@@ -77,7 +78,7 @@ const SiteNameEnglish = styled.div<{ isScrolled: boolean }>`
   font-weight: bold;
   color: #2c5530;
   line-height: 1.2;
-  font-family: 'Arial', sans-serif;
+  font-family: "Heebo", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
   transition: all 0.3s ease;
 `;
 
@@ -97,6 +98,7 @@ const NavLink = styled.a<{ isRTL: boolean; isScrolled: boolean }>`
   text-decoration: none;
   font-weight: 500;
   font-size: ${props => props.isScrolled ? '1rem' : '1.7rem'};
+  font-family: "Heebo", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
   transition: all 0.3s ease;
   cursor: pointer;
   
@@ -124,6 +126,7 @@ const LanguageButton = styled.button`
   transition: all 0.3s ease;
   font-size: 1rem;
   font-weight: 500;
+  font-family: "Heebo", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
   display: flex;
   align-items: center;
   gap: 0.3rem;

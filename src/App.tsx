@@ -18,7 +18,6 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    font-family: 'Arial', 'Helvetica', sans-serif;
     line-height: 1.6;
     color: #333;
     overflow-x: hidden;
