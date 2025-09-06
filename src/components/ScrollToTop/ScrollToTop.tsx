@@ -12,6 +12,7 @@ const ScrollButton = styled.button<{ isVisible: boolean }>`
   height: 50px;
   border-radius: 50%;
   font-size: 1.5rem;
+  font-family: "Inter", "Heebo", sans-serif !important;
   cursor: pointer;
   opacity: ${props => props.isVisible ? 1 : 0};
   visibility: ${props => props.isVisible ? 'visible' : 'hidden'};

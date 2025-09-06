@@ -1,6 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination } from 'swiper/modules';
 import { useLanguage } from '../../context/LanguageContext';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+
+// Global CSS to ensure navigation buttons are visible
+const GlobalSwiperStyles = styled.div`
+  .swiper-button-next,
+  .swiper-button-prev {
+    display: flex !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+`;
 
 const GallerySection = styled.section`
   padding: 5rem 0;
@@ -11,6 +26,7 @@ const Container = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 2rem;
+  overflow: visible;
 `;
 
 const SectionTitle = styled.h2<{ isRTL: boolean }>`
@@ -18,6 +34,9 @@ const SectionTitle = styled.h2<{ isRTL: boolean }>`
   font-size: 2.5rem;
   color: #2c5530;
   margin-bottom: 1rem;
+  font-family: ${props => props.isRTL ? '"Heebo", sans-serif' : '"Playfair Display", serif'} !important;
+  font-weight: 600;
+  letter-spacing: -0.02em;
   
   ${props => props.isRTL && `
     direction: rtl;
@@ -29,25 +48,152 @@ const SectionSubtitle = styled.p<{ isRTL: boolean }>`
   font-size: 1.1rem;
   color: #666;
   margin-bottom: 3rem;
+  font-family: ${props => props.isRTL ? '"Heebo", sans-serif' : '"Inter", sans-serif'} !important;
+  font-weight: 400;
+  line-height: 1.6;
   
   ${props => props.isRTL && `
     direction: rtl;
   `}
 `;
 
-const GalleryContainer = styled.div`
+const SwiperContainer = styled.div`
   position: relative;
   margin-bottom: 3rem;
-  overflow: hidden;
-  padding: 0 4rem;
-`;
-
-const GalleryWrapper = styled.div<{ currentPage: number }>`
-  display: flex;
-  width: 200%;
-  transform: translateX(${props => -props.currentPage * 50}%);
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  overflow: hidden;
+  padding: 0 6rem;
+  overflow: visible;
+  
+  .swiper {
+    padding: 0;
+    overflow: visible;
+  }
+  
+  /* Force navigation buttons to be visible */
+  .swiper-button-next,
+  .swiper-button-prev {
+    display: flex !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+  
+  .swiper-slide {
+    height: auto;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    
+    &.swiper-slide-active {
+      opacity: 1;
+    }
+  }
+  
+  .swiper-wrapper {
+    align-items: stretch;
+  }
+  
+  .swiper-button-next,
+  .swiper-button-prev {
+    color: #2c5530 !important;
+    background: rgba(255, 255, 255, 0.9) !important;
+    width: 50px !important;
+    height: 50px !important;
+    border-radius: 50% !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+    transition: all 0.3s ease !important;
+    z-index: 100 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    
+    &:after {
+      font-size: 18px !important;
+      font-weight: bold !important;
+    }
+    
+    &:hover {
+      background: rgba(255, 255, 255, 1) !important;
+      transform: scale(1.1) !important;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15) !important;
+    }
+  }
+  
+  .swiper-button-next {
+    right: -3rem;
+  }
+  
+  .swiper-button-prev {
+    left: -3rem;
+  }
+  
+  .swiper-button-disabled {
+    opacity: 0.3 !important;
+    cursor: not-allowed !important;
+    pointer-events: none !important;
+    background: rgba(200, 200, 200, 0.5) !important;
+    color: #999 !important;
+    
+    &:hover {
+      background: rgba(200, 200, 200, 0.5) !important;
+      transform: none !important;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+    }
+  }
+  
+  
+  .swiper-pagination {
+    bottom: -3rem;
+  }
+  
+  .swiper-pagination-bullet {
+    background: #ccc;
+    opacity: 1;
+    width: 12px;
+    height: 12px;
+    margin: 0 4px;
+    transition: background-color 0.3s ease;
+    
+    &.swiper-pagination-bullet-active {
+      background: #2c5530;
+    }
+    
+    &:hover {
+      background: #4a7c59;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    padding: 0 3rem;
+    
+    .swiper-button-next,
+    .swiper-button-prev {
+      width: 40px;
+      height: 40px;
+      
+      &:after {
+        font-size: 14px;
+      }
+    }
+    
+    .swiper-button-next {
+      right: -2rem;
+    }
+    
+    .swiper-button-prev {
+      left: -2rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    padding: 0 2rem;
+    
+    .swiper-button-next {
+      right: -1.5rem;
+    }
+    
+    .swiper-button-prev {
+      left: -1.5rem;
+    }
+  }
 `;
 
 const GalleryGrid = styled.div`
@@ -56,67 +202,19 @@ const GalleryGrid = styled.div`
   grid-template-rows: repeat(2, 1fr);
   gap: 2rem;
   height: 500px;
-  width: 50%;
-  flex-shrink: 0;
-  border-radius: 10px;
-`;
-
-const ScrollButton = styled.button`
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(44, 85, 48, 0.9);
-  border: none;
-  color: white;
-  font-size: 1.5rem;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  z-index: 20;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   
-  &:hover {
-    background: rgba(44, 85, 48, 1);
-    transform: translateY(-50%) scale(1.1);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    height: 600px;
+    gap: 1.5rem;
   }
   
-  &:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-  }
-`;
-
-const PrevScrollButton = styled(ScrollButton)`
-  left: -1.5rem;
-`;
-
-const NextScrollButton = styled(ScrollButton)`
-  right: -1.5rem;
-`;
-
-const GalleryIndicator = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-top: 1rem;
-`;
-
-const IndicatorDot = styled.div<{ isActive: boolean }>`
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: ${props => props.isActive ? '#2c5530' : '#ccc'};
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  
-  &:hover {
-    background: #2c5530;
+  @media (max-width: 480px) {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    height: 500px;
+    gap: 1rem;
   }
 `;
 
@@ -135,8 +233,8 @@ const GalleryItem = styled.div`
 `;
 
 const GalleryImage = styled.div<{ imageUrl: string }>`
-  height: 250px;
-  background: linear-gradient(45deg, #2c5530, #4a7c59);
+  width: 100%;
+  height: 100%;
   background-image: url(${props => props.imageUrl});
   background-size: cover;
   background-position: center;
@@ -150,6 +248,12 @@ const GalleryImage = styled.div<{ imageUrl: string }>`
     right: 0;
     bottom: 0;
     background: linear-gradient(45deg, rgba(44, 85, 48, 0.7), rgba(74, 124, 89, 0.7));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  ${GalleryItem}:hover &::before {
+    opacity: 1;
   }
 `;
 
@@ -177,57 +281,31 @@ const OverlayIcon = styled.div`
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 `;
 
-const GalleryInfo = styled.div`
-  padding: 1.5rem;
-  background: white;
-`;
 
-const PropertyTitle = styled.h3`
-  font-size: 1.2rem;
-  color: #2c5530;
-  margin-bottom: 0.5rem;
-`;
-
-const PropertyDescription = styled.p`
-  color: #666;
-  font-size: 0.9rem;
-  line-height: 1.5;
-`;
-
-const Modal = styled.div<{ isOpen: boolean }>`
+const LightboxModal = styled.div<{ isOpen: boolean }>`
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.9);
+  background: rgba(0, 0, 0, 0.95);
   display: ${props => props.isOpen ? 'flex' : 'none'};
   align-items: center;
   justify-content: center;
   z-index: 2000;
   padding: 1rem;
-  overflow: hidden;
 `;
 
-const ModalContent = styled.div`
+const LightboxContent = styled.div`
+  position: relative;
   max-width: 90vw;
   max-height: 90vh;
-  position: relative;
-  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
 `;
 
-const ModalImageContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-`;
-
-const ModalImage = styled.img`
+const LightboxImage = styled.img`
   max-width: 100%;
   max-height: 90vh;
   object-fit: contain;
@@ -243,6 +321,7 @@ const CloseButton = styled.button`
   border: none;
   color: white;
   font-size: 2rem;
+  font-family: "Inter", "Heebo", sans-serif !important;
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -262,10 +341,11 @@ const NavigationButton = styled.button`
   position: fixed;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(44, 85, 48, 0.8);
   border: none;
   color: white;
   font-size: 2rem;
+  font-family: "Inter", "Heebo", sans-serif !important;
   width: 60px;
   height: 60px;
   border-radius: 50%;
@@ -277,7 +357,7 @@ const NavigationButton = styled.button`
   z-index: 2001;
   
   &:hover {
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(44, 85, 48, 1);
     transform: translateY(-50%) scale(1.1);
   }
   
@@ -292,7 +372,7 @@ const NavigationButton = styled.button`
     
     &:hover {
       transform: translateY(-50%);
-      background: rgba(0, 0, 0, 0.5);
+      background: rgba(44, 85, 48, 0.8);
     }
   }
 `;
@@ -340,119 +420,119 @@ const LoadingSpinner = styled.div`
 const cottages = [
   {
     id: 1,
-    title: 'צימר משפחתי',
+    title: 'יחידת אירוח משפחתית',
     titleEn: 'Family Cottage',
     thumbnail: '/gallery/thumbnails/_DSC5126-1.jpg',
     fullImage: '/gallery/_DSC5126-1.jpg'
   },
   {
     id: 2,
-    title: 'צימר זוגי רומנטי',
+    title: 'יחידת אירוח זוגית רומנטית',
     titleEn: 'Romantic Couple Cottage',
     thumbnail: '/gallery/thumbnails/_DSC5139-HDR-1.jpg',
     fullImage: '/gallery/_DSC5139-HDR-1.jpg'
   },
   {
     id: 3,
-    title: 'צימר לקבוצות',
+    title: 'יחידת אירוח לקבוצות',
     titleEn: 'Group Cottage',
     thumbnail: '/gallery/thumbnails/_DSC5143-1.jpg',
     fullImage: '/gallery/_DSC5143-1.jpg'
   },
   {
     id: 4,
-    title: 'צימר עם נוף',
+    title: 'יחידת אירוח עם נוף',
     titleEn: 'Scenic View Cottage',
     thumbnail: '/gallery/thumbnails/_DSC5145-2.jpg',
     fullImage: '/gallery/_DSC5145-2.jpg'
   },
   {
     id: 5,
-    title: 'צימר ליד הים',
+    title: 'יחידת אירוח ליד הים',
     titleEn: 'Beachside Cottage',
     thumbnail: '/gallery/thumbnails/_DSC5146-1.jpg',
     fullImage: '/gallery/_DSC5146-1.jpg'
   },
   {
     id: 6,
-    title: 'צימר כפרי',
+    title: 'יחידת אירוח כפרית',
     titleEn: 'Country Cottage',
     thumbnail: '/gallery/thumbnails/_DSC5152-HDR-1.jpg',
     fullImage: '/gallery/_DSC5152-HDR-1.jpg'
   },
   {
     id: 7,
-    title: 'צימר עם בריכה',
+    title: 'יחידת אירוח עם בריכה',
     titleEn: 'Cottage with Pool',
     thumbnail: '/gallery/thumbnails/_DSC5159-1.jpg',
     fullImage: '/gallery/_DSC5159-1.jpg'
   },
   {
     id: 8,
-    title: 'צימר עם ג\'קוזי',
+    title: 'יחידת אירוח עם ג\'קוזי',
     titleEn: 'Cottage with Jacuzzi',
     thumbnail: '/gallery/thumbnails/_DSC5160-2.jpg',
     fullImage: '/gallery/_DSC5160-2.jpg'
   },
   {
     id: 9,
-    title: 'צימר עם מרפסת',
+    title: 'יחידת אירוח עם מרפסת',
     titleEn: 'Cottage with Balcony',
     thumbnail: '/gallery/thumbnails/_DSC5164-1.jpg',
     fullImage: '/gallery/_DSC5164-1.jpg'
   },
   {
     id: 10,
-    title: 'צימר עם גינה',
+    title: 'יחידת אירוח עם גינה',
     titleEn: 'Cottage with Garden',
     thumbnail: '/gallery/thumbnails/_DSC5167-1.jpg',
     fullImage: '/gallery/_DSC5167-1.jpg'
   },
   {
     id: 11,
-    title: 'צימר עם ברביקיו',
+    title: 'יחידת אירוח עם ברביקיו',
     titleEn: 'Cottage with BBQ',
     thumbnail: '/gallery/thumbnails/_DSC5188-HDR-1.jpg',
     fullImage: '/gallery/_DSC5188-HDR-1.jpg'
   },
   {
     id: 12,
-    title: 'צימר עם נוף הרים',
+    title: 'יחידת אירוח עם נוף הרים',
     titleEn: 'Cottage with Mountain View',
     thumbnail: '/gallery/thumbnails/_DSC5201-1.jpg',
     fullImage: '/gallery/_DSC5201-1.jpg'
   },
   {
     id: 13,
-    title: 'צימר עם נוף פנורמי',
+    title: 'יחידת אירוח עם נוף פנורמי',
     titleEn: 'Cottage with Panoramic View',
     thumbnail: '/gallery/thumbnails/_DSC5203-1.jpg',
     fullImage: '/gallery/_DSC5203-1.jpg'
   },
   {
     id: 14,
-    title: 'צימר עם מרפסת פרטית',
+    title: 'יחידת אירוח עם מרפסת פרטית',
     titleEn: 'Cottage with Private Balcony',
     thumbnail: '/gallery/thumbnails/_DSC5204-1.jpg',
     fullImage: '/gallery/_DSC5204-1.jpg'
   },
   {
     id: 15,
-    title: 'צימר עם גינה פרטית',
+    title: 'יחידת אירוח עם גינה פרטית',
     titleEn: 'Cottage with Private Garden',
     thumbnail: '/gallery/thumbnails/_DSC5207-1.jpg',
     fullImage: '/gallery/_DSC5207-1.jpg'
   },
   {
     id: 16,
-    title: 'צימר עם נוף לים',
+    title: 'יחידת אירוח עם נוף לים',
     titleEn: 'Cottage with Sea View',
     thumbnail: '/gallery/thumbnails/_DSC5212-1.jpg',
     fullImage: '/gallery/_DSC5212-1.jpg'
   },
   {
     id: 17,
-    title: 'צימר עם נוף להרים',
+    title: 'יחידת אירוח עם נוף להרים',
     titleEn: 'Cottage with Mountain View',
     thumbnail: '/gallery/thumbnails/_DSC5213-1.jpg',
     fullImage: '/gallery/_DSC5213-1.jpg'
@@ -462,24 +542,21 @@ const cottages = [
 const Gallery: React.FC = () => {
   const { t, language } = useLanguage();
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
-  const [currentPage, setCurrentPage] = useState(0);
   const [isImageLoading, setIsImageLoading] = useState(false);
   const isRTL = language === 'he';
 
-  const imagesPerPage = 6;
-  const totalPages = Math.ceil(cottages.length / imagesPerPage);
-  
-  // Create pages array
-  const pages = [];
-  for (let i = 0; i < totalPages; i++) {
-    pages.push(cottages.slice(i * imagesPerPage, (i + 1) * imagesPerPage));
+  // Create groups of 6 images
+  const imagesPerSlide = 6;
+  const imageGroups = [];
+  for (let i = 0; i < cottages.length; i += imagesPerSlide) {
+    imageGroups.push(cottages.slice(i, i + imagesPerSlide));
   }
 
-  const openModal = (imageIndex: number) => {
-    setSelectedImageIndex(currentPage * imagesPerPage + imageIndex);
+  const openLightbox = (imageIndex: number) => {
+    setSelectedImageIndex(imageIndex);
   };
 
-  const closeModal = () => {
+  const closeLightbox = () => {
     setSelectedImageIndex(null);
   };
 
@@ -505,105 +582,72 @@ const Gallery: React.FC = () => {
     setIsImageLoading(false);
   };
 
-  const scrollToPrevious = () => {
-    if (currentPage > 0) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
-
-  const scrollToNext = () => {
-    if (currentPage < totalPages - 1) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
-
-  const goToPage = (page: number) => {
-    setCurrentPage(page);
-  };
-
   const handleKeyDown = (e: KeyboardEvent) => {
     if (selectedImageIndex !== null) {
-      // Modal navigation
       if (e.key === 'ArrowLeft') {
         goToPrevious();
       } else if (e.key === 'ArrowRight') {
         goToNext();
       } else if (e.key === 'Escape') {
-        closeModal();
-      }
-    } else {
-      // Gallery navigation
-      if (e.key === 'ArrowLeft') {
-        scrollToPrevious();
-      } else if (e.key === 'ArrowRight') {
-        scrollToNext();
+        closeLightbox();
       }
     }
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [selectedImageIndex, currentPage]);
+  }, [selectedImageIndex]);
 
   return (
     <GallerySection id="gallery">
+      <GlobalSwiperStyles />
       <Container>
         <SectionTitle isRTL={isRTL}>{t('gallery.title')}</SectionTitle>
         <SectionSubtitle isRTL={isRTL}>{t('gallery.subtitle')}</SectionSubtitle>
         
-        <GalleryContainer>
-          <PrevScrollButton 
-            onClick={scrollToPrevious} 
-            disabled={currentPage === 0}
+        <SwiperContainer>
+          <Swiper
+            modules={[Navigation, Pagination]}
+            spaceBetween={0}
+            slidesPerView={1}
+            navigation={true}
+            pagination={{ clickable: true }}
+            loop={false}
+            speed={500}
+            centeredSlides={false}
+            watchSlidesProgress={true}
           >
-            ‹
-          </PrevScrollButton>
-          
-          <GalleryWrapper currentPage={currentPage}>
-            {pages.map((pageImages, pageIndex) => (
-              <GalleryGrid key={pageIndex}>
-                {pageImages.map((cottage, index) => (
-                  <GalleryItem key={cottage.id} onClick={() => openModal(index)}>
-                    <GalleryImage imageUrl={cottage.thumbnail}>
-                      <ImageOverlay>
-                        <OverlayIcon>
-                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                            <circle cx="11" cy="11" r="8"></circle>
-                            <path d="m21 21-4.35-4.35"></path>
-                          </svg>
-                        </OverlayIcon>
-                      </ImageOverlay>
-                    </GalleryImage>
-                  </GalleryItem>
-                ))}
-              </GalleryGrid>
+            {imageGroups.map((group, groupIndex) => (
+              <SwiperSlide key={groupIndex}>
+                <GalleryGrid>
+                  {group.map((cottage, index) => {
+                    const globalIndex = groupIndex * imagesPerSlide + index;
+                    return (
+                      <GalleryItem key={cottage.id} onClick={() => openLightbox(globalIndex)}>
+                        <GalleryImage imageUrl={cottage.thumbnail}>
+                          <ImageOverlay>
+                            <OverlayIcon>
+                              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <path d="m21 21-4.35-4.35"></path>
+                              </svg>
+                            </OverlayIcon>
+                          </ImageOverlay>
+                        </GalleryImage>
+                      </GalleryItem>
+                    );
+                  })}
+                </GalleryGrid>
+              </SwiperSlide>
             ))}
-          </GalleryWrapper>
-          
-          <NextScrollButton 
-            onClick={scrollToNext} 
-            disabled={currentPage === totalPages - 1}
-            style={{ display: currentPage === totalPages - 1 ? 'none' : 'flex' }}
-          >
-            ›
-          </NextScrollButton>
-          
-          <GalleryIndicator>
-            {Array.from({ length: totalPages }, (_, index) => (
-              <IndicatorDot
-                key={index}
-                isActive={index === currentPage}
-                onClick={() => goToPage(index)}
-              />
-            ))}
-          </GalleryIndicator>
-        </GalleryContainer>
+          </Swiper>
+        </SwiperContainer>
       </Container>
       
-      <Modal isOpen={selectedImageIndex !== null} onClick={closeModal}>
-        <ModalContent onClick={(e) => e.stopPropagation()}>
-          <CloseButton onClick={closeModal}>×</CloseButton>
+      <LightboxModal isOpen={selectedImageIndex !== null} onClick={closeLightbox}>
+        <LightboxContent onClick={(e) => e.stopPropagation()}>
+          <CloseButton onClick={closeLightbox}>×</CloseButton>
           
           {selectedImageIndex !== null && (
             <>
@@ -614,21 +658,16 @@ const Gallery: React.FC = () => {
                 ‹
               </PrevButton>
               
-              <ModalImageContainer>
-                {selectedImageIndex !== null && (
-                  <>
-                    {isImageLoading && <LoadingSpinner />}
-                    <ModalImage 
-                      key={selectedImageIndex}
-                      src={cottages[selectedImageIndex].fullImage} 
-                      alt={language === 'he' ? cottages[selectedImageIndex].title : cottages[selectedImageIndex].titleEn}
-                      onLoad={handleImageLoad}
-                      onError={handleImageError}
-                      style={{ opacity: isImageLoading ? 0 : 1 }}
-                    />
-                  </>
-                )}
-              </ModalImageContainer>
+              <LightboxImage 
+                key={selectedImageIndex}
+                src={cottages[selectedImageIndex].fullImage} 
+                alt={isRTL ? cottages[selectedImageIndex].title : cottages[selectedImageIndex].titleEn}
+                onLoad={handleImageLoad}
+                onError={handleImageError}
+                style={{ opacity: isImageLoading ? 0 : 1 }}
+              />
+              
+              {isImageLoading && <LoadingSpinner />}
               
               <NextButton 
                 onClick={goToNext} 
@@ -642,10 +681,14 @@ const Gallery: React.FC = () => {
               </ImageCounter>
             </>
           )}
-        </ModalContent>
-      </Modal>
+        </LightboxContent>
+      </LightboxModal>
     </GallerySection>
   );
 };
 
 export default Gallery;
+
+
+
+

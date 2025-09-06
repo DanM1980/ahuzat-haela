@@ -15,7 +15,6 @@ const translations = {
   he: {
     // Navigation
     'nav.home': 'בית',
-    'nav.about': 'אודות',
     'nav.gallery': 'גלריה',
     'nav.contact': 'צור קשר',
     
@@ -25,13 +24,10 @@ const translations = {
     'hero.description': '4 יחידות אירוח עם ג\'קוזי, בריכה מחוממת וסאונה יבשה בנאות גולן',
     'hero.cta': 'גלה עוד',
     
-    // About section
-    'about.title': 'אודותינו',
-    'about.description': 'אחוזת האלה מציעה צימרים מפנקים לאירוח משפחות וקבוצות, עם שירות אישי ומקצועי.',
     
     // Gallery section
-    'gallery.title': 'גלריה',
-    'gallery.subtitle': 'הצימרים שלנו',
+    'gallery.title': 'הצצה לאחוזה',
+    'gallery.subtitle': 'גלו את הקסם של יחידות האירוח הכפריות שלנו',
     
     // Contact section
     'contact.title': 'צור קשר',
@@ -48,6 +44,11 @@ const translations = {
     // Footer
     'footer.rights': 'כל הזכויות שמורות לאחוזת האלה',
     'footer.follow': 'עקבו אחרינו',
+    'footer.quick_links': 'קישורים מהירים',
+    'footer.company_name': 'אחוזת האלה',
+    'footer.location': 'נאות גולן, ישראל',
+    'footer.phone': 'טל: 052-6658209',
+    'footer.description': 'צימרים יוקרתיים בלב הגולן',
     
     // Common
     'common.loading': 'טוען...',
@@ -57,23 +58,19 @@ const translations = {
   en: {
     // Navigation
     'nav.home': 'Home',
-    'nav.about': 'About',
     'nav.gallery': 'Gallery',
     'nav.contact': 'Contact',
     
     // Hero section
-    'hero.title': 'Ahuzat HaEla',
+    'hero.title': 'Ella Estate',
     'hero.subtitle': 'Accommodation Complex in Southern Golan Heights',
     'hero.description': '4 accommodation units with jacuzzi, heated pool and dry sauna in Neot Golan',
     'hero.cta': 'Learn More',
     
-    // About section
-    'about.title': 'About Us',
-    'about.description': 'Ahuzat HaEla offers luxurious cottages for family and group accommodation, with personal and professional service.',
     
     // Gallery section
-    'gallery.title': 'Gallery',
-    'gallery.subtitle': 'Our Cottages',
+    'gallery.title': 'Estate Preview',
+    'gallery.subtitle': 'Discover the magic of our rural accommodation units',
     
     // Contact section
     'contact.title': 'Contact Us',
@@ -88,8 +85,13 @@ const translations = {
     'contact.whatsapp': 'Send WhatsApp Message',
     
     // Footer
-    'footer.rights': 'All rights reserved to Ahuzat HaEla',
+    'footer.rights': 'All rights reserved to Ella Estate',
     'footer.follow': 'Follow Us',
+    'footer.quick_links': 'Quick Links',
+    'footer.company_name': 'Ella Estate',
+    'footer.location': 'Neot Golan, Israel',
+    'footer.phone': 'Tel: +972-52-6658209',
+    'footer.description': 'Luxurious accommodation units in the heart of the Golan',
     
     // Common
     'common.loading': 'Loading...',

@@ -69,7 +69,7 @@ const SiteNameHebrew = styled.div<{ isScrolled: boolean }>`
   font-weight: bold;
   color: #2c5530;
   line-height: 1.2;
-  font-family: "Heebo", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
+  font-family: "Inter", "Heebo", sans-serif !important;
   transition: all 0.3s ease;
 `;
 
@@ -78,7 +78,7 @@ const SiteNameEnglish = styled.div<{ isScrolled: boolean }>`
   font-weight: bold;
   color: #2c5530;
   line-height: 1.2;
-  font-family: "Heebo", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
+  font-family: "Inter", "Heebo", sans-serif !important;
   transition: all 0.3s ease;
 `;
 
@@ -98,7 +98,7 @@ const NavLink = styled.a<{ isRTL: boolean; isScrolled: boolean }>`
   text-decoration: none;
   font-weight: 500;
   font-size: ${props => props.isScrolled ? '1rem' : '1.7rem'};
-  font-family: "Heebo", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
+  font-family: "Inter", "Heebo", sans-serif !important;
   transition: all 0.3s ease;
   cursor: pointer;
   
@@ -126,7 +126,7 @@ const LanguageButton = styled.button`
   transition: all 0.3s ease;
   font-size: 1rem;
   font-weight: 500;
-  font-family: "Heebo", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
+  font-family: "Inter", "Heebo", sans-serif !important;
   display: flex;
   align-items: center;
   gap: 0.3rem;
@@ -250,14 +250,6 @@ const Header: React.FC = () => {
           <NavLink 
             isRTL={isRTL}
             isScrolled={isScrolled}
-            onClick={() => scrollToSection('about')}
-          >
-            {t('nav.about')}
-          </NavLink>
-
-          <NavLink 
-            isRTL={isRTL}
-            isScrolled={isScrolled}
             onClick={() => scrollToSection('contact')}
           >
             {t('nav.contact')}
@@ -294,13 +286,6 @@ const Header: React.FC = () => {
             onClick={() => scrollToSection('gallery')}
           >
             {t('nav.gallery')}
-          </NavLink>
-          <NavLink 
-            isRTL={isRTL}
-            isScrolled={isScrolled}
-            onClick={() => scrollToSection('about')}
-          >
-            {t('nav.about')}
           </NavLink>
           <NavLink 
             isRTL={isRTL}

@@ -53,7 +53,7 @@ const HeroTitle = styled.h1`
   font-weight: 700;
   margin-bottom: 1.5rem;
   line-height: 1.2;
-  font-family: "Heebo", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
+  font-family: "Playfair Display", "Heebo", serif !important;
   
   @media (max-width: 768px) {
     font-size: 3.5rem;
@@ -71,7 +71,7 @@ const HeroSubtitle = styled.p`
   opacity: 0.9;
   line-height: 1.6;
   color: #FFD700;
-  font-family: "Heebo", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
+  font-family: "Playfair Display", "Heebo", serif !important;
   
   @media (max-width: 768px) {
     font-size: 1.6rem;
@@ -89,7 +89,7 @@ const HeroDescription = styled.p`
   opacity: 0.8;
   line-height: 1.6;
   color: #E0E0E0;
-  font-family: "Heebo", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
+  font-family: "Playfair Display", "Heebo", serif !important;
   
   @media (max-width: 768px) {
     font-size: 1.2rem;
@@ -111,7 +111,7 @@ const CTAButton = styled.button`
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  font-family: "Heebo", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
+  font-family: "Playfair Display", "Heebo", serif !important;
   
   &:hover {
     transform: translateY(-2px);

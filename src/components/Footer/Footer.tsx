@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import { useLanguage } from '../../context/LanguageContext';
 
 const FooterSection = styled.footer`
-  background: #2c5530;
+  background: #2e2e2e;
   color: white;
-  padding: 3rem 0 1rem;
+  padding: 3rem 0 2rem;
 `;
 
 const Container = styled.div`
@@ -16,32 +16,43 @@ const Container = styled.div`
 
 const FooterContent = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 3rem;
   margin-bottom: 2rem;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
 `;
 
 const FooterColumn = styled.div<{ isRTL: boolean }>`
+  text-align: ${props => props.isRTL ? 'right' : 'left'};
+  
   ${props => props.isRTL && `
     direction: rtl;
   `}
 `;
 
 const ColumnTitle = styled.h3`
-  font-size: 1.3rem;
-  margin-bottom: 1rem;
-  color: white;
+  font-size: 1.4rem;
+  margin-bottom: 1.5rem;
+  color: #fdd835;
+  font-family: "Playfair Display", "Heebo", serif !important;
+  font-weight: 600;
 `;
 
 const FooterLink = styled.a`
-  color: rgba(255, 255, 255, 0.8);
+  color: #cccccc;
   text-decoration: none;
   display: block;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.8rem;
+  font-family: "Inter", "Heebo", sans-serif !important;
+  font-size: 1rem;
   transition: color 0.3s ease;
   
   &:hover {
-    color: white;
+    color: #fdd835;
   }
 `;
 
@@ -50,59 +61,71 @@ const CompanyInfo = styled.div`
 `;
 
 const CompanyName = styled.div`
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   font-weight: bold;
-  margin-bottom: 0.5rem;
-  color: white;
+  margin-bottom: 1rem;
+  color: #fdd835;
+  font-family: "Playfair Display", "Heebo", serif !important;
 `;
 
 const CompanyDescription = styled.p`
-  color: rgba(255, 255, 255, 0.8);
+  color: #cccccc;
   line-height: 1.6;
   margin-bottom: 1rem;
+  font-family: "Inter", "Heebo", sans-serif !important;
+  font-size: 1rem;
+`;
+
+const ContactInfo = styled.div`
+  margin-bottom: 0.8rem;
+  color: #cccccc;
+  font-family: "Inter", "Heebo", sans-serif !important;
+  font-size: 1rem;
 `;
 
 const SocialLinks = styled.div`
   display: flex;
   gap: 1rem;
+  justify-content: flex-start;
+  margin-top: 1rem;
 `;
 
 const SocialLink = styled.a`
-  width: 40px;
-  height: 40px;
-  background: rgba(255, 255, 255, 0.1);
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
   text-decoration: none;
-  transition: background-color 0.3s ease;
+  transition: transform 0.3s ease;
+  font-size: 1.5rem;
   
   &:hover {
-    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
   }
 `;
 
-const ContactInfo = styled.div`
-  margin-bottom: 0.5rem;
-  color: rgba(255, 255, 255, 0.8);
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+const InstagramIcon = styled(SocialLink)`
+  background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
 `;
 
-const ContactIcon = styled.span`
-  width: 20px;
-  text-align: center;
+const FacebookIcon = styled(SocialLink)`
+  background: #1877f2;
+`;
+
+const WhatsAppIcon = styled(SocialLink)`
+  background: #25D366;
 `;
 
 const FooterBottom = styled.div`
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 1.5rem;
   text-align: center;
-  color: rgba(255, 255, 255, 0.7);
+  color: #cccccc;
   font-size: 0.9rem;
+  font-family: "Inter", "Heebo", sans-serif !important;
 `;
 
 const Footer: React.FC = () => {
@@ -118,82 +141,109 @@ const Footer: React.FC = () => {
 
   const quickLinks = [
     { label: t('nav.home'), action: () => scrollToSection('hero') },
-    { label: t('nav.about'), action: () => scrollToSection('about') },
     { label: t('nav.gallery'), action: () => scrollToSection('gallery') },
     { label: t('nav.contact'), action: () => scrollToSection('contact') }
-  ];
-
-  const services = [
-    language === 'he' ? 'אירוח משפחות' : 'Family Accommodation',
-    language === 'he' ? 'אירוח קבוצות' : 'Group Accommodation',
-    language === 'he' ? 'צימרים זוגיים' : 'Couple Cottages',
-    language === 'he' ? 'אירועים פרטיים' : 'Private Events'
   ];
 
   return (
     <FooterSection>
       <Container>
         <FooterContent>
-          <FooterColumn isRTL={isRTL}>
-            <CompanyInfo>
-              <CompanyName>אחוזת האלה</CompanyName>
-              <CompanyDescription>
-                {language === 'he' 
-                  ? 'אחוזת האלה מציעה צימרים מפנקים לאירוח משפחות וקבוצות, עם שירות אישי ומקצועי לכל אורח.'
-                  : 'Ahuzat HaEla offers luxurious cottages for family and group accommodation, with personal and professional service for every guest.'
-                }
-              </CompanyDescription>
-            </CompanyInfo>
-            
-            <SocialLinks>
-              <SocialLink href="#" aria-label="Facebook">
-                📘
-              </SocialLink>
-              <SocialLink href="#" aria-label="Instagram">
-                📷
-              </SocialLink>
-              <SocialLink href="#" aria-label="LinkedIn">
-                💼
-              </SocialLink>
-              <SocialLink href="#" aria-label="WhatsApp">
-                💬
-              </SocialLink>
-            </SocialLinks>
-          </FooterColumn>
-          
-          <FooterColumn isRTL={isRTL}>
-            <ColumnTitle>{language === 'he' ? 'קישורים מהירים' : 'Quick Links'}</ColumnTitle>
-            {quickLinks.map((link, index) => (
-              <FooterLink key={index} onClick={link.action} style={{ cursor: 'pointer' }}>
-                {link.label}
-              </FooterLink>
-            ))}
-          </FooterColumn>
-          
-          <FooterColumn isRTL={isRTL}>
-            <ColumnTitle>{language === 'he' ? 'השירותים שלנו' : 'Our Services'}</ColumnTitle>
-            {services.map((service, index) => (
-              <FooterLink key={index} href="#">
-                {service}
-              </FooterLink>
-            ))}
-          </FooterColumn>
-          
-          <FooterColumn isRTL={isRTL}>
-            <ColumnTitle>{language === 'he' ? 'צור קשר' : 'Contact Us'}</ColumnTitle>
-            <ContactInfo>
-              <ContactIcon>📍</ContactIcon>
-              {language === 'he' ? 'רחוב הרצל 123, תל אביב' : '123 Herzl Street, Tel Aviv'}
-            </ContactInfo>
-            <ContactInfo>
-              <ContactIcon>📞</ContactIcon>
-              +972-50-123-4567
-            </ContactInfo>
-            <ContactInfo>
-              <ContactIcon>✉️</ContactIcon>
-              info@ahuzat-haela.co.il
-            </ContactInfo>
-          </FooterColumn>
+          {isRTL ? (
+            // Hebrew layout: Follow Us, Quick Links, Company Info
+            <>
+              {/* עמודה ראשונה - עקבו אחרינו */}
+              <FooterColumn isRTL={isRTL}>
+                <ColumnTitle>{t('footer.follow')}</ColumnTitle>
+                <SocialLinks>
+                  <InstagramIcon href="https://instagram.com" target="_blank" aria-label="Instagram">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                    </svg>
+                  </InstagramIcon>
+                  <FacebookIcon href="https://facebook.com" target="_blank" aria-label="Facebook">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+                    </svg>
+                  </FacebookIcon>
+                  <WhatsAppIcon href="https://wa.me/972526658209" target="_blank" aria-label="WhatsApp">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                      <path d="M13 8H7"/>
+                      <path d="M17 12H7"/>
+                    </svg>
+                  </WhatsAppIcon>
+                </SocialLinks>
+              </FooterColumn>
+              
+              {/* עמודה שנייה - קישורים מהירים */}
+              <FooterColumn isRTL={isRTL}>
+                <ColumnTitle>{t('footer.quick_links')}</ColumnTitle>
+                {quickLinks.map((link, index) => (
+                  <FooterLink key={index} onClick={link.action} style={{ cursor: 'pointer' }}>
+                    {link.label}
+                  </FooterLink>
+                ))}
+              </FooterColumn>
+              
+              {/* עמודה שלישית - אחוזת האלה */}
+              <FooterColumn isRTL={isRTL}>
+                <CompanyName>{t('footer.company_name')}</CompanyName>
+                <ContactInfo>{t('footer.location')}</ContactInfo>
+                <ContactInfo>{t('footer.phone')}</ContactInfo>
+                <ContactInfo>{t('footer.description')}</ContactInfo>
+              </FooterColumn>
+            </>
+          ) : (
+            // English layout: Company Info, Quick Links, Follow Us
+            <>
+              {/* עמודה ראשונה - Company Info */}
+              <FooterColumn isRTL={isRTL}>
+                <CompanyName>{t('footer.company_name')}</CompanyName>
+                <ContactInfo>{t('footer.location')}</ContactInfo>
+                <ContactInfo>{t('footer.phone')}</ContactInfo>
+                <ContactInfo>{t('footer.description')}</ContactInfo>
+              </FooterColumn>
+              
+              {/* עמודה שנייה - Quick Links */}
+              <FooterColumn isRTL={isRTL}>
+                <ColumnTitle>{t('footer.quick_links')}</ColumnTitle>
+                {quickLinks.map((link, index) => (
+                  <FooterLink key={index} onClick={link.action} style={{ cursor: 'pointer' }}>
+                    {link.label}
+                  </FooterLink>
+                ))}
+              </FooterColumn>
+              
+              {/* עמודה שלישית - Follow Us */}
+              <FooterColumn isRTL={isRTL}>
+                <ColumnTitle>{t('footer.follow')}</ColumnTitle>
+                <SocialLinks>
+                  <InstagramIcon href="https://instagram.com" target="_blank" aria-label="Instagram">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                    </svg>
+                  </InstagramIcon>
+                  <FacebookIcon href="https://facebook.com" target="_blank" aria-label="Facebook">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+                    </svg>
+                  </FacebookIcon>
+                  <WhatsAppIcon href="https://wa.me/972526658209" target="_blank" aria-label="WhatsApp">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                      <path d="M13 8H7"/>
+                      <path d="M17 12H7"/>
+                    </svg>
+                  </WhatsAppIcon>
+                </SocialLinks>
+              </FooterColumn>
+            </>
+          )}
         </FooterContent>
         
         <FooterBottom>

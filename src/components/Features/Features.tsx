@@ -19,7 +19,7 @@ const SectionTitle = styled.h2<{ isRTL: boolean }>`
   font-size: 2.5rem;
   color: #2c5530;
   margin-bottom: 3rem;
-  font-family: "Heebo", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
+  font-family: "Inter", "Heebo", sans-serif !important;
   
   ${props => props.isRTL && `
     direction: rtl;
@@ -84,14 +84,14 @@ const FeatureTitle = styled.h3`
   margin-bottom: 0.8rem;
   font-weight: 600;
   line-height: 1.3;
-  font-family: "Heebo", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
+  font-family: "Inter", "Heebo", sans-serif !important;
 `;
 
 const FeatureDescription = styled.p`
   color: #666;
   font-size: 0.95rem;
   line-height: 1.5;
-  font-family: "Heebo", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
+  font-family: "Inter", "Heebo", sans-serif !important;
 `;
 
 const Features: React.FC = () => {
@@ -116,8 +116,8 @@ const Features: React.FC = () => {
     },
     {
       icon: <Star />,
-      title: language === 'he' ? '4 סוויטות יוקרה' : '4 Luxury Suites',
-      description: language === 'he' ? 'סוויטות כפריות משולבות עץ ואבן' : 'Rural suites combining wood and stone'
+      title: language === 'he' ? '4 יחידות אירוח יוקרה' : '4 Luxury Accommodation Units',
+      description: language === 'he' ? 'יחידות אירוח כפריות משולבות עץ ואבן' : 'Rural accommodation units combining wood and stone'
     }
   ];
 
@@ -125,7 +125,7 @@ const Features: React.FC = () => {
     <FeaturesSection>
       <Container>
         <SectionTitle isRTL={isRTL}>
-          {language === 'he' ? 'למה לבחור באחוזת האלה?' : 'Why choose Ahuzat Ha\'Ela?'}
+          {language === 'he' ? 'למה לבחור באחוזת האלה?' : 'Why choose Ella Estate?'}
         </SectionTitle>
         
         <FeaturesContainer>
