@@ -92,7 +92,7 @@ vercel --prod
 ### משתני סביבה
 צור קובץ `.env.local`:
 ```
-REACT_APP_SITE_URL=https://ahuzat-haela.co.il
+REACT_APP_SITE_URL=https://ellaestate.com
 REACT_APP_PHONE=+972526658209
 ```
 
