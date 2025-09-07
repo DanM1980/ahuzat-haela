@@ -428,22 +428,22 @@ const cottages = [
     id: 1,
     title: 'יחידת אירוח משפחתית',
     titleEn: 'Family Cottage',
-    thumbnail: './gallery/thumbnails/_DSC5126-1.jpg',
-    fullImage: './gallery/_DSC5126-1.jpg'
+    thumbnail: '/images/gallery/thumbnails/_DSC5126-1.jpg',
+    fullImage: '/images/gallery/_DSC5126-1.jpg'
   },
   {
     id: 2,
     title: 'יחידת אירוח זוגית רומנטית',
     titleEn: 'Romantic Couple Cottage',
-    thumbnail: './gallery/thumbnails/_DSC5139-HDR-1.jpg',
-    fullImage: './gallery/_DSC5139-HDR-1.jpg'
+    thumbnail: '/images/gallery/thumbnails/_DSC5139-HDR-1.jpg',
+    fullImage: '/images/gallery/_DSC5139-HDR-1.jpg'
   },
   {
     id: 3,
     title: 'יחידת אירוח לקבוצות',
     titleEn: 'Group Cottage',
-    thumbnail: '/gallery/thumbnails/_DSC5143-1.jpg',
-    fullImage: '/gallery/_DSC5143-1.jpg'
+    thumbnail: '/images/gallery/thumbnails/_DSC5143-1.jpg',
+    fullImage: '/images/gallery/_DSC5143-1.jpg'
   },
   {
     id: 4,
