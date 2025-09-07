@@ -237,9 +237,9 @@ const Hero: React.FC = () => {
 
   // Array of background images
   const backgroundImages = [
-    '/images/hero/DJI_0011_10.jpg',
-    '/images/hero/DJI_0011_13.jpg',
-    '/images/hero/GX010233_stabilized.mp4_snapshot_00.44.705~2.jpg'
+    '/pics/hero/DJI_0011_10.jpg',
+    '/pics/hero/DJI_0011_13.jpg',
+    '/pics/hero/GX010233_stabilized.mp4_snapshot_00.44.705~2.jpg'
   ];
 
   // Select next image based on cookie
