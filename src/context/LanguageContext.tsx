@@ -63,9 +63,9 @@ const translations = {
     
     // Hero section
     'hero.title': 'Ella Estate',
-    'hero.subtitle': 'Accommodation Complex in Southern Golan Heights',
-    'hero.description': '4 accommodation units with jacuzzi, heated pool and dry sauna in Neot Golan',
-    'hero.cta': 'Learn More',
+    'hero.subtitle': 'A countryside retreat in southern Golan',
+    'hero.description': 'Four luxurious suites featuring private jacuzzis, a heated pool and dry sauna — located in Neot Golan.',
+    'hero.cta': 'Discover More',
     
     
     // Gallery section
@@ -107,15 +107,15 @@ interface LanguageProviderProps {
 export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) => {
   const [language, setLanguage] = useState<Language>('he');
 
-  const t = (key: string): string => {
+  const t = React.useCallback((key: string): string => {
     return translations[language][key as keyof typeof translations[typeof language]] || key;
-  };
+  }, [language]);
 
-  const value: LanguageContextType = {
+  const value: LanguageContextType = React.useMemo(() => ({
     language,
     setLanguage,
     t,
-  };
+  }), [language, t]);
 
   return (
     <LanguageContext.Provider value={value}>

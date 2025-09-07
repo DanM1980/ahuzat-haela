@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
 import { useLanguage } from '../../context/LanguageContext';
+import { preloadImage } from '../../utils/imageOptimization';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -34,7 +35,7 @@ const SectionTitle = styled.h2<{ isRTL: boolean }>`
   font-size: 2.5rem;
   color: rgb(41 37 36 / 1);
   margin-bottom: 1rem;
-  font-family: ${props => props.isRTL ? '"Heebo", sans-serif' : '"Playfair Display", serif'} !important;
+  font-family: ${props => props.isRTL ? '"Heebo", sans-serif' : '"Inter", sans-serif'} !important;
   font-weight: 600;
   letter-spacing: -0.02em;
   
@@ -557,27 +558,33 @@ const Gallery: React.FC = () => {
     imageGroups.push(cottages.slice(i, i + imagesPerSlide));
   }
 
-  const openLightbox = (imageIndex: number) => {
+  const openLightbox = useCallback(async (imageIndex: number) => {
+    // Preload the full-size image before opening lightbox
+    try {
+      await preloadImage(cottages[imageIndex].fullImage);
+    } catch (error) {
+      console.warn('Failed to preload image:', error);
+    }
     setSelectedImageIndex(imageIndex);
-  };
+  }, []);
 
   const closeLightbox = () => {
     setSelectedImageIndex(null);
   };
 
-  const goToPrevious = () => {
+  const goToPrevious = React.useCallback(() => {
     if (selectedImageIndex !== null && selectedImageIndex > 0) {
       setIsImageLoading(true);
       setSelectedImageIndex(selectedImageIndex - 1);
     }
-  };
+  }, [selectedImageIndex]);
 
-  const goToNext = () => {
+  const goToNext = React.useCallback(() => {
     if (selectedImageIndex !== null && selectedImageIndex < cottages.length - 1) {
       setIsImageLoading(true);
       setSelectedImageIndex(selectedImageIndex + 1);
     }
-  };
+  }, [selectedImageIndex]);
 
   const handleImageLoad = () => {
     setIsImageLoading(false);
@@ -587,7 +594,7 @@ const Gallery: React.FC = () => {
     setIsImageLoading(false);
   };
 
-  const handleKeyDown = (e: KeyboardEvent) => {
+  const handleKeyDown = React.useCallback((e: KeyboardEvent) => {
     if (selectedImageIndex !== null) {
       if (e.key === 'ArrowLeft') {
         goToPrevious();
@@ -597,12 +604,12 @@ const Gallery: React.FC = () => {
         closeLightbox();
       }
     }
-  };
+  }, [selectedImageIndex, goToPrevious, goToNext]);
 
   React.useEffect(() => {
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [selectedImageIndex]);
+  }, [handleKeyDown]);
 
   return (
     <GallerySection id="gallery">

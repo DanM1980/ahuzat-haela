@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useLanguage } from '../../context/LanguageContext';
+import { useScrollToSection } from '../../hooks/useScrollToSection';
 
 const HeroSection = styled.section`
   min-height: 100vh;
@@ -22,14 +23,15 @@ const HeroBackgroundContainer = styled.div`
 
 const HeroBackground = styled.div<{ imageUrl: string }>`
   position: absolute;
-  top: 0;
+  top: -20%;
   left: 0;
   right: 0;
-  bottom: 0;
+  bottom: -20%;
   background-image: url(${props => props.imageUrl});
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  background-attachment: fixed;
   filter: brightness(0.6);
   z-index: 1;
 `;
@@ -55,12 +57,10 @@ const HeroLogoSection = styled.div`
   gap: 0;
   margin-bottom: 0;
   text-align: center;
-  margin-left: 1rem;
   
   @media (max-width: 768px) {
-    flex-direction: column;
+    flex-direction: row;
     gap: 0;
-    margin-left: 0;
   }
 `;
 
@@ -69,7 +69,6 @@ const HeroSiteName = styled.div`
   flex-direction: column;
   align-items: center;
   text-align: center;
-  margin-left: 5rem;
 `;
 
 const HeroSiteNameHebrew = styled.div`
@@ -113,12 +112,12 @@ const HeroLogoContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: -2rem;
 `;
 
 const HeroLogoImage = styled.img`
   width: 200px;
   height: 200px;
+  margin: 0 -3rem;
   object-fit: contain;
   filter: brightness(1.3) 
           contrast(1.4);
@@ -134,14 +133,14 @@ const HeroLogoImage = styled.img`
   }
 `;
 
-const HeroSubtitle = styled.p`
+const HeroSubtitle = styled.p<{ isRTL: boolean }>`
   font-size: 2rem;
   font-weight: 500;
   margin-bottom: 1.5rem;
   opacity: 0.9;
   line-height: 1.6;
   color: #FFD700;
-  font-family: "Playfair Display", "Heebo", serif !important;
+  font-family: ${props => props.isRTL ? '"Heebo", sans-serif' : '"Inter", sans-serif'} !important;
   
   @media (max-width: 768px) {
     font-size: 1.6rem;
@@ -152,14 +151,14 @@ const HeroSubtitle = styled.p`
   }
 `;
 
-const HeroDescription = styled.p`
+const HeroDescription = styled.p<{ isRTL: boolean }>`
   font-size: 1.4rem;
   font-weight: 400;
   margin-bottom: 2.5rem;
   opacity: 0.8;
   line-height: 1.6;
   color: #E0E0E0;
-  font-family: "Playfair Display", "Heebo", serif !important;
+  font-family: ${props => props.isRTL ? '"Heebo", sans-serif' : '"Inter", sans-serif'} !important;
   
   @media (max-width: 768px) {
     font-size: 1.2rem;
@@ -170,7 +169,7 @@ const HeroDescription = styled.p`
   }
 `;
 
-const CTAButton = styled.button`
+const CTAButton = styled.button<{ isRTL: boolean }>`
   background: white;
   color: rgb(41 37 36 / 1);
   border: none;
@@ -181,7 +180,7 @@ const CTAButton = styled.button`
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  font-family: "Playfair Display", "Heebo", serif !important;
+  font-family: ${props => props.isRTL ? '"Heebo", sans-serif' : '"Inter", sans-serif'} !important;
   
   &:hover {
     transform: translateY(-2px);
@@ -224,6 +223,7 @@ const ScrollIndicator = styled.div`
 
 const Hero: React.FC = () => {
   const { t, language } = useLanguage();
+  const { scrollToSection } = useScrollToSection();
   const isRTL = language === 'he';
 
   // Array of background images
@@ -235,7 +235,6 @@ const Hero: React.FC = () => {
 
   // Select next image based on cookie
   const [selectedImage] = useState(() => {
-    // Get last image index from cookie
     const getCookie = (name: string) => {
       const value = `; ${document.cookie}`;
       const parts = value.split(`; ${name}=`);
@@ -244,26 +243,16 @@ const Hero: React.FC = () => {
     };
 
     const lastImageIndex = getCookie('lastHeroImage');
-    let nextIndex = 0;
-    
-    if (lastImageIndex !== null && lastImageIndex !== undefined) {
-      nextIndex = (parseInt(lastImageIndex) + 1) % backgroundImages.length;
-    }
+    const nextIndex = lastImageIndex ? (parseInt(lastImageIndex) + 1) % backgroundImages.length : 0;
 
     // Save new index to cookie
-    document.cookie = `lastHeroImage=${nextIndex}; path=/; max-age=${60 * 60 * 24 * 365}`; // 1 year
+    document.cookie = `lastHeroImage=${nextIndex}; path=/; max-age=${60 * 60 * 24 * 365}`;
 
     return backgroundImages[nextIndex];
   });
 
-
-
-
   const scrollToNext = () => {
-    const gallerySection = document.getElementById('gallery');
-    if (gallerySection) {
-      gallerySection.scrollIntoView({ behavior: 'smooth' });
-    }
+    scrollToSection('gallery');
   };
 
   return (
@@ -288,9 +277,9 @@ const Hero: React.FC = () => {
             <HeroSiteNameEnglish>Ella Estate</HeroSiteNameEnglish>
           </HeroSiteName>
         </HeroLogoSection>
-        <HeroSubtitle>{t('hero.subtitle')}</HeroSubtitle>
-        <HeroDescription>{t('hero.description')}</HeroDescription>
-        <CTAButton onClick={scrollToNext}>
+        <HeroSubtitle isRTL={isRTL}>{t('hero.subtitle')}</HeroSubtitle>
+        <HeroDescription isRTL={isRTL}>{t('hero.description')}</HeroDescription>
+        <CTAButton isRTL={isRTL} onClick={scrollToNext}>
           {t('hero.cta')}
         </CTAButton>
       </HeroContent>

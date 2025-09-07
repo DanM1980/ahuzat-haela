@@ -19,7 +19,7 @@ const SectionTitle = styled.h2<{ isRTL: boolean }>`
   font-size: 2.5rem;
   color: rgb(41 37 36 / 1);
   margin-bottom: 3rem;
-  font-family: "Inter", "Heebo", sans-serif !important;
+  font-family: ${props => props.isRTL ? '"Heebo", sans-serif' : '"Inter", sans-serif'} !important;
   
   ${props => props.isRTL && `
     direction: rtl;
@@ -78,48 +78,48 @@ const FeatureIcon = styled.div`
   }
 `;
 
-const FeatureTitle = styled.h3`
+const FeatureTitle = styled.h3<{ isRTL: boolean }>`
   font-size: 1.3rem;
   color: #333;
   margin-bottom: 0.8rem;
   font-weight: 600;
   line-height: 1.3;
-  font-family: "Inter", "Heebo", sans-serif !important;
+  font-family: ${props => props.isRTL ? '"Heebo", sans-serif' : '"Inter", sans-serif'} !important;
 `;
 
-const FeatureDescription = styled.p`
+const FeatureDescription = styled.p<{ isRTL: boolean }>`
   color: #666;
   font-size: 0.95rem;
   line-height: 1.5;
-  font-family: "Inter", "Heebo", sans-serif !important;
+  font-family: ${props => props.isRTL ? '"Heebo", sans-serif' : '"Inter", sans-serif'} !important;
 `;
 
 const Features: React.FC = () => {
   const { language } = useLanguage();
   const isRTL = language === 'he';
 
-  const featureCards = [
+  const featureCards = React.useMemo(() => [
     {
       icon: <TreePine />,
-      title: language === 'he' ? 'חוויה כפרית אותנטית' : 'Authentic Rural Experience',
-      description: language === 'he' ? 'רומנטיקה, יוקרה ופסטורליות' : 'Romance, luxury and pastoralism'
+      title: language === 'he' ? 'חוויה כפרית אותנטית' : 'Authentic Countryside Charm',
+      description: language === 'he' ? 'רומנטיקה, יוקרה ופסטורליות' : 'A blend of romance, elegance, and pastoral serenity.'
     },
     {
       icon: <Wifi />,
-      title: language === 'he' ? 'מתקנים מהשורה הראשונה' : 'First-class Facilities',
-      description: language === 'he' ? 'בריכה מחוממת וסאונה, ג\'קוזי בכל חדר' : 'Heated pool, sauna and jacuzzi in every room'
+      title: language === 'he' ? 'מתקנים מהשורה הראשונה' : 'Top-Notch Facilities',
+      description: language === 'he' ? 'בריכה מחוממת וסאונה, ג\'קוזי בכל חדר' : 'Heated pool, dry sauna, and private jacuzzi in every suite.'
     },
     {
       icon: <MapPin />,
-      title: language === 'he' ? 'מיקום מעולה' : 'Excellent Location',
-      description: language === 'he' ? '15 דקות מחופי הכנרת ובלב הגולן' : '15 minutes from the Sea of Galilee beaches and in the heart of the Golan'
+      title: language === 'he' ? 'מיקום מעולה' : 'Prime Location',
+      description: language === 'he' ? '15 דקות מחופי הכנרת ובלב הגולן' : 'Just 15 minutes from the shores of the Sea of Galilee, in the heart of the Golan Heights.'
     },
     {
       icon: <Star />,
-      title: language === 'he' ? 'ארבע יחידות אירוח יוקרתיות' : '4 Luxury Accommodation Units',
-      description: language === 'he' ? 'יחידות אירוח כפריות משולבות עץ ואבן' : 'Rural accommodation units combining wood and stone'
+      title: language === 'he' ? 'ארבע יחידות אירוח יוקרתיות' : 'Exclusive Luxury Suites',
+      description: language === 'he' ? 'יחידות אירוח כפריות משולבות עץ ואבן' : 'Rustic yet refined, designed with natural wood and stone.'
     }
-  ];
+  ], [language]);
 
   return (
     <FeaturesSection>
@@ -132,8 +132,8 @@ const Features: React.FC = () => {
           {featureCards.map((card, index) => (
             <FeatureCard key={index} isRTL={isRTL}>
               <FeatureIcon>{card.icon}</FeatureIcon>
-              <FeatureTitle>{card.title}</FeatureTitle>
-              <FeatureDescription>{card.description}</FeatureDescription>
+              <FeatureTitle isRTL={isRTL}>{card.title}</FeatureTitle>
+              <FeatureDescription isRTL={isRTL}>{card.description}</FeatureDescription>
             </FeatureCard>
           ))}
         </FeaturesContainer>

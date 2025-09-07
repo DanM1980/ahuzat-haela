@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useLanguage } from '../../context/LanguageContext';
+import { useScrollToSection } from '../../hooks/useScrollToSection';
 
 const FooterSection = styled.footer`
   background: #2e2e2e;
@@ -32,13 +33,17 @@ const FooterColumn = styled.div<{ isRTL: boolean }>`
   ${props => props.isRTL && `
     direction: rtl;
   `}
+  
+  @media (max-width: 768px) {
+    text-align: center;
+  }
 `;
 
-const ColumnTitle = styled.h3`
+const ColumnTitle = styled.h3<{ isRTL: boolean }>`
   font-size: 1.4rem;
   margin-bottom: 1.5rem;
   color: #fdd835;
-  font-family: "Playfair Display", "Heebo", serif !important;
+  font-family: ${props => props.isRTL ? '"Heebo", sans-serif' : '"Inter", sans-serif'} !important;
   font-weight: 600;
 `;
 
@@ -56,24 +61,12 @@ const FooterLink = styled.a`
   }
 `;
 
-const CompanyInfo = styled.div`
-  margin-bottom: 1rem;
-`;
-
-const CompanyName = styled.div`
+const CompanyName = styled.div<{ isRTL: boolean }>`
   font-size: 1.6rem;
   font-weight: bold;
   margin-bottom: 1rem;
   color: #fdd835;
-  font-family: "Playfair Display", "Heebo", serif !important;
-`;
-
-const CompanyDescription = styled.p`
-  color: #cccccc;
-  line-height: 1.6;
-  margin-bottom: 1rem;
-  font-family: "Inter", "Heebo", sans-serif !important;
-  font-size: 1rem;
+  font-family: ${props => props.isRTL ? '"Heebo", sans-serif' : '"Inter", sans-serif'} !important;
 `;
 
 const ContactInfo = styled.div`
@@ -88,6 +81,10 @@ const SocialLinks = styled.div`
   gap: 1rem;
   justify-content: flex-start;
   margin-top: 1rem;
+  
+  @media (max-width: 768px) {
+    justify-content: center;
+  }
 `;
 
 const SocialLink = styled.a`
@@ -130,20 +127,14 @@ const FooterBottom = styled.div`
 
 const Footer: React.FC = () => {
   const { t, language } = useLanguage();
+  const { scrollToSection } = useScrollToSection();
   const isRTL = language === 'he';
 
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  const quickLinks = [
+  const quickLinks = React.useMemo(() => [
     { label: t('nav.home'), action: () => scrollToSection('hero') },
     { label: t('nav.gallery'), action: () => scrollToSection('gallery') },
     { label: t('nav.contact'), action: () => scrollToSection('contact') }
-  ];
+  ], [t, scrollToSection]);
 
   return (
     <FooterSection>
@@ -154,7 +145,7 @@ const Footer: React.FC = () => {
             <>
               {/* עמודה ראשונה - עקבו אחרינו */}
               <FooterColumn isRTL={isRTL}>
-                <ColumnTitle>{t('footer.follow')}</ColumnTitle>
+                <ColumnTitle isRTL={isRTL}>{t('footer.follow')}</ColumnTitle>
                 <SocialLinks>
                   <InstagramIcon href="https://www.instagram.com/ellazimer/" target="_blank" aria-label="Instagram">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -180,7 +171,7 @@ const Footer: React.FC = () => {
               
               {/* עמודה שנייה - קישורים מהירים */}
               <FooterColumn isRTL={isRTL}>
-                <ColumnTitle>{t('footer.quick_links')}</ColumnTitle>
+                <ColumnTitle isRTL={isRTL}>{t('footer.quick_links')}</ColumnTitle>
                 {quickLinks.map((link, index) => (
                   <FooterLink key={index} onClick={link.action} style={{ cursor: 'pointer' }}>
                     {link.label}
@@ -190,7 +181,7 @@ const Footer: React.FC = () => {
               
               {/* עמודה שלישית - אחוזת האלה */}
               <FooterColumn isRTL={isRTL}>
-                <CompanyName>{t('footer.company_name')}</CompanyName>
+                <CompanyName isRTL={isRTL}>{t('footer.company_name')}</CompanyName>
                 <ContactInfo>{t('footer.location')}</ContactInfo>
                 <ContactInfo>{t('footer.phone')}</ContactInfo>
                 <ContactInfo>{t('footer.description')}</ContactInfo>
@@ -201,7 +192,7 @@ const Footer: React.FC = () => {
             <>
               {/* עמודה ראשונה - Company Info */}
               <FooterColumn isRTL={isRTL}>
-                <CompanyName>{t('footer.company_name')}</CompanyName>
+                <CompanyName isRTL={isRTL}>{t('footer.company_name')}</CompanyName>
                 <ContactInfo>{t('footer.location')}</ContactInfo>
                 <ContactInfo>{t('footer.phone')}</ContactInfo>
                 <ContactInfo>{t('footer.description')}</ContactInfo>
@@ -209,7 +200,7 @@ const Footer: React.FC = () => {
               
               {/* עמודה שנייה - Quick Links */}
               <FooterColumn isRTL={isRTL}>
-                <ColumnTitle>{t('footer.quick_links')}</ColumnTitle>
+                <ColumnTitle isRTL={isRTL}>{t('footer.quick_links')}</ColumnTitle>
                 {quickLinks.map((link, index) => (
                   <FooterLink key={index} onClick={link.action} style={{ cursor: 'pointer' }}>
                     {link.label}
@@ -219,7 +210,7 @@ const Footer: React.FC = () => {
               
               {/* עמודה שלישית - Follow Us */}
               <FooterColumn isRTL={isRTL}>
-                <ColumnTitle>{t('footer.follow')}</ColumnTitle>
+                <ColumnTitle isRTL={isRTL}>{t('footer.follow')}</ColumnTitle>
                 <SocialLinks>
                   <InstagramIcon href="https://www.instagram.com/ellazimer/" target="_blank" aria-label="Instagram">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

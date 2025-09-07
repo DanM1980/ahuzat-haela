@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import { LanguageProvider } from './context/LanguageContext';
 import Header from './components/Header/Header';
 import Hero from './components/Hero/Hero';
 import Features from './components/Features/Features';
-import Gallery from './components/Gallery/Gallery';
 import Contact from './components/Contact/Contact';
 import Footer from './components/Footer/Footer';
 import ScrollToTop from './components/ScrollToTop/ScrollToTop';
+
+// Lazy load heavy components
+const Gallery = lazy(() => import('./components/Gallery/Gallery'));
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -55,7 +57,7 @@ const GlobalStyle = createGlobalStyle`
 
   /* Typography hierarchy */
   h1, h2, h3, h4, h5, h6 {
-    font-family: "Playfair Display", "Heebo", serif !important;
+    font-family: "Inter", "Heebo", sans-serif !important;
     font-weight: 600;
     line-height: 1.2;
     letter-spacing: -0.02em;
@@ -136,7 +138,9 @@ function App() {
         <Header />
         <Hero />
         <Features />
-        <Gallery />
+        <Suspense fallback={<div style={{ height: '500px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>טוען גלריה...</div>}>
+          <Gallery />
+        </Suspense>
         <Contact />
         <Footer />
         <ScrollToTop />

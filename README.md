@@ -1,73 +1,114 @@
-# אחוזת האלה - אתר תדמית
+# אחוזת האלה - Ella Estate
 
-אתר תדמית מקצועי לשירותי אירוח "אחוזת האלה" בנאות גולן.
+אתר מתחם אירוח יוקרתי בדרום רמת הגולן. 4 יחידות אירוח עם ג'קוזי, בריכה מחוממת וסאונה יבשה בנאות גולן.
 
-## תכונות
+## 🏗️ טכנולוגיות
 
-- ✅ עיצוב רספונסיבי לכל המכשירים
-- ✅ תמיכה מלאה בעברית ואנגלית
-- ✅ כיווניות RTL/LTR
-- ✅ אינטגרציה עם WhatsApp
-- ✅ מפת Google עם ניווט
-- ✅ גלריה עם Lightbox
-- ✅ טופס יצירת קשר
-- ✅ עיצוב מודרני וחם
+- **React 18** - ספריית UI מודרנית
+- **TypeScript** - טיפוסים בטוחים
+- **Styled Components** - CSS-in-JS
+- **Swiper.js** - גלריה אינטראקטיבית
+- **Lucide React** - אייקונים מודרניים
 
-## טכנולוגיות
+## 🚀 התחלה מהירה
 
-- React 18
-- TypeScript
-- Styled Components
-- HTML5/CSS3
-
-## התקנה והפעלה
-
-1. התקן את התלויות:
+### התקנת תלויות
 ```bash
 npm install
 ```
 
-2. הפעל את השרת המקומי:
+### הרצה במצב פיתוח
 ```bash
 npm start
 ```
+פותח את האתר ב-[http://localhost:3000](http://localhost:3000)
 
-3. פתח את הדפדפן בכתובת: http://localhost:3000
-
-## בנייה לפרודקשן
-
+### בניית גרסת production
 ```bash
 npm run build
 ```
 
-## מבנה הפרויקט
+### בדיקות
+```bash
+npm test
+```
+
+## 📁 מבנה הפרויקט
 
 ```
 src/
-├── components/          # רכיבי React
+├── components/          # קומפוננטים
 │   ├── Header/         # כותרת עליונה
-│   ├── Hero/           # עמוד בית
+│   ├── Hero/           # סקשן ראשי
+│   ├── Features/       # תכונות
 │   ├── Gallery/        # גלריה
-│   ├── About/          # אודות
 │   ├── Contact/        # יצירת קשר
-│   ├── Footer/         # כותרת תחתונה
-│   └── ScrollToTop/    # כפתור חזרה למעלה
+│   └── Footer/         # כותרת תחתונה
 ├── context/            # Context API
-│   └── LanguageContext.tsx
-├── data/               # נתונים
-│   └── translations.ts
-├── types/              # הגדרות TypeScript
-│   └── index.ts
-├── App.tsx             # רכיב ראשי
-└── index.tsx           # נקודת כניסה
+├── hooks/              # Custom hooks
+├── utils/              # פונקציות עזר
+└── App.tsx             # קומפוננט ראשי
 ```
 
-## מידע ליצירת קשר
+## ✨ תכונות
 
-- **טלפון**: 052-6658209
-- **מיקום**: נאות גולן
-- **WhatsApp**: [שלח הודעה](https://wa.me/972526658209)
+- 🌐 **תמיכה דו-לשונית** (עברית/אנגלית)
+- 📱 **עיצוב רספונסיבי** לכל המכשירים
+- 🎨 **אפקטי פרלקס** ואנימציות חלקות
+- 🖼️ **גלריה אינטראקטיבית** עם lightbox
+- ⚡ **ביצועים מיטביים** עם lazy loading
+- 🔍 **אופטימיזציה ל-SEO** מלאה
+- ♿ **נגישות** (Accessibility)
 
-## רישיון
+## 🚀 פריסה
 
-כל הזכויות שמורות לאחוזת האלה.
+### Netlify
+```bash
+# התקן Netlify CLI
+npm install -g netlify-cli
+
+# פריסה
+netlify deploy --prod --dir=build
+```
+
+### Vercel
+```bash
+# התקן Vercel CLI
+npm install -g vercel
+
+# פריסה
+vercel --prod
+```
+
+## 📊 ביצועים
+
+- **JavaScript:** 81.3 kB (gzipped)
+- **CSS:** 4.06 kB (gzipped)
+- **Chunks:** 27.94 kB (gzipped)
+- **סך הכל:** ~114 kB
+
+## 🔧 הגדרות
+
+### משתני סביבה
+צור קובץ `.env.local`:
+```
+REACT_APP_SITE_URL=https://ahuzat-haela.co.il
+REACT_APP_PHONE=+972526658209
+```
+
+### SEO
+- Meta tags מלאים
+- Open Graph
+- Schema.org markup
+- Sitemap.xml
+- Robots.txt
+
+## 📞 יצירת קשר
+
+- **טלפון:** 052-6658209
+- **ווטסאפ:** [שלח הודעה](https://wa.me/972526658209)
+- **מיקום:** נאות גולן, רמת הגולן
+
+## 📄 רישיון
+
+כל הזכויות שמורות לאחוזת האלה © 2024
