@@ -29,16 +29,25 @@ const HeaderContent = styled.div`
   position: relative;
 `;
 
-const LogoSection = styled.div`
+const LogoSection = styled.div<{ isScrolled: boolean }>`
   display: flex;
   align-items: center;
   cursor: pointer;
-  transition: transform 0.3s ease;
+  transition: all 0.3s ease;
   justify-self: end;
   grid-column: 3;
+  transform: ${props => props.isScrolled ? 'translate(0, 0)' : 'translate(-50px, 50px)'};
+  opacity: ${props => props.isScrolled ? 1 : 0};
+  visibility: ${props => props.isScrolled ? 'visible' : 'hidden'};
   
   &:hover {
-    transform: scale(1.02);
+    transform: ${props => props.isScrolled ? 'scale(1.02)' : 'translate(-50px, 50px)'};
+  }
+  
+  @media (max-width: 768px) {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(0, 0);
   }
 `;
 
@@ -54,16 +63,9 @@ const LogoImage = styled.img<{ isScrolled: boolean }>`
   height: ${props => props.isScrolled ? '90px' : '150px'};
   object-fit: contain;
   transition: all 0.3s ease;
-  opacity: ${props => props.isScrolled ? 1 : 0};
-  visibility: ${props => props.isScrolled ? 'visible' : 'hidden'};
   
   &:hover {
     transform: scale(1.05);
-  }
-  
-  @media (max-width: 768px) {
-    opacity: 1;
-    visibility: visible;
   }
 `;
 
@@ -162,8 +164,8 @@ const LanguageButton = styled.button<{ isScrolled: boolean }>`
 `;
 
 const GlobeIcon = styled.svg`
-  width: 1.1rem;
-  height: 1.1rem;
+  width: 1.4rem;
+  height: 1.4rem;
   fill: rgb(41 37 36 / 1);
 `;
 
@@ -255,10 +257,10 @@ const Header: React.FC = () => {
             isScrolled={isScrolled}
             onClick={() => setLanguage(language === 'he' ? 'en' : 'he')}
           >
-            {language === 'he' ? 'English' : 'עברית'}
             <GlobeIcon viewBox="0 0 24 24">
               <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
             </GlobeIcon>
+            {language === 'he' ? 'EN' : 'HE'}
           </LanguageButton>
         </LanguageSwitcher>
         
@@ -286,7 +288,7 @@ const Header: React.FC = () => {
         </Nav>
         
         {/* Logo and Site Name - Right */}
-        <LogoSection onClick={scrollToTop}>
+        <LogoSection isScrolled={isScrolled} onClick={scrollToTop}>
           <SiteName>
             <SiteNameHebrew isScrolled={isScrolled}>אחוזת האלה</SiteNameHebrew>
             <SiteNameEnglish isScrolled={isScrolled}>Ella Estate</SiteNameEnglish>

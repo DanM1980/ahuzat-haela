@@ -118,11 +118,11 @@ const SwiperContainer = styled.div`
   }
   
   .swiper-button-next {
-    right: -3rem;
+    right: -60px;
   }
   
   .swiper-button-prev {
-    left: -3rem;
+    left: -60px;
   }
   
   .swiper-button-disabled {
@@ -175,11 +175,11 @@ const SwiperContainer = styled.div`
     }
     
     .swiper-button-next {
-      right: -2rem;
+      right: -50px;
     }
     
     .swiper-button-prev {
-      left: -2rem;
+      left: -50px;
     }
   }
   
@@ -187,11 +187,11 @@ const SwiperContainer = styled.div`
     padding: 0 2rem;
     
     .swiper-button-next {
-      right: -1.5rem;
+      right: -40px;
     }
     
     .swiper-button-prev {
-      left: -1.5rem;
+      left: -40px;
     }
   }
 `;
@@ -247,7 +247,7 @@ const GalleryImage = styled.div<{ imageUrl: string }>`
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(45deg, rgba(44, 85, 48, 0.7), rgba(74, 124, 89, 0.7));
+    background: linear-gradient(45deg, rgba(202, 138, 4, 0.4), rgba(255, 215, 0, 0.4));
     opacity: 0;
     transition: opacity 0.3s ease;
   }
@@ -341,9 +341,9 @@ const NavigationButton = styled.button`
   position: fixed;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(44, 85, 48, 0.8);
+  background: rgba(255, 255, 255, 0.9);
   border: none;
-  color: white;
+  color: rgb(41 37 36 / 1);
   font-size: 2rem;
   font-family: "Inter", "Heebo", sans-serif !important;
   width: 60px;
@@ -355,10 +355,12 @@ const NavigationButton = styled.button`
   justify-content: center;
   transition: all 0.3s ease;
   z-index: 2001;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   
   &:hover {
-    background: rgba(44, 85, 48, 1);
+    background: rgba(255, 255, 255, 1);
     transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
   }
   
   &:active {
@@ -369,10 +371,13 @@ const NavigationButton = styled.button`
     opacity: 0.3;
     cursor: not-allowed;
     transform: translateY(-50%);
+    background: rgba(200, 200, 200, 0.5);
+    color: #999;
     
     &:hover {
       transform: translateY(-50%);
-      background: rgba(44, 85, 48, 0.8);
+      background: rgba(200, 200, 200, 0.5);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     }
   }
 `;

@@ -31,10 +31,11 @@ const HeroBackground = styled.div<{ imageUrl: string; scrollY: number }>`
   background-position: center;
   background-repeat: no-repeat;
   filter: brightness(0.6);
-  transform: translate3d(0, ${props => props.scrollY * 0.5}px, 0);
+  transform: translate3d(0, ${props => props.scrollY * 0.3}px, 0);
   will-change: transform;
   backface-visibility: hidden;
   z-index: 1;
+  transition: transform 0.1s ease-out;
 `;
 
 const HeroContent = styled.div<{ isRTL: boolean }>`
@@ -61,6 +62,7 @@ const HeroLogoSection = styled.div<{ scrollY: number }>`
   margin-left: 1rem;
   opacity: ${props => props.scrollY > 50 ? 0 : 1};
   visibility: ${props => props.scrollY > 50 ? 'hidden' : 'visible'};
+  transform: ${props => props.scrollY > 50 ? 'translate(200px, -100px)' : 'translate(0, 0)'};
   transition: all 0.3s ease;
   
   @media (max-width: 768px) {
@@ -75,6 +77,7 @@ const HeroSiteName = styled.div`
   flex-direction: column;
   align-items: center;
   text-align: center;
+  margin-left: 5rem;
 `;
 
 const HeroSiteNameHebrew = styled.div`
@@ -128,8 +131,8 @@ const HeroLogoImage = styled.img`
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
   
   @media (max-width: 768px) {
-    width: 150px;
-    height: 150px;
+    width: 200px;
+    height: 200px;
   }
   
   @media (max-width: 480px) {
