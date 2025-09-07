@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import styled from 'styled-components';
 
 const ScrollButton = styled.button<{ isVisible: boolean }>`
@@ -64,4 +64,4 @@ const ScrollToTop: React.FC = () => {
   );
 };
 
-export default ScrollToTop;
+export default memo(ScrollToTop);

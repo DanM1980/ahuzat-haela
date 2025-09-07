@@ -1,9 +1,10 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo, memo } from 'react';
 import styled from 'styled-components';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
 import { useLanguage } from '../../context/LanguageContext';
 import { preloadImage } from '../../utils/imageOptimization';
+import LazyImage from './LazyImage';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -219,7 +220,7 @@ const GalleryGrid = styled.div`
   }
 `;
 
-const GalleryItem = styled.div`
+const GalleryItemStyled = styled.div`
   position: relative;
   border-radius: 10px;
   overflow: hidden;
@@ -233,30 +234,7 @@ const GalleryItem = styled.div`
   }
 `;
 
-const GalleryImage = styled.div<{ imageUrl: string }>`
-  width: 100%;
-  height: 100%;
-  background-image: url(${props => props.imageUrl});
-  background-size: cover;
-  background-position: center;
-  position: relative;
-  
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(45deg, rgba(202, 138, 4, 0.4), rgba(255, 215, 0, 0.4));
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-  
-  ${GalleryItem}:hover &::before {
-    opacity: 1;
-  }
-`;
+// Removed unused GalleryImage component
 
 const ImageOverlay = styled.div`
   position: absolute;
@@ -271,7 +249,7 @@ const ImageOverlay = styled.div`
   opacity: 0;
   transition: opacity 0.3s ease;
   
-  ${GalleryItem}:hover & {
+  ${GalleryItemStyled}:hover & {
     opacity: 1;
   }
 `;
@@ -306,13 +284,7 @@ const LightboxContent = styled.div`
   justify-content: center;
 `;
 
-const LightboxImage = styled.img`
-  max-width: 100%;
-  max-height: 90vh;
-  object-fit: contain;
-  border-radius: 10px;
-  transition: opacity 0.3s ease-in-out;
-`;
+// Removed unused LightboxImage component
 
 const CloseButton = styled.button`
   position: fixed;
@@ -545,18 +517,49 @@ const cottages = [
   }
 ];
 
+// Memoized gallery item component
+const MemoizedGalleryItem = memo<{
+  cottage: any;
+  globalIndex: number;
+  onOpenLightbox: (index: number) => void;
+}>(({ cottage, globalIndex, onOpenLightbox }) => {
+  const handleClick = useCallback(() => {
+    onOpenLightbox(globalIndex);
+  }, [globalIndex, onOpenLightbox]);
+
+  return (
+    <GalleryItemStyled onClick={handleClick}>
+      <LazyImage src={cottage.thumbnail} alt={cottage.title}>
+        <ImageOverlay>
+          <OverlayIcon>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="m21 21-4.35-4.35"></path>
+            </svg>
+          </OverlayIcon>
+        </ImageOverlay>
+      </LazyImage>
+    </GalleryItemStyled>
+  );
+});
+
+MemoizedGalleryItem.displayName = 'MemoizedGalleryItem';
+
 const Gallery: React.FC = () => {
   const { t, language } = useLanguage();
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
   const [isImageLoading, setIsImageLoading] = useState(false);
   const isRTL = language === 'he';
 
-  // Create groups of 6 images
-  const imagesPerSlide = 6;
-  const imageGroups = [];
-  for (let i = 0; i < cottages.length; i += imagesPerSlide) {
-    imageGroups.push(cottages.slice(i, i + imagesPerSlide));
-  }
+  // Memoize image groups to prevent unnecessary recalculations
+  const imageGroups = useMemo(() => {
+    const imagesPerSlide = 6;
+    const groups = [];
+    for (let i = 0; i < cottages.length; i += imagesPerSlide) {
+      groups.push(cottages.slice(i, i + imagesPerSlide));
+    }
+    return groups;
+  }, []);
 
   const openLightbox = useCallback(async (imageIndex: number) => {
     // Preload the full-size image before opening lightbox
@@ -586,13 +589,7 @@ const Gallery: React.FC = () => {
     }
   }, [selectedImageIndex]);
 
-  const handleImageLoad = () => {
-    setIsImageLoading(false);
-  };
-
-  const handleImageError = () => {
-    setIsImageLoading(false);
-  };
+  // Removed unused image handlers
 
   const handleKeyDown = React.useCallback((e: KeyboardEvent) => {
     if (selectedImageIndex !== null) {
@@ -634,20 +631,14 @@ const Gallery: React.FC = () => {
               <SwiperSlide key={groupIndex}>
                 <GalleryGrid>
                   {group.map((cottage, index) => {
-                    const globalIndex = groupIndex * imagesPerSlide + index;
+                    const globalIndex = groupIndex * 6 + index;
                     return (
-                      <GalleryItem key={cottage.id} onClick={() => openLightbox(globalIndex)}>
-                        <GalleryImage imageUrl={cottage.thumbnail}>
-                          <ImageOverlay>
-                            <OverlayIcon>
-                              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <circle cx="11" cy="11" r="8"></circle>
-                                <path d="m21 21-4.35-4.35"></path>
-                              </svg>
-                            </OverlayIcon>
-                          </ImageOverlay>
-                        </GalleryImage>
-                      </GalleryItem>
+                      <MemoizedGalleryItem 
+                        key={cottage.id} 
+                        cottage={cottage}
+                        globalIndex={globalIndex}
+                        onOpenLightbox={openLightbox}
+                      />
                     );
                   })}
                 </GalleryGrid>
@@ -670,13 +661,16 @@ const Gallery: React.FC = () => {
                 ‹
               </PrevButton>
               
-              <LightboxImage 
+              <LazyImage 
                 key={selectedImageIndex}
                 src={cottages[selectedImageIndex].fullImage} 
                 alt={isRTL ? cottages[selectedImageIndex].title : cottages[selectedImageIndex].titleEn}
-                onLoad={handleImageLoad}
-                onError={handleImageError}
-                style={{ opacity: isImageLoading ? 0 : 1 }}
+                objectFit="contain"
+                style={{ 
+                  width: '100%', 
+                  height: '100%', 
+                  opacity: isImageLoading ? 0 : 1 
+                }}
               />
               
               {isImageLoading && <LoadingSpinner />}
@@ -699,7 +693,7 @@ const Gallery: React.FC = () => {
   );
 };
 
-export default Gallery;
+export default memo(Gallery);
 
 
 

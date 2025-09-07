@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense, lazy, memo } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import { LanguageProvider } from './context/LanguageContext';
 import Header from './components/Header/Header';
@@ -149,4 +149,4 @@ function App() {
   );
 }
 
-export default App;
+export default memo(App);

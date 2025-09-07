@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 import { useLanguage } from '../../context/LanguageContext';
 import { Star, MapPin, Wifi, TreePine } from 'lucide-react';
@@ -142,4 +142,4 @@ const Features: React.FC = () => {
   );
 };
 
-export default Features;
+export default memo(Features);

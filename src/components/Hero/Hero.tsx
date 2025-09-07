@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo, useEffect, memo } from 'react';
 import styled from 'styled-components';
 import { useLanguage } from '../../context/LanguageContext';
 import { useScrollToSection } from '../../hooks/useScrollToSection';
@@ -236,11 +236,11 @@ const Hero: React.FC = () => {
   const isRTL = language === 'he';
 
   // Array of background images
-  const backgroundImages = [
+  const backgroundImages = useMemo(() => [
     '/images/hero/DJI_0011_10.jpg',
     '/images/hero/DJI_0011_13.jpg',
     '/images/hero/GX010233_stabilized.mp4_snapshot_00.44.705~2.jpg'
-  ];
+  ], []);
 
   // Select next image based on cookie
   const [selectedImage] = useState(() => {
@@ -259,6 +259,13 @@ const Hero: React.FC = () => {
 
     return backgroundImages[nextIndex];
   });
+
+  // Preload next image
+  useEffect(() => {
+    const nextIndex = (parseInt(document.cookie.split('lastHeroImage=')[1]?.split(';')[0] || '0') + 1) % backgroundImages.length;
+    const nextImage = new Image();
+    nextImage.src = backgroundImages[nextIndex];
+  }, [backgroundImages]);
 
   const scrollToNext = () => {
     scrollToSection('gallery');
@@ -299,4 +306,4 @@ const Hero: React.FC = () => {
   );
 };
 
-export default Hero;
+export default memo(Hero);

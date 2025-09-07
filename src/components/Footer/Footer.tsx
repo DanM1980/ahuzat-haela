@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 import { useLanguage } from '../../context/LanguageContext';
 import { useScrollToSection } from '../../hooks/useScrollToSection';
@@ -245,4 +245,4 @@ const Footer: React.FC = () => {
   );
 };
 
-export default Footer;
+export default memo(Footer);

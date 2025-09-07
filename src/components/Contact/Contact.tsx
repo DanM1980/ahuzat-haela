@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 import { useLanguage } from '../../context/LanguageContext';
 
@@ -160,4 +160,4 @@ const Contact: React.FC = () => {
   );
 };
 
-export default Contact;
+export default memo(Contact);
