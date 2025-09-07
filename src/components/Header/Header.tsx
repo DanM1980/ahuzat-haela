@@ -29,25 +29,21 @@ const HeaderContent = styled.div`
   position: relative;
 `;
 
-const LogoSection = styled.div<{ isScrolled: boolean }>`
+const LogoSection = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;
-  transition: all 0.3s ease;
   justify-self: end;
   grid-column: 3;
-  transform: ${props => props.isScrolled ? 'translate(0, 0)' : 'translate(-50px, 50px)'};
-  opacity: ${props => props.isScrolled ? 1 : 0};
-  visibility: ${props => props.isScrolled ? 'visible' : 'hidden'};
+  transition: transform 0.3s ease;
+  user-select: none;
   
   &:hover {
-    transform: ${props => props.isScrolled ? 'scale(1.02)' : 'translate(-50px, 50px)'};
+    transform: scale(1.08);
   }
   
-  @media (max-width: 768px) {
-    opacity: 1;
-    visibility: visible;
-    transform: translate(0, 0);
+  &:active {
+    transform: scale(1.05);
   }
 `;
 
@@ -59,14 +55,10 @@ const LogoContainer = styled.div`
 `;
 
 const LogoImage = styled.img<{ isScrolled: boolean }>`
-  width: ${props => props.isScrolled ? '90px' : '150px'};
-  height: ${props => props.isScrolled ? '90px' : '150px'};
+  width: ${props => props.isScrolled ? '90px' : '120px'};
+  height: ${props => props.isScrolled ? '90px' : '120px'};
   object-fit: contain;
-  transition: all 0.3s ease;
-  
-  &:hover {
-    transform: scale(1.05);
-  }
+  transition: width 0.3s ease, height 0.3s ease;
 `;
 
 const SiteName = styled.div`
@@ -76,35 +68,21 @@ const SiteName = styled.div`
 `;
 
 const SiteNameHebrew = styled.div<{ isScrolled: boolean }>`
-  font-size: ${props => props.isScrolled ? '1.3rem' : '2.2rem'};
+  font-size: ${props => props.isScrolled ? '1.3rem' : '1.6rem'};
   font-weight: bold;
   color: rgb(41 37 36 / 1);
   line-height: 1.2;
   font-family: "Inter", "Heebo", sans-serif !important;
   transition: all 0.3s ease;
-  opacity: ${props => props.isScrolled ? 1 : 0};
-  visibility: ${props => props.isScrolled ? 'visible' : 'hidden'};
-  
-  @media (max-width: 768px) {
-    opacity: 1;
-    visibility: visible;
-  }
 `;
 
 const SiteNameEnglish = styled.div<{ isScrolled: boolean }>`
-  font-size: ${props => props.isScrolled ? '1.3rem' : '2.2rem'};
+  font-size: ${props => props.isScrolled ? '1.3rem' : '1.6rem'};
   font-weight: bold;
   color: rgb(41 37 36 / 1);
   line-height: 1.2;
   font-family: "Inter", "Heebo", sans-serif !important;
   transition: all 0.3s ease;
-  opacity: ${props => props.isScrolled ? 1 : 0};
-  visibility: ${props => props.isScrolled ? 'visible' : 'hidden'};
-  
-  @media (max-width: 768px) {
-    opacity: 1;
-    visibility: visible;
-  }
 `;
 
 const Nav = styled.nav<{ isRTL: boolean }>`
@@ -242,7 +220,12 @@ const Header: React.FC = () => {
   };
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const heroSection = document.getElementById('hero');
+    if (heroSection) {
+      heroSection.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
     setIsMobileMenuOpen(false);
   };
 
@@ -288,7 +271,7 @@ const Header: React.FC = () => {
         </Nav>
         
         {/* Logo and Site Name - Right */}
-        <LogoSection isScrolled={isScrolled} onClick={scrollToTop}>
+        <LogoSection onClick={scrollToTop}>
           <SiteName>
             <SiteNameHebrew isScrolled={isScrolled}>אחוזת האלה</SiteNameHebrew>
             <SiteNameEnglish isScrolled={isScrolled}>Ella Estate</SiteNameEnglish>

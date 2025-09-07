@@ -16,14 +16,27 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
+  html, body {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+  }
+
   body {
     line-height: 1.6;
     color: #333;
-    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight: 400;
   }
 
   html {
     scroll-behavior: smooth;
+  }
+
+  #root {
+    width: 100%;
+    min-height: 100vh;
   }
 
   a {
@@ -33,6 +46,52 @@ const GlobalStyle = createGlobalStyle`
 
   button {
     font-family: inherit;
+  }
+
+  /* Global font settings */
+  * {
+    font-family: "Inter", "Heebo", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
+  }
+
+  /* Typography hierarchy */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "Playfair Display", "Heebo", serif !important;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  h1 {
+    font-weight: 700;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  h2 {
+    font-weight: 600;
+    font-size: clamp(2rem, 4vw, 3rem);
+  }
+
+  h3 {
+    font-weight: 600;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+  }
+
+  p, span, div, a, button, input, textarea, select {
+    font-family: "Inter", "Heebo", sans-serif !important;
+    font-weight: 400;
+  }
+
+  /* Special styling for Hebrew text */
+  [dir="rtl"] {
+    font-family: "Heebo", "Inter", sans-serif !important;
+  }
+
+  [dir="rtl"] h1, [dir="rtl"] h2, [dir="rtl"] h3, [dir="rtl"] h4, [dir="rtl"] h5, [dir="rtl"] h6 {
+    font-family: "Heebo", "Inter", sans-serif !important;
+  }
+
+  code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
   }
 
   /* Custom scrollbar */

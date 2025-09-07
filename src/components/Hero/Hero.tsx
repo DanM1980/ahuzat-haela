@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useLanguage } from '../../context/LanguageContext';
 
@@ -20,7 +20,7 @@ const HeroBackgroundContainer = styled.div`
   z-index: 1;
 `;
 
-const HeroBackground = styled.div<{ imageUrl: string; scrollY: number }>`
+const HeroBackground = styled.div<{ imageUrl: string }>`
   position: absolute;
   top: 0;
   left: 0;
@@ -31,11 +31,7 @@ const HeroBackground = styled.div<{ imageUrl: string; scrollY: number }>`
   background-position: center;
   background-repeat: no-repeat;
   filter: brightness(0.6);
-  transform: translate3d(0, ${props => props.scrollY * 0.3}px, 0);
-  will-change: transform;
-  backface-visibility: hidden;
   z-index: 1;
-  transition: transform 0.1s ease-out;
 `;
 
 const HeroContent = styled.div<{ isRTL: boolean }>`
@@ -51,7 +47,7 @@ const HeroContent = styled.div<{ isRTL: boolean }>`
   `}
 `;
 
-const HeroLogoSection = styled.div<{ scrollY: number }>`
+const HeroLogoSection = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -60,10 +56,6 @@ const HeroLogoSection = styled.div<{ scrollY: number }>`
   margin-bottom: 0;
   text-align: center;
   margin-left: 1rem;
-  opacity: ${props => props.scrollY > 50 ? 0 : 1};
-  visibility: ${props => props.scrollY > 50 ? 'hidden' : 'visible'};
-  transform: ${props => props.scrollY > 50 ? 'translate(200px, -100px)' : 'translate(0, 0)'};
-  transition: all 0.3s ease;
   
   @media (max-width: 768px) {
     flex-direction: column;
@@ -128,7 +120,8 @@ const HeroLogoImage = styled.img`
   width: 200px;
   height: 200px;
   object-fit: contain;
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+  filter: brightness(1.3) 
+          contrast(1.4);
   
   @media (max-width: 768px) {
     width: 200px;
@@ -138,22 +131,6 @@ const HeroLogoImage = styled.img`
   @media (max-width: 480px) {
     width: 120px;
     height: 120px;
-  }
-`;
-
-const HeroTitle = styled.h1`
-  font-size: 5rem;
-  font-weight: 700;
-  margin-bottom: 1.5rem;
-  line-height: 1.2;
-  font-family: "Playfair Display", "Heebo", serif !important;
-  
-  @media (max-width: 768px) {
-    font-size: 3.5rem;
-  }
-  
-  @media (max-width: 480px) {
-    font-size: 2.8rem;
   }
 `;
 
@@ -279,25 +256,6 @@ const Hero: React.FC = () => {
     return backgroundImages[nextIndex];
   });
 
-  // Parallax scroll effect
-  const [scrollY, setScrollY] = useState(0);
-
-  useEffect(() => {
-    let ticking = false;
-
-    const handleScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          setScrollY(window.scrollY);
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
 
 
@@ -311,10 +269,10 @@ const Hero: React.FC = () => {
   return (
     <HeroSection id="hero">
       <HeroBackgroundContainer>
-        <HeroBackground imageUrl={selectedImage} scrollY={scrollY} />
+        <HeroBackground imageUrl={selectedImage} />
       </HeroBackgroundContainer>
       <HeroContent isRTL={isRTL}>
-        <HeroLogoSection scrollY={scrollY}>
+        <HeroLogoSection>
           <HeroLogoContainer>
             <HeroLogoImage 
               src="/logo.png" 
