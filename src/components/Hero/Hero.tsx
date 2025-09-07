@@ -43,6 +43,7 @@ const HeroContent = styled.div<{ isRTL: boolean }>`
   max-width: 800px;
   padding: 0 2rem;
   margin-top: 2rem;
+  position: relative;
   
   ${props => props.isRTL && `
     direction: rtl;
@@ -51,16 +52,17 @@ const HeroContent = styled.div<{ isRTL: boolean }>`
 
 const HeroLogoSection = styled.div`
   display: flex;
-  flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 0;
   margin-bottom: 0;
-  text-align: center;
+  min-height: 200px;
   
   @media (max-width: 768px) {
-    flex-direction: row;
-    gap: 0;
+    min-height: 150px;
+  }
+  
+  @media (max-width: 480px) {
+    min-height: 120px;
   }
 `;
 
@@ -68,7 +70,6 @@ const HeroSiteName = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
 `;
 
 const HeroSiteNameHebrew = styled.div`
@@ -109,22 +110,30 @@ const HeroSiteNameEnglish = styled.div`
 `;
 
 const HeroLogoContainer = styled.div`
+  position: absolute;
+  top: 0;
+  right: 3rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 3;
+
+  @media (max-width: 480px) {
+    right: 1rem;
+  }
 `;
 
 const HeroLogoImage = styled.img`
   width: 200px;
   height: 200px;
-  margin: 0 -3rem;
+  margin: 0;
   object-fit: contain;
   filter: brightness(1.3) 
           contrast(1.4);
   
   @media (max-width: 768px) {
-    width: 200px;
-    height: 200px;
+    width: 150px;
+    height: 150px;
   }
   
   @media (max-width: 480px) {
