@@ -3,13 +3,13 @@ const fs = require('fs');
 const path = require('path');
 
 // Create thumbnails directory if it doesn't exist
-const thumbnailsDir = path.join(__dirname, '..', 'public', 'gallery', 'thumbnails');
+const thumbnailsDir = path.join(__dirname, '..', 'public', 'images', 'gallery', 'thumbnails');
 if (!fs.existsSync(thumbnailsDir)) {
   fs.mkdirSync(thumbnailsDir, { recursive: true });
 }
 
 // Gallery images directory
-const galleryDir = path.join(__dirname, '..', 'public', 'gallery');
+const galleryDir = path.join(__dirname, '..', 'public', 'images', 'gallery');
 
 // Get all image files from gallery directory
 const imageFiles = fs.readdirSync(galleryDir).filter(file => {

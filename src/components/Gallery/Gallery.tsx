@@ -428,120 +428,120 @@ const cottages = [
     id: 1,
     title: 'יחידת אירוח משפחתית',
     titleEn: 'Family Cottage',
-    thumbnail: '/pics/gallery/thumbnails/_DSC5126-1.jpg',
-    fullImage: '/pics/gallery/_DSC5126-1.jpg'
+    thumbnail: '/images/gallery/thumbnails/DSC5126-1.jpg',
+    fullImage: '/images/gallery/DSC5126-1.jpg'
   },
   {
     id: 2,
     title: 'יחידת אירוח זוגית רומנטית',
     titleEn: 'Romantic Couple Cottage',
-    thumbnail: '/pics/gallery/thumbnails/_DSC5139-HDR-1.jpg',
-    fullImage: '/pics/gallery/_DSC5139-HDR-1.jpg'
+    thumbnail: '/images/gallery/thumbnails/DSC5139-HDR-1.jpg',
+    fullImage: '/images/gallery/DSC5139-HDR-1.jpg'
   },
   {
     id: 3,
     title: 'יחידת אירוח לקבוצות',
     titleEn: 'Group Cottage',
-    thumbnail: '/pics/gallery/thumbnails/_DSC5143-1.jpg',
-    fullImage: '/pics/gallery/_DSC5143-1.jpg'
+    thumbnail: '/images/gallery/thumbnails/DSC5143-1.jpg',
+    fullImage: '/images/gallery/DSC5143-1.jpg'
   },
   {
     id: 4,
     title: 'יחידת אירוח עם נוף',
     titleEn: 'Scenic View Cottage',
-    thumbnail: '/pics/gallery/thumbnails/_DSC5145-2.jpg',
-    fullImage: '/pics/gallery/_DSC5145-2.jpg'
+    thumbnail: '/images/gallery/thumbnails/DSC5145-2.jpg',
+    fullImage: '/images/gallery/DSC5145-2.jpg'
   },
   {
     id: 5,
     title: 'יחידת אירוח ליד הים',
     titleEn: 'Beachside Cottage',
-    thumbnail: '/pics/gallery/thumbnails/_DSC5146-1.jpg',
-    fullImage: '/pics/gallery/_DSC5146-1.jpg'
+    thumbnail: '/images/gallery/thumbnails/DSC5146-1.jpg',
+    fullImage: '/images/gallery/DSC5146-1.jpg'
   },
   {
     id: 6,
     title: 'יחידת אירוח כפרית',
     titleEn: 'Country Cottage',
-    thumbnail: '/pics/gallery/thumbnails/_DSC5152-HDR-1.jpg',
-    fullImage: '/pics/gallery/_DSC5152-HDR-1.jpg'
+    thumbnail: '/images/gallery/thumbnails/DSC5152-HDR-1.jpg',
+    fullImage: '/images/gallery/DSC5152-HDR-1.jpg'
   },
   {
     id: 7,
     title: 'יחידת אירוח עם בריכה',
     titleEn: 'Cottage with Pool',
-    thumbnail: '/pics/gallery/thumbnails/_DSC5159-1.jpg',
-    fullImage: '/pics/gallery/_DSC5159-1.jpg'
+    thumbnail: '/images/gallery/thumbnails/DSC5159-1.jpg',
+    fullImage: '/images/gallery/DSC5159-1.jpg'
   },
   {
     id: 8,
     title: 'יחידת אירוח עם ג\'קוזי',
     titleEn: 'Cottage with Jacuzzi',
-    thumbnail: '/pics/gallery/thumbnails/_DSC5160-2.jpg',
-    fullImage: '/pics/gallery/_DSC5160-2.jpg'
+    thumbnail: '/images/gallery/thumbnails/DSC5160-2.jpg',
+    fullImage: '/images/gallery/DSC5160-2.jpg'
   },
   {
     id: 9,
     title: 'יחידת אירוח עם מרפסת',
     titleEn: 'Cottage with Balcony',
-    thumbnail: '/pics/gallery/thumbnails/_DSC5164-1.jpg',
-    fullImage: '/pics/gallery/_DSC5164-1.jpg'
+    thumbnail: '/images/gallery/thumbnails/DSC5164-1.jpg',
+    fullImage: '/images/gallery/DSC5164-1.jpg'
   },
   {
     id: 10,
     title: 'יחידת אירוח עם גינה',
     titleEn: 'Cottage with Garden',
-    thumbnail: '/pics/gallery/thumbnails/_DSC5167-1.jpg',
-    fullImage: '/pics/gallery/_DSC5167-1.jpg'
+    thumbnail: '/images/gallery/thumbnails/DSC5167-1.jpg',
+    fullImage: '/images/gallery/DSC5167-1.jpg'
   },
   {
     id: 11,
     title: 'יחידת אירוח עם ברביקיו',
     titleEn: 'Cottage with BBQ',
-    thumbnail: '/pics/gallery/thumbnails/_DSC5188-HDR-1.jpg',
-    fullImage: '/pics/gallery/_DSC5188-HDR-1.jpg'
+    thumbnail: '/images/gallery/thumbnails/DSC5188-HDR-1.jpg',
+    fullImage: '/images/gallery/DSC5188-HDR-1.jpg'
   },
   {
     id: 12,
     title: 'יחידת אירוח עם נוף הרים',
     titleEn: 'Cottage with Mountain View',
-    thumbnail: '/pics/gallery/thumbnails/_DSC5201-1.jpg',
-    fullImage: '/pics/gallery/_DSC5201-1.jpg'
+    thumbnail: '/images/gallery/thumbnails/DSC5201-1.jpg',
+    fullImage: '/images/gallery/DSC5201-1.jpg'
   },
   {
     id: 13,
     title: 'יחידת אירוח עם נוף פנורמי',
     titleEn: 'Cottage with Panoramic View',
-    thumbnail: '/pics/gallery/thumbnails/_DSC5203-1.jpg',
-    fullImage: '/pics/gallery/_DSC5203-1.jpg'
+    thumbnail: '/images/gallery/thumbnails/DSC5203-1.jpg',
+    fullImage: '/images/gallery/DSC5203-1.jpg'
   },
   {
     id: 14,
     title: 'יחידת אירוח עם מרפסת פרטית',
     titleEn: 'Cottage with Private Balcony',
-    thumbnail: '/pics/gallery/thumbnails/_DSC5204-1.jpg',
-    fullImage: '/pics/gallery/_DSC5204-1.jpg'
+    thumbnail: '/images/gallery/thumbnails/DSC5204-1.jpg',
+    fullImage: '/images/gallery/DSC5204-1.jpg'
   },
   {
     id: 15,
     title: 'יחידת אירוח עם גינה פרטית',
     titleEn: 'Cottage with Private Garden',
-    thumbnail: '/pics/gallery/thumbnails/_DSC5207-1.jpg',
-    fullImage: '/pics/gallery/_DSC5207-1.jpg'
+    thumbnail: '/images/gallery/thumbnails/DSC5207-1.jpg',
+    fullImage: '/images/gallery/DSC5207-1.jpg'
   },
   {
     id: 16,
     title: 'יחידת אירוח עם נוף לים',
     titleEn: 'Cottage with Sea View',
-    thumbnail: '/pics/gallery/thumbnails/_DSC5212-1.jpg',
-    fullImage: '/pics/gallery/_DSC5212-1.jpg'
+    thumbnail: '/images/gallery/thumbnails/DSC5212-1.jpg',
+    fullImage: '/images/gallery/DSC5212-1.jpg'
   },
   {
     id: 17,
     title: 'יחידת אירוח עם נוף להרים',
     titleEn: 'Cottage with Mountain View',
-    thumbnail: '/pics/gallery/thumbnails/_DSC5213-1.jpg',
-    fullImage: '/pics/gallery/_DSC5213-1.jpg'
+    thumbnail: '/images/gallery/thumbnails/DSC5213-1.jpg',
+    fullImage: '/images/gallery/DSC5213-1.jpg'
   }
 ];
 
