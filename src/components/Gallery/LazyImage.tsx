@@ -15,7 +15,6 @@ const ImageContainer = styled.div<{ loaded: boolean }>`
   position: relative;
   width: 100%;
   height: 100%;
-  background: #f0f0f0;
   overflow: hidden;
   transition: opacity 0.3s ease;
   opacity: ${props => props.loaded ? 1 : 0.7};

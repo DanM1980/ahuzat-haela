@@ -45,6 +45,11 @@ const HeroContent = styled.div<{ isRTL: boolean }>`
   margin-top: 2rem;
   position: relative;
   
+  /* Mobile landscape mode - increase top margin to avoid header overlap */
+  @media (max-width: 896px) and (orientation: landscape) {
+    margin-top: 7rem;
+  }
+  
   ${props => props.isRTL && `
     direction: rtl;
   `}
@@ -204,6 +209,12 @@ const CTAButton = styled.button<{ isRTL: boolean }>`
     font-size: 1.2rem;
     padding: 1rem 2rem;
   }
+
+    /* Mobile landscape mode - hide button */
+  @media (max-width: 896px) and (orientation: landscape) {
+    display: none;
+  }
+
 `;
 
 const ScrollIndicator = styled.div`
