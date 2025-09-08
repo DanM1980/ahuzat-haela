@@ -44,7 +44,7 @@ const FeaturesContainer = styled.div`
   
   @media (max-width: 480px) {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 1.5rem;
   }
 `;
@@ -159,7 +159,7 @@ const Features: React.FC = () => {
         <SectionTitle isRTL={isRTL}>
           {language === 'he' ? 'למה לבחור באחוזת האלה?' : 'Why choose Ella Estate?'}
         </SectionTitle>
-        
+
         <FeaturesContainer>
           {featureCards.map((card, index) => (
             <FeatureCard key={index} isRTL={isRTL}>
