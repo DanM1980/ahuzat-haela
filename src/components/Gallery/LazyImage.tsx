@@ -8,6 +8,7 @@ interface LazyImageProps {
   style?: React.CSSProperties;
   children?: React.ReactNode;
   objectFit?: string;
+  onLoad?: () => void;
 }
 
 const ImageContainer = styled.div<{ loaded: boolean }>`
@@ -48,7 +49,7 @@ const LoadingPlaceholder = styled.div`
   }
 `;
 
-const LazyImage: React.FC<LazyImageProps> = ({ src, alt, className, style, children, objectFit }) => {
+const LazyImage: React.FC<LazyImageProps> = ({ src, alt, className, style, children, objectFit, onLoad }) => {
   const [loaded, setLoaded] = useState(false);
   const [inView, setInView] = useState(false);
   const imgRef = useRef<HTMLDivElement>(null);
@@ -76,6 +77,7 @@ const LazyImage: React.FC<LazyImageProps> = ({ src, alt, className, style, child
 
   const handleLoad = () => {
     setLoaded(true);
+    onLoad?.();
   };
 
   return (

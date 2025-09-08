@@ -589,6 +589,13 @@ const Gallery: React.FC = () => {
     }
   }, [selectedImageIndex]);
 
+  // Reset loading state when image changes
+  React.useEffect(() => {
+    if (selectedImageIndex !== null) {
+      setIsImageLoading(false);
+    }
+  }, [selectedImageIndex]);
+
   // Removed unused image handlers
 
   const handleKeyDown = React.useCallback((e: KeyboardEvent) => {
@@ -671,6 +678,7 @@ const Gallery: React.FC = () => {
                   height: '100%', 
                   opacity: isImageLoading ? 0 : 1 
                 }}
+                onLoad={() => setIsImageLoading(false)}
               />
               
               {isImageLoading && <LoadingSpinner />}
