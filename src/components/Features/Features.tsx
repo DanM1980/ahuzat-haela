@@ -37,8 +37,15 @@ const FeaturesContainer = styled.div`
   }
   
   @media (max-width: 768px) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  
+  @media (max-width: 480px) {
+    display: grid;
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: 1.5rem;
   }
 `;
 
@@ -53,6 +60,10 @@ const FeatureCard = styled.div<{ isRTL: boolean }>`
   &:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  }
+  
+  @media (max-width: 768px) {
+    padding: 1.5rem 1rem;
   }
   
   ${props => props.isRTL && `
@@ -76,6 +87,17 @@ const FeatureIcon = styled.div`
     width: 3rem;
     height: 3rem;
   }
+  
+  @media (max-width: 768px) {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 1rem;
+    
+    svg {
+      width: 2rem;
+      height: 2rem;
+    }
+  }
 `;
 
 const FeatureTitle = styled.h3<{ isRTL: boolean }>`
@@ -85,6 +107,11 @@ const FeatureTitle = styled.h3<{ isRTL: boolean }>`
   font-weight: 600;
   line-height: 1.3;
   font-family: ${props => props.isRTL ? '"Heebo", sans-serif' : '"Inter", sans-serif'} !important;
+  
+  @media (max-width: 768px) {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
 `;
 
 const FeatureDescription = styled.p<{ isRTL: boolean }>`
@@ -92,6 +119,11 @@ const FeatureDescription = styled.p<{ isRTL: boolean }>`
   font-size: 0.95rem;
   line-height: 1.5;
   font-family: ${props => props.isRTL ? '"Heebo", sans-serif' : '"Inter", sans-serif'} !important;
+  
+  @media (max-width: 768px) {
+    font-size: 0.85rem;
+    line-height: 1.4;
+  }
 `;
 
 const Features: React.FC = () => {
