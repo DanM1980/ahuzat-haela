@@ -253,27 +253,6 @@ const MapComponent: React.FC<MapComponentProps> = ({
                     </div>
                     
                     <div style="padding: 1rem; background: white; border-radius: 0 0 12px 12px;">
-                      ${attraction.image ? `
-                        <div style="
-                          width: 100%;
-                          height: 150px;
-                          background: #f8f9fa;
-                          border-radius: 8px;
-                          margin-bottom: 1rem;
-                          overflow: hidden;
-                          display: flex;
-                          align-items: center;
-                          justify-content: center;
-                        ">
-                          <img src="${attraction.image}" alt="${attraction.name}" style="
-                            width: 100%;
-                            height: 100%;
-                            object-fit: cover;
-                            border-radius: 8px;
-                          " onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\\'color: #999; font-size: 0.9rem;\\'>${attraction.name.includes('א') ? 'תמונה לא זמינה' : 'Image not available'}</div>'">
-                        </div>
-                      ` : ''}
-                      
                       <p style="
                         color: #666;
                         line-height: 1.5;
@@ -290,7 +269,7 @@ const MapComponent: React.FC<MapComponentProps> = ({
                           font-size: 0.8rem;
                           display: inline-block;
                           margin: 0.25rem 0.25rem 0.25rem 0;
-                        ">${attraction.name.includes('א') ? 'רמת קושי' : 'Difficulty'}: ${attraction.difficulty}</div>
+                        ">רמת קושי: ${attraction.difficulty}</div>
                       ` : ''}
                       
                       ${attraction.duration ? `
@@ -302,7 +281,7 @@ const MapComponent: React.FC<MapComponentProps> = ({
                           font-size: 0.8rem;
                           display: inline-block;
                           margin: 0.25rem 0.25rem 0.25rem 0;
-                        ">${attraction.name.includes('א') ? 'משך' : 'Duration'}: ${attraction.duration}</div>
+                        ">משך: ${attraction.duration}</div>
                       ` : ''}
                       
                       ${attraction.cuisine ? `
@@ -314,7 +293,7 @@ const MapComponent: React.FC<MapComponentProps> = ({
                           font-size: 0.8rem;
                           display: inline-block;
                           margin: 0.25rem 0.25rem 0.25rem 0;
-                        ">${attraction.name.includes('א') ? 'מטבח' : 'Cuisine'}: ${attraction.cuisine}</div>
+                        ">מטבח: ${attraction.cuisine}</div>
                       ` : ''}
                       
                       <div style="
@@ -334,7 +313,7 @@ const MapComponent: React.FC<MapComponentProps> = ({
                           transition: all 0.3s ease;
                           display: inline-block;
                         " onmouseover="this.style.background='#3d6b4a'" onmouseout="this.style.background='#4a7c59'">
-                          ${attraction.name.includes('א') ? 'מידע נוסף' : 'More Info'}
+                          מידע נוסף
                         </a>
                         <a href="tel:${attraction.phone}" style="
                           background: #28a745;
@@ -347,7 +326,7 @@ const MapComponent: React.FC<MapComponentProps> = ({
                           transition: all 0.3s ease;
                           display: inline-block;
                         " onmouseover="this.style.background='#218838'" onmouseout="this.style.background='#28a745'">
-                          ${attraction.name.includes('א') ? 'התקשר' : 'Call'}
+                          התקשר
                         </a>
                       </div>
                     </div>
