@@ -7,15 +7,13 @@ import attractionsData from '../../data/attractions.json';
 // Types
 interface Attraction {
   id: string;
-  category: string;
-  name: string;
-  description: string;
+  category: { he: string; en: string };
+  name: { he: string; en: string };
+  description: { he: string; en: string };
   lat: number;
   lng: number;
   icon: string;
-  difficulty?: string;
-  duration?: string;
-  cuisine?: string;
+  cuisine?: { he: string; en: string };
   priceRange?: string;
   type?: string;
   ageGroup?: string;
@@ -30,6 +28,7 @@ interface MapComponentProps {
   attractions: Attraction[];
   selectedCategory: string | null;
   onAttractionClick: (attraction: Attraction) => void;
+  isRTL: boolean;
 }
 
 // Styled Components
@@ -46,6 +45,12 @@ const MapContent = styled.div`
   margin: 0 auto;
   padding: 0 2rem;
   width: 100%;
+  
+  @media (max-width: 768px) {
+    padding: 0;
+    max-width: 100%;
+    margin: 0;
+  }
 `;
 
 const SectionTitle = styled.h2<{ $isRTL: boolean }>`
@@ -56,6 +61,12 @@ const SectionTitle = styled.h2<{ $isRTL: boolean }>`
   font-family: ${props => props.$isRTL ? '"Heebo", sans-serif' : '"Inter", sans-serif'} !important;
   font-weight: 600;
   letter-spacing: -0.02em;
+  
+  @media (max-width: 768px) {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    padding: 0 1rem;
+  }
   
   ${props => props.$isRTL && `
     direction: rtl;
@@ -72,6 +83,12 @@ const SectionSubtitle = styled.p<{ $isRTL: boolean }>`
   margin-right: auto;
   line-height: 1.6;
   
+  @media (max-width: 768px) {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    padding: 0 1rem;
+  }
+  
   ${props => props.$isRTL && `
     direction: rtl;
   `}
@@ -79,12 +96,19 @@ const SectionSubtitle = styled.p<{ $isRTL: boolean }>`
 
 const MapWrapper = styled.div`
   width: 100%;
-  height: 500px;
+  height: 600px;
   border-radius: 15px;
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   margin-bottom: 3rem;
   position: relative;
+  
+  @media (max-width: 768px) {
+    height: 600px;
+    border-radius: 0;
+    margin-bottom: 2rem;
+    box-shadow: none;
+  }
 `;
 
 const Legend = styled.div<{ $isRTL: boolean }>`
@@ -93,6 +117,12 @@ const Legend = styled.div<{ $isRTL: boolean }>`
   gap: 2rem;
   margin-bottom: 2rem;
   flex-wrap: wrap;
+  
+  @media (max-width: 768px) {
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding: 0 1rem;
+  }
   
   ${props => props.$isRTL && `
     direction: rtl;
@@ -111,6 +141,12 @@ const LegendItem = styled.div<{ $isActive: boolean; $isRTL: boolean }>`
   transition: all 0.3s ease;
   border: 2px solid ${props => props.$isActive ? '#4a7c59' : '#e9ecef'};
   font-weight: 500;
+  
+  @media (max-width: 768px) {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    border-radius: 20px;
+  }
   
   &:hover {
     background: ${props => props.$isActive ? '#3d6b4a' : '#f8f9fa'};
@@ -158,7 +194,8 @@ const MapComponent: React.FC<MapComponentProps> = ({
   zoom,
   attractions,
   selectedCategory,
-  onAttractionClick
+  onAttractionClick,
+  isRTL
 }) => {
   const [map, setMap] = useState<google.maps.Map | null>(null);
   const [markers, setMarkers] = useState<google.maps.marker.AdvancedMarkerElement[]>([]);
@@ -184,29 +221,50 @@ const MapComponent: React.FC<MapComponentProps> = ({
         const ellaEstateMarkerElement = document.createElement('div');
         ellaEstateMarkerElement.innerHTML = `
           <div style="
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, #FFD700 0%, #FF8C00 100%);
-            border: 3px solid white;
-            border-radius: 50%;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            color: white;
-            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
-            cursor: pointer;
-            animation: pulse 2s infinite;
+            cursor: default;
           ">
-            🏡
+            <div style="
+              width: 40px;
+              height: 40px;
+              background: rgba(74, 124, 89, 0.2);
+              border: 2px solid rgba(74, 124, 89, 0.6);
+              border-radius: 50%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+              backdrop-filter: blur(3px);
+              overflow: hidden;
+              margin-bottom: 5px;
+            ">
+              <img 
+                src="/logo.png" 
+                alt="אחוזת האלה" 
+                style="
+                  width: 30px;
+                  height: 30px;
+                  object-fit: contain;
+                "
+              />
+            </div>
+            <div style="
+              background: rgba(74, 124, 89, 0.9);
+              color: white;
+              padding: 4px 8px;
+              border-radius: 12px;
+              font-size: 11px;
+              font-weight: 600;
+              font-family: 'Inter', 'Heebo', sans-serif;
+              white-space: nowrap;
+              box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+              backdrop-filter: blur(3px);
+             ">
+               ${isRTL ? 'אחוזת האלה' : 'Ella Estate'}
+             </div>
           </div>
-          <style>
-            @keyframes pulse {
-              0% { transform: scale(1); }
-              50% { transform: scale(1.1); }
-              100% { transform: scale(1); }
-            }
-          </style>
         `;
 
         const ellaEstateMarker = new window.google.maps.marker.AdvancedMarkerElement({
@@ -216,93 +274,11 @@ const MapComponent: React.FC<MapComponentProps> = ({
           content: ellaEstateMarkerElement
         });
 
-        // Add click listener for Ella Estate marker
-        ellaEstateMarker.addListener('click', () => {
-          if (infoWindow) {
-            const content = `
-              <div style="
-                font-family: 'Inter', 'Heebo', sans-serif;
-                max-width: 350px;
-                max-height: 500px;
-                padding: 0;
-                direction: rtl;
-                overflow: hidden;
-              ">
-                <div style="
-                  background: linear-gradient(135deg, #FFD700 0%, #FF8C00 100%);
-                  color: white;
-                  padding: 1rem;
-                  border-radius: 12px 12px 0 0;
-                  text-align: center;
-                  position: relative;
-                ">
-                  <div style="font-size: 2rem; margin-bottom: 0.5rem;">🏡</div>
-                  <h3 style="margin: 0; font-size: 1.3rem; font-weight: 700;">אחוזת האלה</h3>
-                  <div style="
-                    background: rgba(255,255,255,0.2);
-                    color: white;
-                    padding: 0.25rem 0.75rem;
-                    border-radius: 15px;
-                    font-size: 0.9rem;
-                    font-weight: 500;
-                    display: inline-block;
-                    margin-top: 0.5rem;
-                  ">מתחם אירוח</div>
-                </div>
-                
-                <div style="padding: 1rem; background: white; border-radius: 0 0 12px 12px;">
-                  <p style="
-                    color: #666;
-                    line-height: 1.5;
-                    margin: 0 0 1rem 0;
-                    font-size: 0.9rem;
-                  ">מתחם אירוח יוקרתי בדרום רמת הגולן עם 4 יחידות אירוח, ג'קוזי, בריכה מחוממת וסאונה יבשה</p>
-                  
-                  <div style="
-                    display: flex;
-                    gap: 0.5rem;
-                    margin-top: 1rem;
-                    flex-wrap: wrap;
-                  ">
-                    <a href="tel:052-6658209" style="
-                      background: #4a7c59;
-                      color: white;
-                      padding: 0.5rem 1rem;
-                      border-radius: 8px;
-                      text-decoration: none;
-                      font-size: 0.9rem;
-                      font-weight: 500;
-                      transition: all 0.3s ease;
-                      display: inline-block;
-                    " onmouseover="this.style.background='#3d6b4a'" onmouseout="this.style.background='#4a7c59'">
-                      התקשר
-                    </a>
-                    <a href="https://maps.app.goo.gl/BuNjAuLiW4mpo3fZ6" target="_blank" rel="noopener noreferrer" style="
-                      background: #28a745;
-                      color: white;
-                      padding: 0.5rem 1rem;
-                      border-radius: 8px;
-                      text-decoration: none;
-                      font-size: 0.9rem;
-                      font-weight: 500;
-                      transition: all 0.3s ease;
-                      display: inline-block;
-                    " onmouseover="this.style.background='#218838'" onmouseout="this.style.background='#28a745'">
-                      מידע נוסף
-                    </a>
-                  </div>
-                </div>
-              </div>
-            `;
-
-            infoWindow.setContent(content);
-            infoWindow.open(map, ellaEstateMarker);
-          }
-        });
-
         // Filter attractions by selected category
         const filteredAttractions = selectedCategory
-          ? attractions.filter(attraction => attraction.category === selectedCategory)
+          ? attractions.filter(attraction =>
+            attraction.category.he === selectedCategory || attraction.category.en === selectedCategory
+          )
           : attractions;
 
         // Create new markers
@@ -319,16 +295,17 @@ const MapComponent: React.FC<MapComponentProps> = ({
               <div style="
                 width: 40px;
                 height: 40px;
-                background: #4a7c59;
-                border: 2px solid white;
+                background: rgba(74, 124, 89, 0.2);
+                border: 2px solid rgba(74, 124, 89, 0.6);
                 border-radius: 50%;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                font-size: 16px;
+                font-size: 20px;
                 color: white;
-                box-shadow: 0 2px 8px rgba(0,0,0,0.3);
                 cursor: pointer;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+                backdrop-filter: blur(3px);
               ">
                 ${attraction.icon}
               </div>
@@ -337,7 +314,7 @@ const MapComponent: React.FC<MapComponentProps> = ({
             const marker = new window.google.maps.marker.AdvancedMarkerElement({
               position: { lat: attraction.lat, lng: attraction.lng },
               map: map,
-              title: attraction.name,
+              title: isRTL ? attraction.name.he : attraction.name.en,
               content: markerElement
             });
 
@@ -345,14 +322,14 @@ const MapComponent: React.FC<MapComponentProps> = ({
               if (infoWindow) {
                 // Create InfoWindow content
                 const content = `
-                  <div style="
-                    font-family: 'Inter', 'Heebo', sans-serif;
-                    max-width: 350px;
-                    max-height: 500px;
-                    padding: 0;
-                    direction: ${attraction.name.includes('א') ? 'rtl' : 'ltr'};
-                    overflow: hidden;
-                  ">
+                   <div style="
+                     font-family: 'Inter', 'Heebo', sans-serif;
+                     max-width: 350px;
+                     max-height: 500px;
+                     padding: 0;
+                     direction: ${isRTL ? 'rtl' : 'ltr'};
+                     overflow: hidden;
+                   ">
                     <div style="
                       background: linear-gradient(135deg, #4a7c59 0%, #3d6b4a 100%);
                       color: white;
@@ -361,97 +338,77 @@ const MapComponent: React.FC<MapComponentProps> = ({
                       text-align: center;
                       position: relative;
                     ">
-                      <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">${attraction.icon}</div>
-                      <h3 style="margin: 0; font-size: 1.1rem; font-weight: 600;">${attraction.name}</h3>
-                      <div style="
-                        background: rgba(255,255,255,0.2);
-                        color: white;
-                        padding: 0.25rem 0.75rem;
-                        border-radius: 15px;
-                        font-size: 0.8rem;
-                        font-weight: 500;
-                        display: inline-block;
-                        margin-top: 0.5rem;
-                      ">${attraction.category}</div>
+                       <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">${attraction.icon}</div>
+                       <h3 style="margin: 0; font-size: 1.1rem; font-weight: 600;">${isRTL ? (attraction.name?.he || '') : (attraction.name?.en || '')}</h3>
+                       <div style="
+                         background: rgba(255,255,255,0.2);
+                         color: white;
+                         padding: 0.25rem 0.75rem;
+                         border-radius: 15px;
+                         font-size: 0.8rem;
+                         font-weight: 500;
+                         display: inline-block;
+                         margin-top: 0.5rem;
+                       ">${isRTL ? (attraction.category?.he || '') : (attraction.category?.en || '')}</div>
                     </div>
                     
                     <div style="padding: 1rem; background: white; border-radius: 0 0 12px 12px;">
-                      <p style="
-                        color: #666;
-                        line-height: 1.5;
-                        margin: 0 0 1rem 0;
-                        font-size: 0.9rem;
-                      ">${attraction.description}</p>
+                       <p style="
+                         color: #666;
+                         line-height: 1.5;
+                         margin: 0 0 1rem 0;
+                         font-size: 0.9rem;
+                       ">${isRTL ? (attraction.description?.he || '') : (attraction.description?.en || '')}</p>
+                       
+                       ${attraction.cuisine && attraction.cuisine.he && attraction.cuisine.en ? `
+                         <div style="
+                           background: #f8f9fa;
+                           color: #666;
+                           padding: 0.25rem 0.5rem;
+                           border-radius: 10px;
+                           font-size: 0.8rem;
+                           display: inline-block;
+                           margin: 0.25rem 0.25rem 0.25rem 0;
+                         ">${isRTL ? 'מטבח' : 'Cuisine'}: ${isRTL ? (attraction.cuisine?.he || '') : (attraction.cuisine?.en || '')}</div>
+                       ` : ''}
                       
-                      ${attraction.difficulty ? `
-                        <div style="
-                          background: #f8f9fa;
-                          color: #666;
-                          padding: 0.25rem 0.5rem;
-                          border-radius: 10px;
-                          font-size: 0.8rem;
-                          display: inline-block;
-                          margin: 0.25rem 0.25rem 0.25rem 0;
-                        ">רמת קושי: ${attraction.difficulty}</div>
-                      ` : ''}
-                      
-                      ${attraction.duration ? `
-                        <div style="
-                          background: #f8f9fa;
-                          color: #666;
-                          padding: 0.25rem 0.5rem;
-                          border-radius: 10px;
-                          font-size: 0.8rem;
-                          display: inline-block;
-                          margin: 0.25rem 0.25rem 0.25rem 0;
-                        ">משך: ${attraction.duration}</div>
-                      ` : ''}
-                      
-                      ${attraction.cuisine ? `
-                        <div style="
-                          background: #f8f9fa;
-                          color: #666;
-                          padding: 0.25rem 0.5rem;
-                          border-radius: 10px;
-                          font-size: 0.8rem;
-                          display: inline-block;
-                          margin: 0.25rem 0.25rem 0.25rem 0;
-                        ">מטבח: ${attraction.cuisine}</div>
-                      ` : ''}
-                      
-                      <div style="
-                        display: flex;
-                        gap: 0.5rem;
-                        margin-top: 1rem;
-                        flex-wrap: wrap;
-                      ">
-                        <a href="${attraction.link}" target="_blank" rel="noopener noreferrer" style="
-                          background: #4a7c59;
-                          color: white;
-                          padding: 0.5rem 1rem;
-                          border-radius: 8px;
-                          text-decoration: none;
-                          font-size: 0.9rem;
-                          font-weight: 500;
-                          transition: all 0.3s ease;
-                          display: inline-block;
-                        " onmouseover="this.style.background='#3d6b4a'" onmouseout="this.style.background='#4a7c59'">
-                          מידע נוסף
-                        </a>
-                        <a href="tel:${attraction.phone}" style="
-                          background: #28a745;
-                          color: white;
-                          padding: 0.5rem 1rem;
-                          border-radius: 8px;
-                          text-decoration: none;
-                          font-size: 0.9rem;
-                          font-weight: 500;
-                          transition: all 0.3s ease;
-                          display: inline-block;
-                        " onmouseover="this.style.background='#218838'" onmouseout="this.style.background='#28a745'">
-                          התקשר
-                        </a>
-                      </div>
+                       <div style="
+                         display: flex;
+                         gap: 0.5rem;
+                         margin-top: 1rem;
+                         flex-wrap: wrap;
+                       ">
+                         ${attraction.link ? `
+                           <a href="${attraction.link}" target="_blank" rel="noopener noreferrer" style="
+                             background: #4a7c59;
+                             color: white;
+                             padding: 0.5rem 1rem;
+                             border-radius: 8px;
+                             text-decoration: none;
+                             font-size: 0.9rem;
+                             font-weight: 500;
+                             transition: all 0.3s ease;
+                             display: inline-block;
+                           " onmouseover="this.style.background='#3d6b4a'" onmouseout="this.style.background='#4a7c59'">
+                             ${isRTL ? 'מידע נוסף' : 'More Info'}
+                           </a>
+                         ` : ''}
+                         ${attraction.phone ? `
+                           <a href="tel:${attraction.phone}" style="
+                             background: #28a745;
+                             color: white;
+                             padding: 0.5rem 1rem;
+                             border-radius: 8px;
+                             text-decoration: none;
+                             font-size: 0.9rem;
+                             font-weight: 500;
+                             transition: all 0.3s ease;
+                             display: inline-block;
+                           " onmouseover="this.style.background='#218838'" onmouseout="this.style.background='#28a745'">
+                             ${isRTL ? 'התקשר' : 'Call'}
+                           </a>
+                         ` : ''}
+                       </div>
                     </div>
                   </div>
                 `;
@@ -473,7 +430,7 @@ const MapComponent: React.FC<MapComponentProps> = ({
         console.error('Error updating map markers:', error);
       }
     }
-  }, [map, attractions, selectedCategory, onAttractionClick, infoWindow]);
+  }, [map, attractions, selectedCategory, onAttractionClick, infoWindow, isRTL]);
 
   return (
     <div
@@ -510,11 +467,29 @@ const Map: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const isRTL = language === 'he';
 
-  const { center, attractions } = attractionsData;
+  const { center, attractions } = attractionsData as {
+    center: {
+      lat: number;
+      lng: number;
+      name: { he: string; en: string };
+      description: { he: string; en: string }
+    };
+    attractions: Attraction[]
+  };
 
   const categories = useMemo(() => {
-    const uniqueCategories = Array.from(new Set(attractions.map(attraction => attraction.category)));
-    return uniqueCategories;
+    const seen = new Set<string>();
+    const result: { he: string; en: string }[] = [];
+
+    attractions.forEach(attraction => {
+      const key = attraction.category.he;
+      if (!seen.has(key)) {
+        seen.add(key);
+        result.push(attraction.category);
+      }
+    });
+
+    return result;
   }, [attractions]);
 
   const handleAttractionClick = (attraction: Attraction) => {
@@ -550,10 +525,11 @@ const Map: React.FC = () => {
         return (
           <MapComponent
             center={center}
-            zoom={12}
+            zoom={13}
             attractions={attractions}
             selectedCategory={selectedCategory}
             onAttractionClick={handleAttractionClick}
+            isRTL={isRTL}
           />
         );
       default:
@@ -592,13 +568,13 @@ const Map: React.FC = () => {
           </LegendItem>
           {categories.map(category => (
             <LegendItem
-              key={category}
-              $isActive={selectedCategory === category}
+              key={isRTL ? category.he : category.en}
+              $isActive={selectedCategory === (isRTL ? category.he : category.en)}
               $isRTL={isRTL}
-              onClick={() => setSelectedCategory(category)}
+              onClick={() => setSelectedCategory(isRTL ? category.he : category.en)}
             >
               <span>{attractions.find(a => a.category === category)?.icon}</span>
-              <span>{category}</span>
+              <span>{isRTL ? category.he : category.en}</span>
             </LegendItem>
           ))}
         </Legend>

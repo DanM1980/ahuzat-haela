@@ -2,76 +2,117 @@
   "center": {
     "lat": 32.7893403,
     "lng": 35.6928461,
-    "name": "אחוזת האלה",
-    "description": "מתחם אירוח בדרום רמת הגולן"
+    "name": {
+      "he": "אחוזת האלה",
+      "en": "Ella Estate"
+    },
+    "description": {
+      "he": "מתחם אירוח בדרום רמת הגולן",
+      "en": "A hospitality complex in the southern Golan Heights"
+    }
   },
   "attractions": [
     {
       "id": "hiking_susita",
-      "category": "מסלולי טיול",
-      "name": "סוסיתא (היפוס)",
-      "description": "חורבות העיר היוונית-רומית על רכס המשקיף לכנרת; מסלול הליכה סביב האתר",
+      "category": {
+        "he": "מסלולי טיול",
+        "en": "Hiking Trails"
+      },
+      "name": {
+        "he": "סוסיתא (היפוס)",
+        "en": "Susita (Hippos)"
+      },
+      "description": {
+        "he": "חורבות העיר היוונית-רומית על רכס המשקיף לכנרת; מסלול הליכה סביב האתר",
+        "en": "Ruins of the Greco-Roman city on a ridge overlooking the Sea of Galilee; walking trail around the site"
+      },
       "lat": 32.778904,
       "lng": 35.659368,
       "icon": "🥾",
-      "difficulty": "",
-      "duration": "",
       "image": "",
       "link": "https://en.parks.org.il/reserve-park/sussita-hippos-national-park/",
       "phone": "*3639"
     },
     {
       "id": "hiking_elal_black_falls",
-      "category": "מסלולי טיול",
-      "name": "נחל אל על – המפל השחור",
-      "description": "קניון בזלת עם מפלים; מסלול מים קלאסי בדרום הגולן",
+      "category": {
+        "he": "מסלולי טיול",
+        "en": "Hiking Trails"
+      },
+      "name": {
+        "he": "נחל אל על – המפל השחור",
+        "en": "Nahal El Al – Black Waterfall"
+      },
+      "description": {
+        "he": "קניון בזלת עם מפלים; מסלול מים קלאסי בדרום הגולן",
+        "en": "Basalt canyon with waterfalls; a classic water hike in the southern Golan"
+      },
       "lat": 32.828554,
       "lng": 35.764734,
       "icon": "🥾",
-      "difficulty": "",
-      "duration": "",
       "image": "",
       "link": "https://www.galilandgolan.com/nahal-el-al",
       "phone": "*3639"
     },
     {
       "id": "hiking_ahu_nov",
-      "category": "מסלולי טיול",
-      "name": "שמורת אחו נוב (אירוס הביצות)",
-      "description": "שביל עונתי בעונת פריחה; אזור ביצתי ייחודי בדרום הגולן",
-      "lat": 32.834540,
+      "category": {
+        "he": "מסלולי טיול",
+        "en": "Hiking Trails"
+      },
+      "name": {
+        "he": "שמורת אחו נוב (אירוס הביצות)",
+        "en": "Ahu Nov Reserve (Iris Pseudacorus)"
+      },
+      "description": {
+        "he": "שביל עונתי בעונת פריחה; אזור ביצתי ייחודי בדרום הגולן",
+        "en": "Seasonal wet-meadow reserve with a spring bloom trail in the southern Golan"
+      },
+      "lat": 32.83454,
       "lng": 35.797726,
       "icon": "🥾",
-      "difficulty": "",
-      "duration": "",
       "image": "",
       "link": "https://en.parks.org.il/reserve-park/",
       "phone": "*3639"
     },
     {
       "id": "hiking_ein_piq",
-      "category": "מסלולי טיול",
-      "name": "עין פיק",
-      "description": "מעיין קטן בנחל פיק מתחת לשרידי הכפר פיק; תצפית ובריכת טבילה",
+      "category": {
+        "he": "מסלולי טיול",
+        "en": "Hiking Trails"
+      },
+      "name": {
+        "he": "עין פיק",
+        "en": "Ein Piq Spring"
+      },
+      "description": {
+        "he": "מעיין קטן בנחל פיק מתחת לשרידי הכפר פיק; תצפית ובריכת טבילה",
+        "en": "Small spring in Nahal Piq below the ruins of Piq; viewpoint and a small dipping pool"
+      },
       "lat": 32.773896,
       "lng": 35.702844,
       "icon": "🥾",
-      "difficulty": "",
-      "duration": "",
       "image": "",
       "link": "https://www.tiuli.com/points-of-interest/588/%D7%A2%D7%99%D7%9F-%D7%A4%D7%99%D7%A7",
       "phone": ""
     },
     {
       "id": "hiking_meitzar",
-      "category": "מסלולי טיול",
-      "name": "נחל מיצר",
-      "description": "ערוץ קצר וירוק, מסלול משפחתי עם תצפיות; שבילי קניון עדין",
-      "lat": 32.768490,
+      "category": {
+        "he": "מסלולי טיול",
+        "en": "Hiking Trails"
+      },
+      "name": {
+        "he": "נחל מיצר",
+        "en": "Nahal Meitzar"
+      },
+      "description": {
+        "he": "ערוץ קצר וירוק, מסלול משפחתי עם תצפיות; שבילי קניון עדין",
+        "en": "A short green ravine; family-friendly trail with viewpoints and gentle canyon paths"
+      },
+      "lat": 32.76849,
       "lng": 35.692514,
       "icon": "🥾",
-      "difficulty": "",
-      "duration": "",
       "image": "",
       "link": "https://www.enjoyingisrael.com/trails/7048/a-trail-in-the-nahal-meitzar-nature-reserve",
       "phone": ""
@@ -79,27 +120,51 @@
 
     {
       "id": "restaurant_hanahtom",
-      "category": "מסעדות",
-      "name": "הנחתום (אזור תעשייה בני יהודה)",
-      "description": "מאפייה-פיצרייה: לחמי שאור, פיצות ומאפים",
+      "category": {
+        "he": "מסעדות",
+        "en": "Restaurants"
+      },
+      "name": {
+        "he": "הנחתום (בני יהודה)",
+        "en": "HaNahtom (Bnei Yehuda)"
+      },
+      "description": {
+        "he": "מאפייה-פיצרייה: לחמי שאור, פיצות ומאפים",
+        "en": "Bakery–pizzeria: sourdough breads, pizzas and pastries"
+      },
       "lat": 32.801183,
       "lng": 35.718158,
       "icon": "🍽️",
-      "cuisine": "מאפייה / פיצריה",
+      "cuisine": {
+        "he": "מאפייה / פיצריה",
+        "en": "Bakery / Pizzeria"
+      },
       "priceRange": "$",
-      "image": "https://www.facebook.com/photo/?fbid=1112388273939530&set=a.592023779309318",
+      "image": "",
       "link": "https://www.hanahtom.com/",
       "phone": "04-6601222"
     },
     {
       "id": "restaurant_marinado",
-      "category": "מסעדות",
-      "name": "מרינדו (עין גב)",
-      "description": "מסעדת בשרים וקצבייה בקיבוץ עין גב",
+      "category": {
+        "he": "מסעדות",
+        "en": "Restaurants"
+      },
+      "name": {
+        "he": "מרינדו (עין גב)",
+        "en": "Marinado (Ein Gev)"
+      },
+      "description": {
+        "he": "מסעדת בשרים וקצבייה בקיבוץ עין גב",
+        "en": "Steakhouse and butcher shop in Kibbutz Ein Gev"
+      },
       "lat": 32.783828,
       "lng": 35.641994,
       "icon": "🍽️",
-      "cuisine": "בשרים / גריל",
+      "cuisine": {
+        "he": "בשרים / גריל",
+        "en": "Meat / Grill"
+      },
       "priceRange": "$$",
       "image": "",
       "link": "https://www.marinado.co.il/",
@@ -107,74 +172,254 @@
     },
     {
       "id": "restaurant_moshbutz",
-      "category": "מסעדות",
-      "name": "מושבוצ (מושב רמות)",
-      "description": "מטבח מקומי-עונתי עם בשרים מתוצרת האזור",
+      "category": {
+        "he": "מסעדות",
+        "en": "Restaurants"
+      },
+      "name": {
+        "he": "מושבוצ (מושב רמות)",
+        "en": "Moshbutz (Moshav Ramot)"
+      },
+      "description": {
+        "he": "מטבח מקומי-עונתי עם בשרים מתוצרת האזור",
+        "en": "Local, seasonal restaurant featuring regional meats"
+      },
       "lat": 32.853044,
-      "lng": 35.664300,
+      "lng": 35.6643,
       "icon": "🍽️",
-      "cuisine": "בשרים / מקומי",
+      "cuisine": {
+        "he": "בשרים / מקומי",
+        "en": "Meat / Local"
+      },
       "priceRange": "$$",
       "image": "",
       "link": "https://moshbutz-rest.co.il/",
       "phone": "053-2492668"
     },
+    {
+      "id": "restaurant_dudis",
+      "category": {
+        "he": "מסעדות",
+        "en": "Restaurants"
+      },
+      "name": {
+        "he": "דודיס (גבעת יואב)",
+        "en": "Dudis (Giv'at Yoav)"
+      },
+      "description": {
+        "he": "ביסטרו-בר כפרי עם דגש על תוצרת מקומית, בשרים, כריכים ובירה מהחבית",
+        "en": "Rural bistro-bar focusing on local produce, meats, sandwiches and draft beer"
+      },
+      "lat": 32.799267,
+      "lng": 35.684174,
+      "icon": "🍽️",
+      "cuisine": {
+        "he": "ישראלי / בשרים / ביסטרו",
+        "en": "Israeli / Meat / Bistro"
+      },
+      "priceRange": "$$",
+      "image": "",
+      "link": "https://dudis.co.il/",
+      "phone": "077-3228050"
+    },
+    {
+      "id": "restaurant_pizza_amici",
+      "category": {
+        "he": "מסעדות",
+        "en": "Restaurants"
+      },
+      "name": {
+        "he": "פיצה אמיצ'י (בני יהודה)",
+        "en": "Pizza Amici (Bnei Yehuda)"
+      },
+      "description": {
+        "he": "פיצרייה בסגנון נפוליטני; לשבת במקום או לקחת; כשר",
+        "en": "Neapolitan-style pizzeria; dine-in or takeaway; kosher"
+      },
+      "lat": 32.800882,
+      "lng": 35.688206,
+      "icon": "🍕",
+      "cuisine": {
+        "he": "איטלקי / פיצה",
+        "en": "Italian / Pizza"
+      },
+      "priceRange": "$",
+      "image": "",
+      "link": "https://tourgolan.org.il/listing/%D7%A4%D7%99%D7%A6%D7%94-%D7%90%D7%9E%D7%99%D7%A6%D7%99/",
+      "phone": "050-9030748"
+    },
+    {
+      "id": "restaurant_hamechalava_hayeshenah",
+      "category": {
+        "he": "מסעדות",
+        "en": "Restaurants"
+      },
+      "name": {
+        "he": "המחלבה הישנה – מסעדה ישראלית בשרית (גבעת יואב)",
+        "en": "The Old Dairy – Israeli Meat Restaurant (Giv'at Yoav)"
+      },
+      "description": {
+        "he": "מסעדת בר ישראלית בבניין המחלבה הישנה; בשרים, קוקטיילים ואירועי בוטיק",
+        "en": "Israeli bar-restaurant in the historic dairy building; meats, cocktails and boutique events"
+      },
+      "lat": 32.799489,
+      "lng": 35.684366,
+      "icon": "🍽️",
+      "cuisine": {
+        "he": "ישראלי / בשרים / בר",
+        "en": "Israeli / Meat / Bar"
+      },
+      "priceRange": "$$",
+      "image": "",
+      "link": "https://full-bar.co.il/",
+      "phone": "055-9923125"
+    }
+    ,
 
     {
       "id": "attraction_kursi",
-      "category": "אטרקציות",
-      "name": "גן לאומי כורסי",
-      "description": "מנזר וכנסייה ביזנטיים על שפת הכנרת המזרחית (אתר נס החזירים)",
+      "category": {
+        "he": "אטרקציות",
+        "en": "Attractions"
+      },
+      "name": {
+        "he": "גן לאומי כורסי",
+        "en": "Kursi National Park"
+      },
+      "description": {
+        "he": "מנזר וכנסייה ביזנטיים על שפת הכנרת המזרחית (אתר נס החזירים)",
+        "en": "Byzantine monastery and church on the eastern shore of the Sea of Galilee (site of the Miracle of the Swine)"
+      },
       "lat": 32.826086,
       "lng": 35.650378,
       "icon": "🎯",
-      "type": "גן לאומי / ארכאולוגיה",
-      "ageGroup": "כל המשפחה",
+      "type": {
+        "he": "גן לאומי / ארכאולוגיה",
+        "en": "National Park / Archeology"
+      },
+      "ageGroup": {
+        "he": "כל המשפחה",
+        "en": "All ages / Families"
+      },
       "image": "",
       "link": "https://en.parks.org.il/reserve-park/kursi-national-park/",
       "phone": "*3639"
     },
     {
       "id": "attraction_diamond_beach",
-      "category": "אטרקציות",
-      "name": "חוף הדיאמונד (כנרת, מזרח)",
-      "description": "חוף פראי פתוח, פופולרי לגולשי רוח; מדרום לחוף צאלון",
-      "lat": 32.835190,
+      "category": {
+        "he": "אטרקציות",
+        "en": "Attractions"
+      },
+      "name": {
+        "he": "חוף הדיאמונד (כנרת, מזרח)",
+        "en": "Diamond Beach (Eastern Kinneret)"
+      },
+      "description": {
+        "he": "חוף פראי פתוח, פופולרי לגולשי רוח; מדרום לחוף צאלון",
+        "en": "Wild open beach, popular for wind sports; south of Tsalon Beach"
+      },
+      "lat": 32.83519,
       "lng": 35.645058,
       "icon": "🎯",
-      "type": "חוף טבעי",
-      "ageGroup": "כל המשפחה",
+      "type": {
+        "he": "חוף טבעי",
+        "en": "Natural Beach"
+      },
+      "ageGroup": {
+        "he": "כל המשפחה",
+        "en": "All ages / Families"
+      },
       "image": "",
       "link": "https://www.tiuli.com/points-of-interest/836/%D7%97%D7%95%D7%A3-%D7%93%D7%99%D7%90%D7%9E%D7%95%D7%A0%D7%93-%D7%91%D7%9B%D7%99%D7%A0%D7%A8%D7%AA",
       "phone": ""
     },
     {
       "id": "attraction_pitaya_farm",
-      "category": "אטרקציות",
-      "name": "חוות הפיטאיה – משק גור (גבעת יואב)",
-      "description": "קמפינג ותיירות חקלאית במטעי פיטאיה עם סיורים ופעילויות",
+      "category": {
+        "he": "אטרקציות",
+        "en": "Attractions"
+      },
+      "name": {
+        "he": "חוות הפיטאיה – משק גור (גבעת יואב)",
+        "en": "Pitaya Farm – Gur Family (Giv'at Yoav)"
+      },
+      "description": {
+        "he": "קמפינג ותיירות חקלאית במטעי פיטאיה עם סיורים ופעילויות",
+        "en": "Camping and agritourism amid dragon-fruit orchards with tours and activities"
+      },
       "lat": 32.810163,
       "lng": 35.666082,
       "icon": "🎯",
-      "type": "תיירות חקלאית / קמפינג",
-      "ageGroup": "כל המשפחה",
+      "type": {
+        "he": "תיירות חקלאית / קמפינג",
+        "en": "Agritourism / Camping"
+      },
+      "ageGroup": {
+        "he": "כל המשפחה",
+        "en": "All ages / Families"
+      },
       "image": "",
       "link": "https://www.pitayafarm.co.il/",
       "phone": "050-3559366"
     },
     {
       "id": "attraction_chateau_golan",
-      "category": "אטרקציות",
-      "name": "שאטו גולן (יקב אליעד)",
-      "description": "יקב בוטיק במושב אליעד; מרכז מבקרים וטעימות בתיאום",
+      "category": {
+        "he": "אטרקציות",
+        "en": "Attractions"
+      },
+      "name": {
+        "he": "שאטו גולן (יקב אליעד)",
+        "en": "Chateau Golan (Eliad Winery)"
+      },
+      "description": {
+        "he": "יקב בוטיק במושב אליעד; מרכז מבקרים וטעימות בתיאום",
+        "en": "Boutique winery in Moshav Eliad; visitor center and tastings by appointment"
+      },
       "lat": 32.806717,
       "lng": 35.740946,
       "icon": "🎯",
-      "type": "יקב",
-      "ageGroup": "מבוגרים",
+      "type": {
+        "he": "יקב",
+        "en": "Winery"
+      },
+      "ageGroup": {
+        "he": "מבוגרים",
+        "en": "Adults"
+      },
       "image": "",
       "link": "http://www.chateaugolan.com/",
       "phone": "04-6600026"
+    },
+    {
+      "id": "attraction_masik_natural",
+      "category": {
+        "he": "אטרקציות",
+        "en": "Attractions"
+      },
+      "name": {
+        "he": "מסיק נטורל",
+        "en": "Masik Natural Cosmetics"
+      },
+      "description": {
+        "he": "חברה משפחתית למוצרי קוסמטיקה טבעיים – סבונים, שמנים וקרמים; מרכז מבקרים באזור גולן דרומי",
+        "en": "Family-run natural cosmetics—soaps, oils and creams; visitor center in the southern Golan"
+      },
+      "lat": 32.802162,
+      "lng": 35.718749,
+      "icon": "🎯",
+      "type": {
+        "he": "קוסמטיקה / מבקרים",
+        "en": "Cosmetics / Visitor Center"
+      },
+      "ageGroup": {
+        "he": "מבוגרים",
+        "en": "Adults"
+      },
+      "image": "",
+      "link": "https://masik-natural.com/en/",
+      "phone": "050-2515294"
     }
   ]
 }
