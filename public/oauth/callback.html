@@ -1,120 +1,134 @@
 <!DOCTYPE html>
 <html lang="he">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google OAuth Callback</title>
-    <style>
-        body {
-            font-family: 'Inter', 'Heebo', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            color: white;
-        }
-        .container {
-            text-align: center;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 2rem;
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-        }
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-top: 4px solid white;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 1rem;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .message {
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-        }
-        .error {
-            color: #ff6b6b;
-        }
-        .success {
-            color: #51cf66;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google OAuth Callback</title>
+  <style>
+    body {
+      font-family: 'Inter', 'Heebo', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      color: white;
+    }
+
+    .container {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 2rem;
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 4px solid rgba(255, 255, 255, 0.3);
+      border-top: 4px solid white;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 1rem;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .message {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .error {
+      color: #ff6b6b;
+    }
+
+    .success {
+      color: #51cf66;
+    }
+  </style>
 </head>
+
 <body>
-    <div class="container">
-        <div class="spinner"></div>
-        <div class="message" id="message">מתחבר ל-Google...</div>
-    </div>
+  <div class="container">
+    <div class="spinner"></div>
+    <div class="message" id="message">מתחבר ל-Google...</div>
+  </div>
 
-    <script>
-        // Parse URL parameters
-        const urlParams = new URLSearchParams(window.location.search);
-        const code = urlParams.get('code');
-        const error = urlParams.get('error');
-        const state = urlParams.get('state');
+  <script>
+    // Parse URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('code');
+    const error = urlParams.get('error');
+    const state = urlParams.get('state');
 
-        const messageEl = document.getElementById('message');
+    const messageEl = document.getElementById('message');
 
-        if (error) {
-            // Handle OAuth error
-            messageEl.textContent = 'שגיאה בהתחברות ל-Google: ' + error;
-            messageEl.className = 'message error';
-            
-            // Send error to parent window
-            if (window.opener) {
-                window.opener.postMessage({
-                    type: 'GOOGLE_OAUTH_ERROR',
-                    error: error
-                }, window.location.origin);
-            }
-            
-            // Close popup after 3 seconds
-            setTimeout(() => {
-                window.close();
-            }, 3000);
-        } else if (code) {
-            // Handle successful OAuth
-            messageEl.textContent = 'התחברות הצליחה! סוגר חלון...';
-            messageEl.className = 'message success';
-            
-            // Send success to parent window
-            if (window.opener) {
-                window.opener.postMessage({
-                    type: 'GOOGLE_OAUTH_SUCCESS',
-                    code: code,
-                    state: state
-                }, window.location.origin);
-            }
-            
-            // Close popup after 1 second
-            setTimeout(() => {
-                window.close();
-            }, 1000);
-        } else {
-            // No code or error - something went wrong
-            messageEl.textContent = 'שגיאה לא ידועה בהתחברות';
-            messageEl.className = 'message error';
-            
-            if (window.opener) {
-                window.opener.postMessage({
-                    type: 'GOOGLE_OAUTH_ERROR',
-                    error: 'No code or error parameter found'
-                }, window.location.origin);
-            }
-            
-            setTimeout(() => {
-                window.close();
-            }, 3000);
-        }
-    </script>
+    if (error) {
+      // Handle OAuth error
+      messageEl.textContent = 'שגיאה בהתחברות ל-Google: ' + error;
+      messageEl.className = 'message error';
+
+      // Send error to parent window
+      if (window.opener) {
+        window.opener.postMessage({
+          type: 'GOOGLE_OAUTH_ERROR',
+          error: error
+        }, window.location.origin);
+      }
+
+      // Close popup after 3 seconds
+      setTimeout(() => {
+        window.close();
+      }, 3000);
+    } else if (code) {
+      // Handle successful OAuth
+      messageEl.textContent = 'התחברות הצליחה! סוגר חלון...';
+      messageEl.className = 'message success';
+
+      // Send success to parent window
+      if (window.opener) {
+        window.opener.postMessage({
+          type: 'GOOGLE_OAUTH_SUCCESS',
+          code: code,
+          state: state
+        }, window.location.origin);
+      }
+
+      // Close popup after 1 second
+      setTimeout(() => {
+        window.close();
+      }, 1000);
+    } else {
+      // No code or error - something went wrong
+      messageEl.textContent = 'שגיאה לא ידועה בהתחברות';
+      messageEl.className = 'message error';
+
+      if (window.opener) {
+        window.opener.postMessage({
+          type: 'GOOGLE_OAUTH_ERROR',
+          error: 'No code or error parameter found'
+        }, window.location.origin);
+      }
+
+      setTimeout(() => {
+        window.close();
+      }, 3000);
+    }
+  </script>
 </body>
+
 </html>

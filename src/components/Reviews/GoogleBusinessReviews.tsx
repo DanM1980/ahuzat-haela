@@ -389,8 +389,8 @@ const RetryButton = styled.button<{ $isRTL: boolean }>`
 `;
 
 const OAuthButton = styled.button<{ $isRTL: boolean; $loading: boolean }>`
-  background: ${props => props.$loading 
-    ? 'linear-gradient(135deg, #ccc 0%, #999 100%)' 
+  background: ${props => props.$loading
+    ? 'linear-gradient(135deg, #ccc 0%, #999 100%)'
     : 'linear-gradient(135deg, #4285f4 0%, #34a853 100%)'
   };
   color: white;
@@ -408,10 +408,10 @@ const OAuthButton = styled.button<{ $isRTL: boolean; $loading: boolean }>`
   
   &:hover {
     transform: ${props => props.$loading ? 'none' : 'translateY(-3px)'};
-    box-shadow: ${props => props.$loading 
-      ? '0 8px 30px rgba(66, 133, 244, 0.3)' 
-      : '0 12px 40px rgba(66, 133, 244, 0.4)'
-    };
+    box-shadow: ${props => props.$loading
+    ? '0 8px 30px rgba(66, 133, 244, 0.3)'
+    : '0 12px 40px rgba(66, 133, 244, 0.4)'
+  };
   }
   
   ${props => props.$isRTL && `
@@ -580,7 +580,7 @@ const GoogleBusinessReviews: React.FC = () => {
   return (
     <ReviewsContainer id="reviews">
       <GlobalSwiperStyles />
-      
+
       <ReviewsContent>
         <SectionTitle $isRTL={isRTL}>
           {isRTL ? 'מה האורחים מספרים עלינו?' : 'What Our Guests Say'}
