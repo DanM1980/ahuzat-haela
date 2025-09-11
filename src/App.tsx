@@ -8,6 +8,7 @@ import Reviews from './components/Reviews/Reviews';
 import Contact from './components/Contact/Contact';
 import Footer from './components/Footer/Footer';
 import ScrollToTop from './components/ScrollToTop/ScrollToTop';
+// OAuth callback will be handled via popup, no routing needed
 
 // Lazy load heavy components
 const Gallery = lazy(() => import('./components/Gallery/Gallery'));
