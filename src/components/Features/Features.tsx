@@ -14,14 +14,14 @@ const Container = styled.div`
   padding: 0 2rem;
 `;
 
-const SectionTitle = styled.h2<{ isRTL: boolean }>`
+const SectionTitle = styled.h2<{ $isRTL: boolean }>`
   text-align: center;
   font-size: 2.5rem;
   color: rgb(41 37 36 / 1);
   margin-bottom: 3rem;
-  font-family: ${props => props.isRTL ? '"Heebo", sans-serif' : '"Inter", sans-serif'} !important;
+  font-family: ${props => props.$isRTL ? '"Heebo", sans-serif' : '"Inter", sans-serif'} !important;
   
-  ${props => props.isRTL && `
+  ${props => props.$isRTL && `
     direction: rtl;
   `}
 `;
@@ -49,7 +49,7 @@ const FeaturesContainer = styled.div`
   }
 `;
 
-const FeatureCard = styled.div<{ isRTL: boolean }>`
+const FeatureCard = styled.div<{ $isRTL: boolean }>`
   background: white;
   padding: 2.5rem 2rem;
   border-radius: 15px;
@@ -66,7 +66,7 @@ const FeatureCard = styled.div<{ isRTL: boolean }>`
     padding: 1.5rem 1rem;
   }
   
-  ${props => props.isRTL && `
+  ${props => props.$isRTL && `
     direction: rtl;
   `}
 `;
@@ -100,13 +100,13 @@ const FeatureIcon = styled.div`
   }
 `;
 
-const FeatureTitle = styled.h3<{ isRTL: boolean }>`
+const FeatureTitle = styled.h3<{ $isRTL: boolean }>`
   font-size: 1.3rem;
   color: #333;
   margin-bottom: 0.8rem;
   font-weight: 600;
   line-height: 1.3;
-  font-family: ${props => props.isRTL ? '"Heebo", sans-serif' : '"Inter", sans-serif'} !important;
+  font-family: ${props => props.$isRTL ? '"Heebo", sans-serif' : '"Inter", sans-serif'} !important;
   
   @media (max-width: 768px) {
     font-size: 1.1rem;
@@ -114,11 +114,11 @@ const FeatureTitle = styled.h3<{ isRTL: boolean }>`
   }
 `;
 
-const FeatureDescription = styled.p<{ isRTL: boolean }>`
+const FeatureDescription = styled.p<{ $isRTL: boolean }>`
   color: #666;
   font-size: 0.95rem;
   line-height: 1.5;
-  font-family: ${props => props.isRTL ? '"Heebo", sans-serif' : '"Inter", sans-serif'} !important;
+  font-family: ${props => props.$isRTL ? '"Heebo", sans-serif' : '"Inter", sans-serif'} !important;
   
   @media (max-width: 768px) {
     font-size: 0.85rem;
@@ -156,16 +156,16 @@ const Features: React.FC = () => {
   return (
     <FeaturesSection>
       <Container>
-        <SectionTitle isRTL={isRTL}>
+        <SectionTitle $isRTL={isRTL}>
           {language === 'he' ? 'למה לבחור באחוזת האלה?' : 'Why choose Ella Estate?'}
         </SectionTitle>
 
         <FeaturesContainer>
           {featureCards.map((card, index) => (
-            <FeatureCard key={index} isRTL={isRTL}>
+            <FeatureCard key={index} $isRTL={isRTL}>
               <FeatureIcon>{card.icon}</FeatureIcon>
-              <FeatureTitle isRTL={isRTL}>{card.title}</FeatureTitle>
-              <FeatureDescription isRTL={isRTL}>{card.description}</FeatureDescription>
+              <FeatureTitle $isRTL={isRTL}>{card.title}</FeatureTitle>
+              <FeatureDescription $isRTL={isRTL}>{card.description}</FeatureDescription>
             </FeatureCard>
           ))}
         </FeaturesContainer>

@@ -16,6 +16,7 @@ const translations = {
     // Navigation
     'nav.home': 'בית',
     'nav.gallery': 'גלריה',
+    'nav.map': 'מפה',
     'nav.contact': 'צור קשר',
 
     // Hero section
@@ -59,6 +60,7 @@ const translations = {
     // Navigation
     'nav.home': 'Home',
     'nav.gallery': 'Gallery',
+    'nav.map': 'Map',
     'nav.contact': 'Contact',
 
     // Hero section

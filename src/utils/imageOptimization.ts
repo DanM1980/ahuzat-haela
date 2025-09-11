@@ -9,7 +9,10 @@ export const preloadImage = (src: string): Promise<void> => {
   return new Promise((resolve, reject) => {
     const img = new Image();
     img.onload = () => resolve();
-    img.onerror = reject;
+    img.onerror = (error) => {
+      console.error('Error preloading image:', src, error);
+      reject(error);
+    };
     img.src = src;
   });
 };

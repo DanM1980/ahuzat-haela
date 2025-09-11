@@ -1,7 +1,7 @@
 import React, { useState, useEffect, memo } from 'react';
 import styled from 'styled-components';
 
-const ScrollButton = styled.button<{ isVisible: boolean }>`
+const ScrollButton = styled.button<{ $isVisible: boolean }>`
   position: fixed;
   bottom: 2rem;
   right: 2rem;
@@ -14,8 +14,8 @@ const ScrollButton = styled.button<{ isVisible: boolean }>`
   font-size: 1.5rem;
   font-family: "Inter", "Heebo", sans-serif !important;
   cursor: pointer;
-  opacity: ${props => props.isVisible ? 1 : 0};
-  visibility: ${props => props.isVisible ? 'visible' : 'hidden'};
+  opacity: ${props => props.$isVisible ? 1 : 0};
+  visibility: ${props => props.$isVisible ? 'visible' : 'hidden'};
   transition: all 0.3s ease;
   z-index: 1000;
   box-shadow: 0 4px 15px rgba(161, 98, 7, 0.3);
@@ -58,7 +58,7 @@ const ScrollToTop: React.FC = () => {
   };
 
   return (
-    <ScrollButton isVisible={isVisible} onClick={scrollToTop}>
+    <ScrollButton $isVisible={isVisible} onClick={scrollToTop}>
       ↑
     </ScrollButton>
   );

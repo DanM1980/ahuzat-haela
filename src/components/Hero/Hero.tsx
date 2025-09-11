@@ -21,13 +21,13 @@ const HeroBackgroundContainer = styled.div`
   z-index: 1;
 `;
 
-const HeroBackground = styled.div<{ imageUrl: string }>`
+const HeroBackground = styled.div<{ $imageUrl: string }>`
   position: absolute;
   top: -20%;
   left: 0;
   right: 0;
   bottom: -20%;
-  background-image: url(${props => props.imageUrl});
+  background-image: url(${props => props.$imageUrl});
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -36,7 +36,7 @@ const HeroBackground = styled.div<{ imageUrl: string }>`
   z-index: 1;
 `;
 
-const HeroContent = styled.div<{ isRTL: boolean }>`
+const HeroContent = styled.div<{ $isRTL: boolean }>`
   text-align: center;
   color: white;
   z-index: 2;
@@ -50,7 +50,7 @@ const HeroContent = styled.div<{ isRTL: boolean }>`
     margin-top: 7rem;
   }
   
-  ${props => props.isRTL && `
+  ${props => props.$isRTL && `
     direction: rtl;
   `}
 `;
@@ -147,14 +147,14 @@ const HeroLogoImage = styled.img`
   }
 `;
 
-const HeroSubtitle = styled.p<{ isRTL: boolean }>`
+const HeroSubtitle = styled.p<{ $isRTL: boolean }>`
   font-size: 2rem;
   font-weight: 500;
   margin-bottom: 1.5rem;
   opacity: 0.9;
   line-height: 1.6;
   color: #FFD700;
-  font-family: ${props => props.isRTL ? '"Heebo", sans-serif' : '"Inter", sans-serif'} !important;
+  font-family: ${props => props.$isRTL ? '"Heebo", sans-serif' : '"Inter", sans-serif'} !important;
   
   @media (max-width: 768px) {
     font-size: 1.6rem;
@@ -165,14 +165,14 @@ const HeroSubtitle = styled.p<{ isRTL: boolean }>`
   }
 `;
 
-const HeroDescription = styled.p<{ isRTL: boolean }>`
+const HeroDescription = styled.p<{ $isRTL: boolean }>`
   font-size: 1.4rem;
   font-weight: 400;
   margin-bottom: 2.5rem;
   opacity: 0.8;
   line-height: 1.6;
   color: #E0E0E0;
-  font-family: ${props => props.isRTL ? '"Heebo", sans-serif' : '"Inter", sans-serif'} !important;
+  font-family: ${props => props.$isRTL ? '"Heebo", sans-serif' : '"Inter", sans-serif'} !important;
   
   @media (max-width: 768px) {
     font-size: 1.2rem;
@@ -183,7 +183,7 @@ const HeroDescription = styled.p<{ isRTL: boolean }>`
   }
 `;
 
-const CTAButton = styled.button<{ isRTL: boolean }>`
+const CTAButton = styled.button<{ $isRTL: boolean }>`
   background: white;
   color: rgb(41 37 36 / 1);
   border: none;
@@ -194,7 +194,7 @@ const CTAButton = styled.button<{ isRTL: boolean }>`
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  font-family: ${props => props.isRTL ? '"Heebo", sans-serif' : '"Inter", sans-serif'} !important;
+  font-family: ${props => props.$isRTL ? '"Heebo", sans-serif' : '"Inter", sans-serif'} !important;
   
   &:hover {
     transform: translateY(-2px);
@@ -285,13 +285,13 @@ const Hero: React.FC = () => {
   return (
     <HeroSection id="hero">
       <HeroBackgroundContainer>
-        <HeroBackground imageUrl={selectedImage} />
+        <HeroBackground $imageUrl={selectedImage} />
       </HeroBackgroundContainer>
-      <HeroContent isRTL={isRTL}>
+      <HeroContent $isRTL={isRTL}>
         <HeroLogoSection>
           <HeroLogoContainer>
-            <HeroLogoImage 
-              src="/logo.png" 
+            <HeroLogoImage
+              src="/logo.png"
               alt="אחוזת האלה - Ella Estate"
               onError={(e) => {
                 // Fallback to logo-bw.png if logo.png fails
@@ -304,9 +304,9 @@ const Hero: React.FC = () => {
             <HeroSiteNameEnglish>Ella Estate</HeroSiteNameEnglish>
           </HeroSiteName>
         </HeroLogoSection>
-        <HeroSubtitle isRTL={isRTL}>{t('hero.subtitle')}</HeroSubtitle>
-        <HeroDescription isRTL={isRTL}>{t('hero.description')}</HeroDescription>
-        <CTAButton isRTL={isRTL} onClick={scrollToNext}>
+        <HeroSubtitle $isRTL={isRTL}>{t('hero.subtitle')}</HeroSubtitle>
+        <HeroDescription $isRTL={isRTL}>{t('hero.description')}</HeroDescription>
+        <CTAButton $isRTL={isRTL} onClick={scrollToNext}>
           {t('hero.cta')}
         </CTAButton>
       </HeroContent>

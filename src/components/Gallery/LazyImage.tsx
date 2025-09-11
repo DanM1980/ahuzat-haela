@@ -11,21 +11,21 @@ interface LazyImageProps {
   onLoad?: () => void;
 }
 
-const ImageContainer = styled.div<{ loaded: boolean }>`
+const ImageContainer = styled.div<{ $loaded: boolean }>`
   position: relative;
   width: 100%;
   height: 100%;
   overflow: hidden;
   transition: opacity 0.3s ease;
-  opacity: ${props => props.loaded ? 1 : 0.7};
+  opacity: ${props => props.$loaded ? 1 : 0.7};
 `;
 
-const StyledImage = styled.img<{ loaded: boolean; objectFit?: string }>`
+const StyledImage = styled.img<{ $loaded: boolean; objectFit?: string }>`
   width: 100%;
   height: 100%;
   object-fit: ${props => props.objectFit || 'cover'};
   transition: opacity 0.3s ease;
-  opacity: ${props => props.loaded ? 1 : 0};
+  opacity: ${props => props.$loaded ? 1 : 0};
 `;
 
 const LoadingPlaceholder = styled.div`
@@ -51,6 +51,7 @@ const LoadingPlaceholder = styled.div`
 const LazyImage: React.FC<LazyImageProps> = ({ src, alt, className, style, children, objectFit, onLoad }) => {
   const [loaded, setLoaded] = useState(false);
   const [inView, setInView] = useState(false);
+  const [error, setError] = useState(false);
   const imgRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -79,16 +80,22 @@ const LazyImage: React.FC<LazyImageProps> = ({ src, alt, className, style, child
     onLoad?.();
   };
 
+  const handleError = () => {
+    setError(true);
+    console.error('Error loading image:', src);
+  };
+
   return (
-    <ImageContainer ref={imgRef} loaded={loaded} className={className} style={style}>
+    <ImageContainer ref={imgRef} $loaded={loaded} className={className} style={style}>
       {!loaded && <LoadingPlaceholder />}
       {inView && (
         <StyledImage
           src={src}
           alt={alt}
-          loaded={loaded}
+          $loaded={loaded}
           objectFit={objectFit}
           onLoad={handleLoad}
+          onError={handleError}
           loading="lazy"
         />
       )}

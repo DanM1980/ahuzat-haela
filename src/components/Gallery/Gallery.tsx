@@ -31,30 +31,30 @@ const Container = styled.div`
   overflow: visible;
 `;
 
-const SectionTitle = styled.h2<{ isRTL: boolean }>`
+const SectionTitle = styled.h2<{ $isRTL: boolean }>`
   text-align: center;
   font-size: 2.5rem;
   color: rgb(41 37 36 / 1);
   margin-bottom: 1rem;
-  font-family: ${props => props.isRTL ? '"Heebo", sans-serif' : '"Inter", sans-serif'} !important;
+  font-family: ${props => props.$isRTL ? '"Heebo", sans-serif' : '"Inter", sans-serif'} !important;
   font-weight: 600;
   letter-spacing: -0.02em;
   
-  ${props => props.isRTL && `
+  ${props => props.$isRTL && `
     direction: rtl;
   `}
 `;
 
-const SectionSubtitle = styled.p<{ isRTL: boolean }>`
+const SectionSubtitle = styled.p<{ $isRTL: boolean }>`
   text-align: center;
   font-size: 1.1rem;
   color: #666;
   margin-bottom: 3rem;
-  font-family: ${props => props.isRTL ? '"Heebo", sans-serif' : '"Inter", sans-serif'} !important;
+  font-family: ${props => props.$isRTL ? '"Heebo", sans-serif' : '"Inter", sans-serif'} !important;
   font-weight: 400;
   line-height: 1.6;
   
-  ${props => props.isRTL && `
+  ${props => props.$isRTL && `
     direction: rtl;
   `}
 `;
@@ -261,14 +261,14 @@ const OverlayIcon = styled.div`
 `;
 
 
-const LightboxModal = styled.div<{ isOpen: boolean }>`
+const LightboxModal = styled.div<{ $isOpen: boolean }>`
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.95);
-  display: ${props => props.isOpen ? 'flex' : 'none'};
+  display: ${props => props.$isOpen ? 'flex' : 'none'};
   align-items: center;
   justify-content: center;
   z-index: 2000;
@@ -619,9 +619,9 @@ const Gallery: React.FC = () => {
     <GallerySection id="gallery">
       <GlobalSwiperStyles />
       <Container>
-        <SectionTitle isRTL={isRTL}>{t('gallery.title')}</SectionTitle>
-        <SectionSubtitle isRTL={isRTL}>{t('gallery.subtitle')}</SectionSubtitle>
-        
+        <SectionTitle $isRTL={isRTL}>{t('gallery.title')}</SectionTitle>
+        <SectionSubtitle $isRTL={isRTL}>{t('gallery.subtitle')}</SectionSubtitle>
+
         <SwiperContainer>
           <Swiper
             modules={[Navigation, Pagination]}
@@ -640,8 +640,8 @@ const Gallery: React.FC = () => {
                   {group.map((cottage, index) => {
                     const globalIndex = groupIndex * 6 + index;
                     return (
-                      <MemoizedGalleryItem 
-                        key={cottage.id} 
+                      <MemoizedGalleryItem
+                        key={cottage.id}
                         cottage={cottage}
                         globalIndex={globalIndex}
                         onOpenLightbox={openLightbox}
@@ -654,42 +654,42 @@ const Gallery: React.FC = () => {
           </Swiper>
         </SwiperContainer>
       </Container>
-      
-      <LightboxModal isOpen={selectedImageIndex !== null} onClick={closeLightbox}>
+
+      <LightboxModal $isOpen={selectedImageIndex !== null} onClick={closeLightbox}>
         <LightboxContent onClick={(e) => e.stopPropagation()}>
           <CloseButton onClick={closeLightbox}>×</CloseButton>
-          
+
           {selectedImageIndex !== null && (
             <>
-              <PrevButton 
-                onClick={goToPrevious} 
+              <PrevButton
+                onClick={goToPrevious}
                 disabled={selectedImageIndex === 0}
               >
                 ‹
               </PrevButton>
-              
-              <LazyImage 
+
+              <LazyImage
                 key={selectedImageIndex}
-                src={cottages[selectedImageIndex].fullImage} 
+                src={cottages[selectedImageIndex].fullImage}
                 alt={isRTL ? cottages[selectedImageIndex].title : cottages[selectedImageIndex].titleEn}
                 objectFit="contain"
-                style={{ 
-                  width: '100%', 
-                  height: '100%', 
-                  opacity: isImageLoading ? 0 : 1 
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  opacity: isImageLoading ? 0 : 1
                 }}
                 onLoad={() => setIsImageLoading(false)}
               />
-              
+
               {isImageLoading && <LoadingSpinner />}
-              
-              <NextButton 
-                onClick={goToNext} 
+
+              <NextButton
+                onClick={goToNext}
                 disabled={selectedImageIndex === cottages.length - 1}
               >
                 ›
               </NextButton>
-              
+
               <ImageCounter>
                 {selectedImageIndex + 1} / {cottages.length}
               </ImageCounter>
