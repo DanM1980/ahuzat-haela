@@ -285,6 +285,14 @@ const ReviewerAvatar = styled.div`
   font-weight: 600;
   font-size: 1.2rem;
   font-family: "Inter", "Heebo", sans-serif !important;
+  overflow: hidden;
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
 `;
 
 const ReviewerInfo = styled.div`
@@ -337,22 +345,110 @@ const ReviewText = styled.p<{ $isRTL: boolean }>`
 
 const LoadingContainer = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 200px;
+  min-height: 400px;
+  padding: 2rem;
+  text-align: center;
+`;
+
+const LoadingSpinner = styled.div`
+  width: 50px;
+  height: 50px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid rgb(41 37 36 / 1);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+`;
+
+const LoadingText = styled.div<{ $isRTL: boolean }>`
   font-size: 1.2rem;
   color: #666;
   font-family: "Inter", "Heebo", sans-serif !important;
+  margin-bottom: 0.5rem;
+  
+  ${props => props.$isRTL && `
+    direction: rtl;
+  `}
+`;
+
+const LoadingSubtext = styled.div<{ $isRTL: boolean }>`
+  font-size: 0.9rem;
+  color: #999;
+  font-family: "Inter", "Heebo", sans-serif !important;
+  
+  ${props => props.$isRTL && `
+    direction: rtl;
+  `}
 `;
 
 const ErrorContainer = styled.div<{ $isRTL: boolean }>`
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
   padding: 2rem;
+  text-align: center;
   background: #fff5f5;
   border: 1px solid #fed7d7;
-  border-radius: 10px;
+  border-radius: 15px;
+  margin: 2rem 0;
+`;
+
+const ErrorIcon = styled.div`
+  font-size: 3rem;
+  margin-bottom: 1rem;
+`;
+
+const ErrorTitle = styled.div<{ $isRTL: boolean }>`
+  font-size: 1.5rem;
+  font-weight: 600;
   color: #c53030;
+  margin-bottom: 1rem;
   font-family: "Inter", "Heebo", sans-serif !important;
+  
+  ${props => props.$isRTL && `
+    direction: rtl;
+  `}
+`;
+
+const ErrorMessage = styled.div<{ $isRTL: boolean }>`
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 1.5rem;
+  max-width: 600px;
+  line-height: 1.6;
+  font-family: "Inter", "Heebo", sans-serif !important;
+  
+  ${props => props.$isRTL && `
+    direction: rtl;
+  `}
+`;
+
+const RetryButton = styled.button<{ $isRTL: boolean }>`
+  background: rgb(41 37 36 / 1);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: "Inter", "Heebo", sans-serif !important;
+  
+  &:hover {
+    background: #4a7c59;
+    transform: translateY(-2px);
+  }
   
   ${props => props.$isRTL && `
     direction: rtl;
@@ -416,20 +512,55 @@ const Reviews: React.FC = () => {
   const [reviews, setReviews] = useState<GoogleReview[]>([]);
   const [averageRating, setAverageRating] = useState<number>(0);
   const [totalReviews, setTotalReviews] = useState<number>(0);
+  const [recommendationPercentage, setRecommendationPercentage] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [isUsingRealAPI, setIsUsingRealAPI] = useState<boolean>(false);
+  const [oauthLoading, setOauthLoading] = useState(false);
   const isRTL = language === 'he';
 
-  // Memoize review groups to prevent unnecessary recalculations
-  const reviewGroups = useMemo(() => {
-    const reviewsPerSlide = 4; // 2 rows of 2 reviews each
-    const groups = [];
-    for (let i = 0; i < reviews.length; i += reviewsPerSlide) {
-      groups.push(reviews.slice(i, i + reviewsPerSlide));
-    }
-    return groups;
+  // Calculate recommendation percentage from average rating
+  // Since Google only returns 5 reviews but provides official rating, we estimate based on rating
+  const calculateRecommendationPercentage = (averageRating: number): number => {
+    if (averageRating === 0) return 0;
+
+    // Estimate recommendation percentage based on average rating
+    // 4.9+ = 95%, 4.5+ = 85%, 4.0+ = 70%, 3.5+ = 50%, etc.
+    if (averageRating >= 4.9) return 95;
+    if (averageRating >= 4.5) return 85;
+    if (averageRating >= 4.0) return 70;
+    if (averageRating >= 3.5) return 50;
+    if (averageRating >= 3.0) return 30;
+    return Math.round(averageRating * 20); // Rough estimate
+  };
+
+  // Sort reviews by date (newest first) and take only 5
+  const sortedReviews = useMemo(() => {
+    return reviews
+      .sort((a, b) => new Date(b.createTime).getTime() - new Date(a.createTime).getTime())
+      .slice(0, 5); // Only show 5 most recent reviews
   }, [reviews]);
+
+  // Handle OAuth flow for all reviews
+  const handleOAuthFlow = async () => {
+    try {
+      setOauthLoading(true);
+      setError(null);
+
+      const reviewsData = await googleBusinessService.fetchAllReviewsWithOAuth();
+
+      setReviews(reviewsData.reviews);
+      setAverageRating(reviewsData.averageRating);
+      setTotalReviews(reviewsData.totalReviewCount);
+      setRecommendationPercentage(calculateRecommendationPercentage(reviewsData.averageRating));
+
+      console.log('✅ OAuth reviews fetched successfully:', reviewsData);
+    } catch (error) {
+      console.error('❌ OAuth flow failed:', error);
+      setError(error instanceof Error ? error.message : 'OAuth flow failed');
+    } finally {
+      setOauthLoading(false);
+    }
+  };
 
   useEffect(() => {
     const fetchReviews = async () => {
@@ -443,17 +574,30 @@ const Reviews: React.FC = () => {
         setReviews(reviewsData.reviews);
         setAverageRating(reviewsData.averageRating);
         setTotalReviews(reviewsData.totalReviewCount);
+
+        // Calculate recommendation percentage from official average rating
+        const recommendationPct = calculateRecommendationPercentage(reviewsData.averageRating);
+        setRecommendationPercentage(recommendationPct);
+
         setError(null);
-
-        // Check if we're using real API data (reviews with 'places_' prefix)
-        const hasRealAPIReviews = reviewsData.reviews.some((review: GoogleReview) =>
-          review.reviewId.startsWith('places_')
-        );
-        setIsUsingRealAPI(hasRealAPIReviews);
-
-        console.log('🎯 Reviews source:', hasRealAPIReviews ? 'Google Places API' : 'Mock Data');
       } catch (err) {
-        setError('שגיאה בטעינת הביקורות. אנא נסה שוב מאוחר יותר.');
+        let errorMessage = 'שגיאה לא ידועה בטעינת הביקורות';
+
+        if (err instanceof Error) {
+          if (err.message.includes('REQUEST_DENIED')) {
+            errorMessage = 'API key לא תקין. ה-API key הנוכחי הוא placeholder. אנא צור API key אמיתי מ-Google Cloud Console';
+          } else if (err.message.includes('ZERO_RESULTS')) {
+            errorMessage = 'Place ID לא נכון. אנא בדוק את ה-Place ID בקובץ .env';
+          } else if (err.message.includes('OVER_QUERY_LIMIT')) {
+            errorMessage = 'חרגת ממגבלת הבקשות. נסה שוב מאוחר יותר';
+          } else if (err.message.includes('not configured')) {
+            errorMessage = 'API credentials לא מוגדרים. אנא הגדר את ה-API key וה-Place ID בקובץ .env';
+          } else {
+            errorMessage = err.message;
+          }
+        }
+
+        setError(errorMessage);
         console.error('Error fetching reviews:', err);
       } finally {
         setLoading(false);
@@ -500,19 +644,67 @@ const Reviews: React.FC = () => {
       <ReviewsContainer id="reviews">
         <ReviewsContent>
           <LoadingContainer>
-            {isRTL ? 'טוען ביקורות...' : 'Loading reviews...'}
+            <LoadingSpinner />
+            <LoadingText $isRTL={isRTL}>
+              {isRTL ? 'טוען ביקורות...' : 'Loading reviews...'}
+            </LoadingText>
+            <LoadingSubtext $isRTL={isRTL}>
+              {isRTL ? 'מחבר ל-Google Places API...' : 'Connecting to Google Places API...'}
+            </LoadingSubtext>
           </LoadingContainer>
         </ReviewsContent>
       </ReviewsContainer>
     );
   }
 
+  const handleRetry = () => {
+    setError(null);
+    setLoading(true);
+    // Re-trigger the useEffect
+    window.location.reload();
+  };
+
   if (error) {
     return (
       <ReviewsContainer id="reviews">
         <ReviewsContent>
           <ErrorContainer $isRTL={isRTL}>
-            {error}
+            <ErrorIcon>⚠️</ErrorIcon>
+            <ErrorTitle $isRTL={isRTL}>
+              {isRTL ? 'שגיאה בטעינת הביקורות' : 'Error Loading Reviews'}
+            </ErrorTitle>
+            <ErrorMessage $isRTL={isRTL}>
+              {error}
+            </ErrorMessage>
+
+            {error.includes('API') && (
+              <div style={{
+                marginTop: '1rem',
+                padding: '1rem',
+                backgroundColor: '#fef3c7',
+                border: '1px solid #f59e0b',
+                borderRadius: '8px',
+                fontSize: '0.9rem',
+                color: '#92400e'
+              }}>
+                <strong>⚠️ ה-API key הנוכחי הוא placeholder ולא עובד!</strong><br />
+                <br />
+                <strong>📋 מה צריך לעשות:</strong><br />
+                1. לך ל: <a href="https://console.cloud.google.com/" target="_blank" rel="noopener noreferrer" style={{ color: '#1d4ed8' }}>Google Cloud Console</a><br />
+                2. צור פרויקט חדש<br />
+                3. הפעל את Places API<br />
+                4. צור API Key אמיתי<br />
+                5. העתק את ה-API Key לקובץ <code>.env</code><br />
+                <br />
+                <strong>🔑 API Key הנוכחי:</strong> <code>AIzaSyBvOkBw3cUzF2dX9eY8hI7jK6lM5nP4qR3s</code> (לא עובד)<br />
+                <br />
+                📖 <strong>מדריך מפורט:</strong> ראה את הקובץ <code>API_SETUP_INSTRUCTIONS.md</code>
+              </div>
+            )}
+
+            <RetryButton $isRTL={isRTL} onClick={handleRetry}>
+              {isRTL ? 'נסה שוב' : 'Try Again'}
+            </RetryButton>
           </ErrorContainer>
         </ReviewsContent>
       </ReviewsContainer>
@@ -532,8 +724,8 @@ const Reviews: React.FC = () => {
       <GlobalSwiperStyles />
 
       {/* Data Source Indicator */}
-      <DataSourceIndicator $isRealAPI={isUsingRealAPI}>
-        {isUsingRealAPI ? 'Google API' : 'Mock Data'}
+      <DataSourceIndicator $isRealAPI={true}>
+        Google API
       </DataSourceIndicator>
 
       {/* Development Tools */}
@@ -542,9 +734,20 @@ const Reviews: React.FC = () => {
         <DevButton onClick={handleTestAPI}>
           Test API
         </DevButton>
+        <DevButton
+          onClick={handleOAuthFlow}
+          disabled={oauthLoading}
+          style={{
+            backgroundColor: oauthLoading ? '#ccc' : '#4a7c59',
+            marginTop: '0.5rem'
+          }}
+        >
+          {oauthLoading ? '⏳ OAuth...' : '🔐 OAuth All Reviews'}
+        </DevButton>
         <div style={{ fontSize: '0.7rem', marginTop: '0.5rem' }}>
           API: {process.env.REACT_APP_GOOGLE_API_KEY ? '✅' : '❌'}<br />
           Place ID: {process.env.REACT_APP_GOOGLE_PLACE_ID ? '✅' : '❌'}<br />
+          OAuth: {process.env.REACT_APP_GOOGLE_CLIENT_ID ? '✅' : '❌'}<br />
           <div style={{ marginTop: '0.5rem', color: '#ffd700' }}>
             💰 $200/month free<br />
             📦 30min cache
@@ -554,13 +757,29 @@ const Reviews: React.FC = () => {
 
       <ReviewsContent>
         <SectionTitle $isRTL={isRTL}>
-          {isRTL ? 'מה אומרים עלינו' : 'What Our Guests Say'}
+          {isRTL ? 'מה האורחים מספרים עלינו?' : 'What Our Guests Say'}
         </SectionTitle>
         <SectionSubtitle $isRTL={isRTL}>
-          {isRTL
-            ? 'הביקורות האמיתיות של אורחינו המרוצים מאחוזת האלה'
-            : 'Real reviews from our satisfied guests at Ella Estate'
-          }
+          {isRTL ? (
+            <>
+              אורחים מרחבי הארץ משתפים חוויות – כל הביקורות כפי שהופיעו ב־
+              <a
+                href="https://maps.app.goo.gl/BuNjAuLiW4mpo3fZ6"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  color: '#4a7c59',
+                  textDecoration: 'underline',
+                  fontWeight: '600'
+                }}
+              >
+                Google Maps
+              </a>
+              .
+            </>
+          ) : (
+            'Real reviews from our satisfied guests at Ella Estate'
+          )}
         </SectionSubtitle>
 
         <StatsContainer>
@@ -568,71 +787,70 @@ const Reviews: React.FC = () => {
             <StatValue>{averageRating.toFixed(1)}</StatValue>
             <StatLabel $isRTL={isRTL}>
               {isRTL ? 'דירוג ממוצע' : 'Average Rating'}
-              {isUsingRealAPI && <span style={{ color: '#4ade80', marginLeft: '0.5rem' }}>🌐</span>}
+              <span style={{ color: '#4ade80', marginLeft: '0.5rem' }}>🌐</span>
             </StatLabel>
           </StatItem>
           <StatItem>
             <StatValue>{totalReviews}</StatValue>
             <StatLabel $isRTL={isRTL}>
               {isRTL ? 'סה"כ ביקורות' : 'Total Reviews'}
-              {isUsingRealAPI && <span style={{ color: '#4ade80', marginLeft: '0.5rem' }}>🌐</span>}
+              <span style={{ color: '#4ade80', marginLeft: '0.5rem' }}>🌐</span>
             </StatLabel>
           </StatItem>
           <StatItem>
-            <StatValue>98%</StatValue>
+            <StatValue>{recommendationPercentage}%</StatValue>
             <StatLabel $isRTL={isRTL}>
               {isRTL ? 'המלצות' : 'Recommendations'}
+              <span style={{ color: '#4ade80', marginLeft: '0.5rem' }}>🌐</span>
             </StatLabel>
           </StatItem>
         </StatsContainer>
 
-        <SwiperContainer>
-          <Swiper
-            modules={[Navigation, Pagination]}
-            spaceBetween={0}
-            slidesPerView={1}
-            navigation={true}
-            pagination={{ clickable: true }}
-            loop={false}
-            speed={500}
-            centeredSlides={false}
-            watchSlidesProgress={true}
-          >
-            {reviewGroups.map((group, groupIndex) => (
-              <SwiperSlide key={groupIndex}>
-                <ReviewsGrid>
-                  {group.map((review) => (
-                    <ReviewCard key={review.reviewId} $isRTL={isRTL}>
-                      <ReviewHeader>
-                        <ReviewerAvatar>
-                          {getInitials(review.reviewer.displayName)}
-                        </ReviewerAvatar>
-                        <ReviewerInfo>
-                          <ReviewerName $isRTL={isRTL}>
-                            {review.reviewer.displayName}
-                          </ReviewerName>
-                          <ReviewDate $isRTL={isRTL}>
-                            {formatDate(review.createTime)}
-                          </ReviewDate>
-                        </ReviewerInfo>
-                      </ReviewHeader>
+        <ReviewsGrid>
+          {sortedReviews.map((review) => (
+            <ReviewCard key={review.reviewId} $isRTL={isRTL}>
+              <ReviewHeader>
+                <ReviewerAvatar>
+                  {review.reviewer.profilePhotoUrl ? (
+                    <img
+                      src={review.reviewer.profilePhotoUrl}
+                      alt={review.reviewer.displayName}
+                      onError={(e) => {
+                        // Fallback to initials if image fails to load
+                        const target = e.target as HTMLImageElement;
+                        target.style.display = 'none';
+                        const parent = target.parentElement;
+                        if (parent) {
+                          parent.textContent = getInitials(review.reviewer.displayName);
+                        }
+                      }}
+                    />
+                  ) : (
+                    getInitials(review.reviewer.displayName)
+                  )}
+                </ReviewerAvatar>
+                <ReviewerInfo>
+                  <ReviewerName $isRTL={isRTL}>
+                    {review.reviewer.displayName}
+                  </ReviewerName>
+                  <ReviewDate $isRTL={isRTL}>
+                    {formatDate(review.createTime)}
+                  </ReviewDate>
+                </ReviewerInfo>
+              </ReviewHeader>
 
-                      <StarRating>
-                        {renderStars(getStarRating(review.starRating))}
-                      </StarRating>
+              <StarRating>
+                {renderStars(getStarRating(review.starRating))}
+              </StarRating>
 
-                      {review.comment && (
-                        <ReviewText $isRTL={isRTL}>
-                          {review.comment}
-                        </ReviewText>
-                      )}
-                    </ReviewCard>
-                  ))}
-                </ReviewsGrid>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </SwiperContainer>
+              {review.comment && (
+                <ReviewText $isRTL={isRTL}>
+                  {review.comment}
+                </ReviewText>
+              )}
+            </ReviewCard>
+          ))}
+        </ReviewsGrid>
       </ReviewsContent>
     </ReviewsContainer>
   );

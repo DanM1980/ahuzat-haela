@@ -21,7 +21,7 @@ export const testGooglePlacesAPI = async () => {
     return result;
   } catch (error) {
     console.error('❌ API Test Failed:', error);
-    console.log('📋 Using mock data as fallback.');
+    console.log('📋 API connection failed. Check your credentials.');
     return null;
   }
 };
