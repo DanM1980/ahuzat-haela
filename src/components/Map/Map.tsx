@@ -180,6 +180,126 @@ const MapComponent: React.FC<MapComponentProps> = ({
           setInfoWindow(newInfoWindow);
         }
 
+        // Create Ella Estate logo marker (always visible)
+        const ellaEstateMarkerElement = document.createElement('div');
+        ellaEstateMarkerElement.innerHTML = `
+          <div style="
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #FFD700 0%, #FF8C00 100%);
+            border: 3px solid white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+            cursor: pointer;
+            animation: pulse 2s infinite;
+          ">
+            🏡
+          </div>
+          <style>
+            @keyframes pulse {
+              0% { transform: scale(1); }
+              50% { transform: scale(1.1); }
+              100% { transform: scale(1); }
+            }
+          </style>
+        `;
+
+        const ellaEstateMarker = new window.google.maps.marker.AdvancedMarkerElement({
+          position: center,
+          map: map,
+          title: 'אחוזת האלה',
+          content: ellaEstateMarkerElement
+        });
+
+        // Add click listener for Ella Estate marker
+        ellaEstateMarker.addListener('click', () => {
+          if (infoWindow) {
+            const content = `
+              <div style="
+                font-family: 'Inter', 'Heebo', sans-serif;
+                max-width: 350px;
+                max-height: 500px;
+                padding: 0;
+                direction: rtl;
+                overflow: hidden;
+              ">
+                <div style="
+                  background: linear-gradient(135deg, #FFD700 0%, #FF8C00 100%);
+                  color: white;
+                  padding: 1rem;
+                  border-radius: 12px 12px 0 0;
+                  text-align: center;
+                  position: relative;
+                ">
+                  <div style="font-size: 2rem; margin-bottom: 0.5rem;">🏡</div>
+                  <h3 style="margin: 0; font-size: 1.3rem; font-weight: 700;">אחוזת האלה</h3>
+                  <div style="
+                    background: rgba(255,255,255,0.2);
+                    color: white;
+                    padding: 0.25rem 0.75rem;
+                    border-radius: 15px;
+                    font-size: 0.9rem;
+                    font-weight: 500;
+                    display: inline-block;
+                    margin-top: 0.5rem;
+                  ">מתחם אירוח</div>
+                </div>
+                
+                <div style="padding: 1rem; background: white; border-radius: 0 0 12px 12px;">
+                  <p style="
+                    color: #666;
+                    line-height: 1.5;
+                    margin: 0 0 1rem 0;
+                    font-size: 0.9rem;
+                  ">מתחם אירוח יוקרתי בדרום רמת הגולן עם 4 יחידות אירוח, ג'קוזי, בריכה מחוממת וסאונה יבשה</p>
+                  
+                  <div style="
+                    display: flex;
+                    gap: 0.5rem;
+                    margin-top: 1rem;
+                    flex-wrap: wrap;
+                  ">
+                    <a href="tel:052-6658209" style="
+                      background: #4a7c59;
+                      color: white;
+                      padding: 0.5rem 1rem;
+                      border-radius: 8px;
+                      text-decoration: none;
+                      font-size: 0.9rem;
+                      font-weight: 500;
+                      transition: all 0.3s ease;
+                      display: inline-block;
+                    " onmouseover="this.style.background='#3d6b4a'" onmouseout="this.style.background='#4a7c59'">
+                      התקשר
+                    </a>
+                    <a href="https://maps.app.goo.gl/BuNjAuLiW4mpo3fZ6" target="_blank" rel="noopener noreferrer" style="
+                      background: #28a745;
+                      color: white;
+                      padding: 0.5rem 1rem;
+                      border-radius: 8px;
+                      text-decoration: none;
+                      font-size: 0.9rem;
+                      font-weight: 500;
+                      transition: all 0.3s ease;
+                      display: inline-block;
+                    " onmouseover="this.style.background='#218838'" onmouseout="this.style.background='#28a745'">
+                      מידע נוסף
+                    </a>
+                  </div>
+                </div>
+              </div>
+            `;
+
+            infoWindow.setContent(content);
+            infoWindow.open(map, ellaEstateMarker);
+          }
+        });
+
         // Filter attractions by selected category
         const filteredAttractions = selectedCategory
           ? attractions.filter(attraction => attraction.category === selectedCategory)
@@ -187,6 +307,9 @@ const MapComponent: React.FC<MapComponentProps> = ({
 
         // Create new markers
         const newMarkers: google.maps.marker.AdvancedMarkerElement[] = [];
+
+        // Add Ella Estate marker to the markers array
+        newMarkers.push(ellaEstateMarker);
 
         filteredAttractions.forEach(attraction => {
           try {
