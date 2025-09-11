@@ -188,14 +188,6 @@ const DesktopHeader: React.FC = () => {
           <NavLink
             $isRTL={isRTL}
             $isScrolled={isScrolled}
-            onClick={() => scrollToSection('reviews')}
-          >
-            {t('nav.reviews')}
-          </NavLink>
-
-          <NavLink
-            $isRTL={isRTL}
-            $isScrolled={isScrolled}
             onClick={() => scrollToSection('contact')}
           >
             {t('nav.contact')}

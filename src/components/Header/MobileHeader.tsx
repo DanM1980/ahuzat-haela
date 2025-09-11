@@ -249,12 +249,6 @@ const MobileHeader: React.FC = () => {
           </MobileNavLink>
           <MobileNavLink
             $isRTL={isRTL}
-            onClick={() => scrollToSection('reviews')}
-          >
-            {t('nav.reviews')}
-          </MobileNavLink>
-          <MobileNavLink
-            $isRTL={isRTL}
             onClick={() => scrollToSection('contact')}
           >
             {t('nav.contact')}

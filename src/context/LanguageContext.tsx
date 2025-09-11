@@ -15,7 +15,6 @@ const translations = {
   he: {
     // Navigation
     'nav.home': 'בית',
-    'nav.reviews': 'ביקורות',
     'nav.gallery': 'גלריה',
     'nav.contact': 'צור קשר',
 
@@ -59,7 +58,6 @@ const translations = {
   en: {
     // Navigation
     'nav.home': 'Home',
-    'nav.reviews': 'Reviews',
     'nav.gallery': 'Gallery',
     'nav.contact': 'Contact',
 
