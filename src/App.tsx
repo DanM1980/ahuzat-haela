@@ -4,7 +4,7 @@ import { LanguageProvider } from './context/LanguageContext';
 import Header from './components/Header/Header';
 import Hero from './components/Hero/Hero';
 import Features from './components/Features/Features';
-import Reviews from './components/Reviews/Reviews';
+import GoogleBusinessReviews from './components/Reviews/GoogleBusinessReviews';
 import Contact from './components/Contact/Contact';
 import Footer from './components/Footer/Footer';
 import ScrollToTop from './components/ScrollToTop/ScrollToTop';
@@ -143,7 +143,7 @@ function App() {
         <Suspense fallback={<div style={{ height: '500px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>טוען גלריה...</div>}>
           <Gallery />
         </Suspense>
-        <Reviews />
+        <GoogleBusinessReviews />
         <Contact />
         <Footer />
         <ScrollToTop />
