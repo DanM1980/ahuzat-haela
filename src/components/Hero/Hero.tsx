@@ -148,7 +148,7 @@ const HeroLogoImage = styled.img`
 `;
 
 const HeroSubtitle = styled.p<{ $isRTL: boolean }>`
-  font-size: 2rem;
+  font-size: 1.6rem;
   font-weight: 500;
   margin-bottom: 1.5rem;
   opacity: 0.9;
@@ -157,11 +157,11 @@ const HeroSubtitle = styled.p<{ $isRTL: boolean }>`
   font-family: ${props => props.$isRTL ? '"Heebo", sans-serif' : '"Inter", sans-serif'} !important;
   
   @media (max-width: 768px) {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
   }
   
   @media (max-width: 480px) {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
   }
 `;
 

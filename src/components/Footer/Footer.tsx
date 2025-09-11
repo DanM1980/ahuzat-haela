@@ -4,7 +4,7 @@ import { useLanguage } from '../../context/LanguageContext';
 import { useScrollToSection } from '../../hooks/useScrollToSection';
 
 const FooterSection = styled.footer`
-  background: #2e2e2e;
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 50%, #2e2e2e 100%);
   color: white;
   padding: 3rem 0 2rem;
 `;

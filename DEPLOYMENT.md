@@ -1,6 +1,38 @@
 # מדריך פריסה - אחוזת האלה
 
-## 🚀 אפשרויות פריסה
+## 🚀 דפלוי מהיר (מומלץ)
+
+### שימוש בסקריפטים אוטומטיים
+
+#### Windows Batch (deploy.bat)
+```bash
+# הרץ את הסקריפט
+deploy.bat
+
+# או דרך npm
+npm run deploy-full
+```
+
+#### PowerShell (deploy.ps1)
+```bash
+# הרץ את הסקריפט
+powershell -ExecutionPolicy Bypass -File deploy.ps1
+
+# או דרך npm
+npm run deploy-ps
+```
+
+### מה הסקריפט עושה:
+1. **עובר ל-master branch** - מוודא שאתה ב-branch הנכון
+2. **דוחף שינויים** - מעדכן את master ב-GitHub
+3. **עובר ל-gh-pages** - ה-branch המיועד לדפלוי
+4. **מזג את master** - מעדכן את gh-pages עם השינויים
+5. **בונה את האתר** - `npm run build` עם כל השיפורים
+6. **מדפלוי** - מעתיק קבצים ודוחף ל-GitHub Pages
+
+---
+
+## 🚀 אפשרויות פריסה נוספות
 
 ### 1. Netlify (מומלץ)
 

@@ -25,7 +25,9 @@
     "eject": "react-scripts eject",
     "generate-thumbnails": "node scripts/generate-thumbnails.js",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "deploy-full": "deploy.bat",
+    "deploy-ps": "powershell -ExecutionPolicy Bypass -File deploy.ps1"
   },
   "browserslist": {
     "production": [

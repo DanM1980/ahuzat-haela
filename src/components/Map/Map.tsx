@@ -34,7 +34,7 @@ interface MapComponentProps {
 // Styled Components
 const MapContainer = styled.section`
   padding: 5rem 0;
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  background: linear-gradient(135deg, #e9ecef 0%, #f8f9fa 50%, #f1f3f4 100%);
   display: flex;
   flex-direction: column;
   align-items: center;

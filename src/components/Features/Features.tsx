@@ -5,7 +5,7 @@ import { Star, MapPin, Wifi, TreePine } from 'lucide-react';
 
 const FeaturesSection = styled.section`
   padding: 4rem 0;
-  background: white;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 50%, #f1f3f4 100%);
 `;
 
 const Container = styled.div`

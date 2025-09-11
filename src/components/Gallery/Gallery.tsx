@@ -21,7 +21,7 @@ const GlobalSwiperStyles = styled.div`
 
 const GallerySection = styled.section`
   padding: 5rem 0;
-  background: #f8f9fa;
+  background: linear-gradient(135deg, #6b8e6b 0%, #5a7c5a 50%, #4a6b4a 100%);
 `;
 
 const Container = styled.div`
@@ -34,7 +34,7 @@ const Container = styled.div`
 const SectionTitle = styled.h2<{ $isRTL: boolean }>`
   text-align: center;
   font-size: 2.5rem;
-  color: rgb(41 37 36 / 1);
+  color: white;
   margin-bottom: 1rem;
   font-family: ${props => props.$isRTL ? '"Heebo", sans-serif' : '"Inter", sans-serif'} !important;
   font-weight: 600;
@@ -48,7 +48,7 @@ const SectionTitle = styled.h2<{ $isRTL: boolean }>`
 const SectionSubtitle = styled.p<{ $isRTL: boolean }>`
   text-align: center;
   font-size: 1.1rem;
-  color: #666;
+  color: #f0f8ff;
   margin-bottom: 3rem;
   font-family: ${props => props.$isRTL ? '"Heebo", sans-serif' : '"Inter", sans-serif'} !important;
   font-weight: 400;

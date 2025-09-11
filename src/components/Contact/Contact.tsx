@@ -4,7 +4,7 @@ import { useLanguage } from '../../context/LanguageContext';
 
 const ContactSection = styled.section`
   padding: 6rem 0;
-  background: linear-gradient(135deg, #a16207, #8a5206);
+  background: linear-gradient(135deg, #a16207 0%, #8a5206 50%, #6d3f0a 100%);
   text-align: center;
 `;
 
@@ -56,22 +56,23 @@ const WhatsAppButton = styled.a`
   display: flex;
   align-items: center;
   gap: 1rem;
-  background: #25D366;
-  color: white;
+  background: #ffffff;
+  color: #a16207;
   padding: 1.2rem 2.5rem;
   border-radius: 50px;
+  border: 2px solid #ffffff;
   text-decoration: none;
   font-size: 1.1rem;
   font-weight: 600;
   font-family: "Inter", "Heebo", sans-serif !important;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+  box-shadow: 0 4px 15px rgba(161, 98, 7, 0.3);
   min-width: 280px;
   
   &:hover {
-    background: #128C7E;
+    background: #a16207;
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+    box-shadow: 0 6px 20px rgba(161, 98, 7, 0.4);
     color: white;
   }
   
