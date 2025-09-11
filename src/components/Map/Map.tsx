@@ -224,9 +224,11 @@ const MapComponent: React.FC<MapComponentProps> = ({
                 const content = `
                   <div style="
                     font-family: 'Inter', 'Heebo', sans-serif;
-                    max-width: 300px;
+                    max-width: 350px;
+                    max-height: 500px;
                     padding: 0;
                     direction: ${attraction.name.includes('א') ? 'rtl' : 'ltr'};
+                    overflow: hidden;
                   ">
                     <div style="
                       background: linear-gradient(135deg, #4a7c59 0%, #3d6b4a 100%);
@@ -236,24 +238,6 @@ const MapComponent: React.FC<MapComponentProps> = ({
                       text-align: center;
                       position: relative;
                     ">
-                      <button onclick="this.closest('.gm-style-iw').parentElement.click()" style="
-                        position: absolute;
-                        top: 0.5rem;
-                        right: 0.5rem;
-                        background: rgba(255,255,255,0.2);
-                        border: none;
-                        color: white;
-                        width: 24px;
-                        height: 24px;
-                        border-radius: 50%;
-                        cursor: pointer;
-                        font-size: 14px;
-                        font-weight: bold;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        transition: background 0.3s ease;
-                      " onmouseover="this.style.background='rgba(255,255,255,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.2)'">×</button>
                       <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">${attraction.icon}</div>
                       <h3 style="margin: 0; font-size: 1.1rem; font-weight: 600;">${attraction.name}</h3>
                       <div style="
@@ -269,6 +253,27 @@ const MapComponent: React.FC<MapComponentProps> = ({
                     </div>
                     
                     <div style="padding: 1rem; background: white; border-radius: 0 0 12px 12px;">
+                      ${attraction.image ? `
+                        <div style="
+                          width: 100%;
+                          height: 150px;
+                          background: #f8f9fa;
+                          border-radius: 8px;
+                          margin-bottom: 1rem;
+                          overflow: hidden;
+                          display: flex;
+                          align-items: center;
+                          justify-content: center;
+                        ">
+                          <img src="${attraction.image}" alt="${attraction.name}" style="
+                            width: 100%;
+                            height: 100%;
+                            object-fit: cover;
+                            border-radius: 8px;
+                          " onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\\'color: #999; font-size: 0.9rem;\\'>${attraction.name.includes('א') ? 'תמונה לא זמינה' : 'Image not available'}</div>'">
+                        </div>
+                      ` : ''}
+                      
                       <p style="
                         color: #666;
                         line-height: 1.5;
