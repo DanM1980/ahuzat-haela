@@ -21,6 +21,20 @@ const HeroBackgroundContainer = styled.div`
   z-index: 1;
 `;
 
+const HeroVideo = styled.video`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  filter: brightness(0.6);
+  z-index: 1;
+`;
+
 const HeroBackground = styled.div<{ $imageUrl: string }>`
   position: absolute;
   top: -20%;
@@ -34,6 +48,7 @@ const HeroBackground = styled.div<{ $imageUrl: string }>`
   background-attachment: fixed;
   filter: brightness(0.6);
   z-index: 1;
+  display: none; /* Hide fallback image when video is used */
 `;
 
 const HeroContent = styled.div<{ $isRTL: boolean }>`
@@ -246,14 +261,26 @@ const Hero: React.FC = () => {
   const { scrollToSection } = useScrollToSection();
   const isRTL = language === 'he';
 
-  // Array of background images
+  // Array of video sources
+  const videoSources = useMemo(() => [
+    '/videos/hero/fields.mp4',
+    '/videos/hero/lake.mp4'
+  ], []);
+  
+  // Fallback background images (in case video fails to load)
   const backgroundImages = useMemo(() => [
     '/images/hero/DJI_0011_10.jpg',
     '/images/hero/DJI_0011_13.jpg',
     '/images/hero/GX010233_stabilized.mp4_snapshot_00.44.705~2.jpg'
   ], []);
 
-  // Select next image based on cookie
+  // Select video randomly on each page load
+  const [selectedVideo] = useState(() => {
+    const randomIndex = Math.floor(Math.random() * videoSources.length);
+    return videoSources[randomIndex];
+  });
+
+  // Select fallback image based on cookie
   const [selectedImage] = useState(() => {
     const getCookie = (name: string) => {
       const value = `; ${document.cookie}`;
@@ -271,12 +298,24 @@ const Hero: React.FC = () => {
     return backgroundImages[nextIndex];
   });
 
-  // Preload next image
+  // State to track if video failed to load
+  const [videoFailed, setVideoFailed] = useState(false);
+
+  // Preload all videos and fallback images
   useEffect(() => {
-    const nextIndex = (parseInt(document.cookie.split('lastHeroImage=')[1]?.split(';')[0] || '0') + 1) % backgroundImages.length;
-    const nextImage = new Image();
-    nextImage.src = backgroundImages[nextIndex];
-  }, [backgroundImages]);
+    // Preload all videos
+    videoSources.forEach(videoSrc => {
+      const video = document.createElement('video');
+      video.src = videoSrc;
+      video.preload = 'metadata';
+    });
+    
+    // Preload all fallback images
+    backgroundImages.forEach(imageSrc => {
+      const image = new Image();
+      image.src = imageSrc;
+    });
+  }, [videoSources, backgroundImages]);
 
   const scrollToNext = () => {
     scrollToSection('gallery');
@@ -285,7 +324,20 @@ const Hero: React.FC = () => {
   return (
     <HeroSection id="hero">
       <HeroBackgroundContainer>
-        <HeroBackground $imageUrl={selectedImage} />
+         {!videoFailed ? (
+           <HeroVideo
+             autoPlay
+             muted
+             loop
+             playsInline
+             onError={() => setVideoFailed(true)}
+           >
+             <source src={selectedVideo} type="video/mp4" />
+             Your browser does not support the video tag.
+           </HeroVideo>
+         ) : (
+          <HeroBackground $imageUrl={selectedImage} />
+        )}
       </HeroBackgroundContainer>
       <HeroContent $isRTL={isRTL}>
         <HeroLogoSection>
