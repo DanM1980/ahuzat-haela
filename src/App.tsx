@@ -48,6 +48,21 @@ const GlobalStyle = createGlobalStyle`
     color: inherit;
   }
 
+  /* Ensure sections appear above fixed video background */
+  section:not(#hero) {
+    position: relative;
+    z-index: 10;
+  }
+
+  /* Fix scrollbar issue with fixed video background */
+  body {
+    overflow-x: hidden;
+  }
+  
+  html {
+    overflow-x: hidden;
+  }
+
   button {
     font-family: inherit;
   }

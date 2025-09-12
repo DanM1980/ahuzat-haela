@@ -9,6 +9,7 @@ const HeroSection = styled.section`
   align-items: center;
   justify-content: center;
   position: relative;
+  background: transparent;
   overflow: hidden;
 `;
 
@@ -18,36 +19,34 @@ const HeroBackgroundContainer = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 1;
+  z-index: -1;
 `;
 
 const HeroVideo = styled.video`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  min-width: 100%;
-  min-height: 100%;
-  width: auto;
-  height: auto;
-  transform: translate(-50%, -50%);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   object-fit: cover;
   filter: brightness(0.6);
   z-index: 1;
+  pointer-events: none;
 `;
 
 const HeroBackground = styled.div<{ $imageUrl: string }>`
-  position: absolute;
-  top: -20%;
+  position: fixed;
+  top: 0;
   left: 0;
-  right: 0;
-  bottom: -20%;
+  width: 100vw;
+  height: 100vh;
   background-image: url(${props => props.$imageUrl});
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-attachment: fixed;
   filter: brightness(0.6);
   z-index: 1;
+  pointer-events: none;
   display: none; /* Hide fallback image when video is used */
 `;
 
@@ -266,7 +265,7 @@ const Hero: React.FC = () => {
     '/videos/hero/fields.mp4',
     '/videos/hero/lake.mp4'
   ], []);
-  
+
   // Fallback background images (in case video fails to load)
   const backgroundImages = useMemo(() => [
     '/images/hero/DJI_0011_10.jpg',
@@ -309,7 +308,7 @@ const Hero: React.FC = () => {
       video.src = videoSrc;
       video.preload = 'metadata';
     });
-    
+
     // Preload all fallback images
     backgroundImages.forEach(imageSrc => {
       const image = new Image();
@@ -324,18 +323,18 @@ const Hero: React.FC = () => {
   return (
     <HeroSection id="hero">
       <HeroBackgroundContainer>
-         {!videoFailed ? (
-           <HeroVideo
-             autoPlay
-             muted
-             loop
-             playsInline
-             onError={() => setVideoFailed(true)}
-           >
-             <source src={selectedVideo} type="video/mp4" />
-             Your browser does not support the video tag.
-           </HeroVideo>
-         ) : (
+        {!videoFailed ? (
+          <HeroVideo
+            autoPlay
+            muted
+            loop
+            playsInline
+            onError={() => setVideoFailed(true)}
+          >
+            <source src={selectedVideo} type="video/mp4" />
+            Your browser does not support the video tag.
+          </HeroVideo>
+        ) : (
           <HeroBackground $imageUrl={selectedImage} />
         )}
       </HeroBackgroundContainer>

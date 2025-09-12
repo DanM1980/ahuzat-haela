@@ -7,6 +7,8 @@ const FooterSection = styled.footer`
   background: linear-gradient(135deg, #2c3e50 0%, #34495e 50%, #2e2e2e 100%);
   color: white;
   padding: 3rem 0 2rem;
+  position: relative;
+  z-index: 10;
 `;
 
 const Container = styled.div`
