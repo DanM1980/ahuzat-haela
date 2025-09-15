@@ -1,0 +1,142 @@
+{
+  "nearbySites": [
+    {
+      "name": "Sea of Galilee",
+      "distance": "15 minutes",
+      "description": "Where Jesus walked on water and performed many miracles",
+      "icon": "🌊",
+      "coordinates": {
+        "latitude": 32.7940,
+        "longitude": 35.5900
+      },
+      "phone": "+972-4-672-0000",
+      "website": "https://www.galilee.gov.il",
+      "image": "/images/nearby-sites/sea-of-galilee.jpg",
+      "images": [
+        "https://images.unsplash.com/photo-1544966503-7cc4ac81b4c4?w=800&h=600&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=600&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800&h=600&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1544966503-7cc4ac81b4c4?w=800&h=600&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=600&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800&h=600&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1544966503-7cc4ac81b4c4?w=800&h=600&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=600&fit=crop&q=80"
+      ]
+    },
+    {
+      "name": "Capernaum",
+      "distance": "20 minutes",
+      "description": "The town of Jesus, home to Peter and the site of many teachings",
+      "icon": "⛪",
+      "coordinates": {
+        "latitude": 32.8800,
+        "longitude": 35.5750
+      },
+      "phone": "+972-4-672-0001",
+      "website": "https://www.capernaum.org.il",
+      "image": "/images/nearby-sites/capernaum.jpg",
+      "images": [
+        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=800&h=600&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=600&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=800&h=600&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=600&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=800&h=600&fit=crop&q=80"
+      ]
+    },
+    {
+      "name": "Mount of Beatitudes",
+      "distance": "25 minutes",
+      "description": "Where Jesus delivered the Sermon on the Mount",
+      "icon": "⛰️",
+      "coordinates": {
+        "latitude": 32.8833,
+        "longitude": 35.5500
+      },
+      "phone": "+972-4-672-0002",
+      "website": "https://www.beatitudes.org.il",
+      "image": "/images/nearby-sites/mount-beatitudes.jpg",
+      "images": [
+        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=800&h=600&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=600&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=800&h=600&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=600&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=800&h=600&fit=crop&q=80"
+      ]
+    },
+    {
+      "name": "Jordan River",
+      "distance": "30 minutes",
+      "description": "Where Jesus was baptized by John the Baptist",
+      "icon": "🌊",
+      "coordinates": {
+        "latitude": 32.7000,
+        "longitude": 35.6000
+      },
+      "phone": "+972-4-672-0003",
+      "website": "https://www.jordan-river.org.il",
+      "image": "/images/nearby-sites/jordan-river.jpg",
+      "images": [
+        "https://images.unsplash.com/photo-1544966503-7cc4ac81b4c4?w=800&h=600&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=600&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800&h=600&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1544966503-7cc4ac81b4c4?w=800&h=600&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=600&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800&h=600&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1544966503-7cc4ac81b4c4?w=800&h=600&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=600&fit=crop&q=80"
+      ]
+    },
+    {
+      "name": "Tabgha",
+      "distance": "18 minutes",
+      "description": "Site of the miracle of the loaves and fishes",
+      "icon": "🍞",
+      "coordinates": {
+        "latitude": 32.8733,
+        "longitude": 35.5500
+      },
+      "phone": "+972-4-672-0004",
+      "website": "https://www.tabgha.org.il",
+      "image": "/images/nearby-sites/tabgha.jpg",
+      "images": [
+        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=800&h=600&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=600&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=800&h=600&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=600&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=800&h=600&fit=crop&q=80"
+      ]
+    },
+    {
+      "name": "Magdala",
+      "distance": "22 minutes",
+      "description": "Home of Mary Magdalene and ancient synagogue",
+      "icon": "🏛️",
+      "coordinates": {
+        "latitude": 32.8500,
+        "longitude": 35.5200
+      },
+      "phone": "+972-4-672-0005",
+      "website": "https://www.magdala.org.il",
+      "image": "/images/nearby-sites/magdala.jpg",
+      "images": [
+        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=800&h=600&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=600&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=800&h=600&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=600&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=800&h=600&fit=crop&q=80"
+      ]
+    }
+  ]
+}
