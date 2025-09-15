@@ -3,7 +3,7 @@
   "name": "Terebinth Estate - Christian Pilgrimage Accommodation",
   "icons": [
     {
-      "src": "/ter/logo.png",
+      "src": "logo.png",
       "type": "image/png",
       "sizes": "any"
     }

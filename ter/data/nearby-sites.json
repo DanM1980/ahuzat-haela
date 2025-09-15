@@ -11,7 +11,7 @@
       },
       "phone": "+972-4-672-0000",
       "website": "https://www.galilee.gov.il",
-      "image": "/images/nearby-sites/sea-of-galilee.jpg",
+      "image": "images/nearby-sites/sea-of-galilee.jpg",
       "images": [
         "https://images.unsplash.com/photo-1544966503-7cc4ac81b4c4?w=800&h=600&fit=crop&q=80",
         "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=600&fit=crop&q=80",
@@ -34,7 +34,7 @@
       },
       "phone": "+972-4-672-0001",
       "website": "https://www.capernaum.org.il",
-      "image": "/images/nearby-sites/capernaum.jpg",
+      "image": "images/nearby-sites/capernaum.jpg",
       "images": [
         "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop&q=80",
         "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=800&h=600&fit=crop&q=80",
@@ -57,7 +57,7 @@
       },
       "phone": "+972-4-672-0002",
       "website": "https://www.beatitudes.org.il",
-      "image": "/images/nearby-sites/mount-beatitudes.jpg",
+      "image": "images/nearby-sites/mount-beatitudes.jpg",
       "images": [
         "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop&q=80",
         "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=800&h=600&fit=crop&q=80",
@@ -80,7 +80,7 @@
       },
       "phone": "+972-4-672-0003",
       "website": "https://www.jordan-river.org.il",
-      "image": "/images/nearby-sites/jordan-river.jpg",
+      "image": "images/nearby-sites/jordan-river.jpg",
       "images": [
         "https://images.unsplash.com/photo-1544966503-7cc4ac81b4c4?w=800&h=600&fit=crop&q=80",
         "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=600&fit=crop&q=80",
@@ -103,7 +103,7 @@
       },
       "phone": "+972-4-672-0004",
       "website": "https://www.tabgha.org.il",
-      "image": "/images/nearby-sites/tabgha.jpg",
+      "image": "images/nearby-sites/tabgha.jpg",
       "images": [
         "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop&q=80",
         "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=800&h=600&fit=crop&q=80",
@@ -126,7 +126,7 @@
       },
       "phone": "+972-4-672-0005",
       "website": "https://www.magdala.org.il",
-      "image": "/images/nearby-sites/magdala.jpg",
+      "image": "images/nearby-sites/magdala.jpg",
       "images": [
         "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop&q=80",
         "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=800&h=600&fit=crop&q=80",
