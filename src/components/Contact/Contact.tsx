@@ -70,10 +70,8 @@ const WhatsAppButton = styled.a`
   min-width: 280px;
   
   &:hover {
-    background: #a16207;
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(161, 98, 7, 0.4);
-    color: white;
   }
   
   @media (max-width: 768px) {
@@ -102,7 +100,6 @@ const PhoneButton = styled.a`
     background: #f8f9fa;
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-    color: #333;
   }
   
   @media (max-width: 768px) {

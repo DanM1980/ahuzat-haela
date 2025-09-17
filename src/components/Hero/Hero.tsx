@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect, memo } from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 import { useLanguage } from '../../context/LanguageContext';
 import { useScrollToSection } from '../../hooks/useScrollToSection';
@@ -22,6 +22,21 @@ const HeroBackgroundContainer = styled.div`
   z-index: -1;
 `;
 
+const HeroBackgroundImage = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url('/images/hero/GX010233_stabilized.mp4_snapshot_00.44.705~2.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: brightness(0.6);
+  z-index: 0;
+  pointer-events: none;
+`;
+
 const HeroVideo = styled.video`
   position: fixed;
   top: 0;
@@ -34,21 +49,6 @@ const HeroVideo = styled.video`
   pointer-events: none;
 `;
 
-const HeroBackground = styled.div<{ $imageUrl: string }>`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-image: url(${props => props.$imageUrl});
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  filter: brightness(0.6);
-  z-index: 1;
-  pointer-events: none;
-  display: none; /* Hide fallback image when video is used */
-`;
 
 const HeroContent = styled.div<{ $isRTL: boolean }>`
   text-align: center;
@@ -260,62 +260,6 @@ const Hero: React.FC = () => {
   const { scrollToSection } = useScrollToSection();
   const isRTL = language === 'he';
 
-  // Array of video sources
-  const videoSources = useMemo(() => [
-    '/videos/hero/fields.mp4',
-    '/videos/hero/lake.mp4'
-  ], []);
-
-  // Fallback background images (in case video fails to load)
-  const backgroundImages = useMemo(() => [
-    '/images/hero/DJI_0011_10.jpg',
-    '/images/hero/DJI_0011_13.jpg',
-    '/images/hero/GX010233_stabilized.mp4_snapshot_00.44.705~2.jpg'
-  ], []);
-
-  // Select video randomly on each page load
-  const [selectedVideo] = useState(() => {
-    const randomIndex = Math.floor(Math.random() * videoSources.length);
-    return videoSources[randomIndex];
-  });
-
-  // Select fallback image based on cookie
-  const [selectedImage] = useState(() => {
-    const getCookie = (name: string) => {
-      const value = `; ${document.cookie}`;
-      const parts = value.split(`; ${name}=`);
-      if (parts.length === 2) return parts.pop()?.split(';').shift();
-      return null;
-    };
-
-    const lastImageIndex = getCookie('lastHeroImage');
-    const nextIndex = lastImageIndex ? (parseInt(lastImageIndex) + 1) % backgroundImages.length : 0;
-
-    // Save new index to cookie
-    document.cookie = `lastHeroImage=${nextIndex}; path=/; max-age=${60 * 60 * 24 * 365}`;
-
-    return backgroundImages[nextIndex];
-  });
-
-  // State to track if video failed to load
-  const [videoFailed, setVideoFailed] = useState(false);
-
-  // Preload all videos and fallback images
-  useEffect(() => {
-    // Preload all videos
-    videoSources.forEach(videoSrc => {
-      const video = document.createElement('video');
-      video.src = videoSrc;
-      video.preload = 'metadata';
-    });
-
-    // Preload all fallback images
-    backgroundImages.forEach(imageSrc => {
-      const image = new Image();
-      image.src = imageSrc;
-    });
-  }, [videoSources, backgroundImages]);
-
   const scrollToNext = () => {
     scrollToSection('gallery');
   };
@@ -323,20 +267,16 @@ const Hero: React.FC = () => {
   return (
     <HeroSection id="hero">
       <HeroBackgroundContainer>
-        {!videoFailed ? (
-          <HeroVideo
-            autoPlay
-            muted
-            loop
-            playsInline
-            onError={() => setVideoFailed(true)}
-          >
-            <source src={selectedVideo} type="video/mp4" />
-            Your browser does not support the video tag.
-          </HeroVideo>
-        ) : (
-          <HeroBackground $imageUrl={selectedImage} />
-        )}
+        <HeroBackgroundImage />
+        <HeroVideo
+          autoPlay
+          muted
+          loop
+          playsInline
+        >
+          <source src="/videos/hero/fields.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </HeroVideo>
       </HeroBackgroundContainer>
       <HeroContent $isRTL={isRTL}>
         <HeroLogoSection>
