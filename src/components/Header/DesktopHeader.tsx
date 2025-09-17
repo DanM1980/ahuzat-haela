@@ -145,10 +145,11 @@ const SiteNameEnglish = styled.div<{ $isScrolled: boolean }>`
 `;
 
 const LogoImage = styled.img<{ $isScrolled: boolean }>`
-  width: ${props => props.$isScrolled ? '90px' : '120px'};
-  height: ${props => props.$isScrolled ? '90px' : '120px'};
+  width: ${props => props.$isScrolled ? '60px' : '80px'};
+  height: ${props => props.$isScrolled ? '60px' : '80px'};
   object-fit: contain;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-left: 0.5rem;
 `;
 
 const DesktopHeader: React.FC = () => {

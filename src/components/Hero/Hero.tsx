@@ -130,8 +130,8 @@ const HeroSiteNameEnglish = styled.div`
 
 const HeroLogoContainer = styled.div`
   position: absolute;
-  top: 0;
-  right: 3rem;
+  top: 2rem;
+  right: 6rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -143,8 +143,8 @@ const HeroLogoContainer = styled.div`
 `;
 
 const HeroLogoImage = styled.img`
-  width: 200px;
-  height: 200px;
+  width: 130px;
+  height: 130px;
   margin: 0;
   object-fit: contain;
   filter: brightness(1.3) 
@@ -284,10 +284,6 @@ const Hero: React.FC = () => {
             <HeroLogoImage
               src="/logo.png"
               alt="אחוזת האלה - Ella Estate"
-              onError={(e) => {
-                // Fallback to logo-bw.png if logo.png fails
-                e.currentTarget.src = "/logo-bw.png";
-              }}
             />
           </HeroLogoContainer>
           <HeroSiteName>
