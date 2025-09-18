@@ -132,11 +132,11 @@ const SiteNameEnglish = styled.div<{ $isScrolled: boolean }>`
 `;
 
 const LogoImage = styled.img<{ $isScrolled: boolean }>`
-  width: ${props => props.$isScrolled ? '50px' : '80px'};
-  height: ${props => props.$isScrolled ? '50px' : '80px'};
+  width: 50px;
+  height: 50px;
   object-fit: contain;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  margin-left: -1rem;
+  margin-left: -0.2rem;
 `;
 
 const MobileMenu = styled.div<{ $isOpen: boolean }>`

@@ -137,8 +137,14 @@ const HeroLogoContainer = styled.div`
   justify-content: center;
   z-index: 3;
 
+  @media (max-width: 768px) {
+    right: 2.5rem;
+    top: 0.7rem;
+  }
+
   @media (max-width: 480px) {
-    right: 1rem;
+    right: 2.5rem;
+    top: 0.7rem;
   }
 `;
 
@@ -151,13 +157,13 @@ const HeroLogoImage = styled.img`
           contrast(1.4);
   
   @media (max-width: 768px) {
-    width: 150px;
-    height: 150px;
+    width: 90px;
+    height: 90px;
   }
   
   @media (max-width: 480px) {
-    width: 120px;
-    height: 120px;
+    width: 90px;
+    height: 90px;
   }
 `;
 
