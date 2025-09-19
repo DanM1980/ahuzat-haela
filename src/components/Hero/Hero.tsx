@@ -54,7 +54,6 @@ const HeroContent = styled.div<{ $isRTL: boolean }>`
   text-align: center;
   color: white;
   z-index: 2;
-  max-width: 800px;
   padding: 0 2rem;
   margin-top: 2rem;
   position: relative;
@@ -70,57 +69,58 @@ const HeroContent = styled.div<{ $isRTL: boolean }>`
 `;
 
 const HeroTitle = styled.div<{ $isRTL: boolean }>`
-  font-size: 3rem;
+  font-size: 4.5rem;
   font-weight: bold;
   color: white;
   line-height: 1.2;
   font-family: ${props => props.$isRTL ? '"Heebo", sans-serif' : '"Inter", sans-serif'} !important;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   text-align: center;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   
   @media (max-width: 768px) {
-    font-size: 2.5rem;
+    font-size: 3.5rem;
   }
   
   @media (max-width: 480px) {
-    font-size: 2rem;
+    font-size: 3rem;
   }
 `;
 
 const HeroSubtitle = styled.p<{ $isRTL: boolean }>`
-  font-size: 1.6rem;
+  font-size: 2.2rem;
   font-weight: 500;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   opacity: 0.9;
   line-height: 1.6;
   color: #FFD700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   font-family: ${props => props.$isRTL ? '"Heebo", sans-serif' : '"Inter", sans-serif'} !important;
   
   @media (max-width: 768px) {
-    font-size: 1.4rem;
+    font-size: 1.8rem;
   }
   
   @media (max-width: 480px) {
-    font-size: 1.2rem;
+    font-size: 1.6rem;
   }
 `;
 
 const HeroDescription = styled.p<{ $isRTL: boolean }>`
-  font-size: 1.4rem;
+  font-size: 1.8rem;
   font-weight: 400;
-  margin-bottom: 2.5rem;
-  opacity: 0.8;
+  margin-bottom: 3rem;
   line-height: 1.6;
-  color: #E0E0E0;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   font-family: ${props => props.$isRTL ? '"Heebo", sans-serif' : '"Inter", sans-serif'} !important;
   
   @media (max-width: 768px) {
-    font-size: 1.2rem;
+    font-size: 1.6rem;
   }
   
   @media (max-width: 480px) {
-    font-size: 1.1rem;
+    font-size: 1.4rem;
   }
 `;
 
@@ -128,18 +128,18 @@ const CTAButton = styled.button<{ $isRTL: boolean }>`
   background: white;
   color: rgb(41 37 36 / 1);
   border: none;
-  padding: 1.2rem 2.5rem;
-  font-size: 1.3rem;
+  padding: 1.5rem 3rem;
+  font-size: 1.6rem;
   font-weight: 600;
   border-radius: 50px;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), 2px 2px 4px rgba(0, 0, 0, 0.5);
   font-family: ${props => props.$isRTL ? '"Heebo", sans-serif' : '"Inter", sans-serif'} !important;
   
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3), 2px 2px 4px rgba(0, 0, 0, 0.5);
   }
   
   &:active {
@@ -147,8 +147,8 @@ const CTAButton = styled.button<{ $isRTL: boolean }>`
   }
   
   @media (max-width: 768px) {
-    font-size: 1.2rem;
-    padding: 1rem 2rem;
+    font-size: 1.4rem;
+    padding: 1.2rem 2.5rem;
   }
 
     /* Mobile landscape mode - hide button */
