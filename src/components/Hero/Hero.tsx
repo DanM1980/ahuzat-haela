@@ -69,37 +69,15 @@ const HeroContent = styled.div<{ $isRTL: boolean }>`
   `}
 `;
 
-const HeroLogoSection = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 0;
-  min-height: 200px;
-  
-  @media (max-width: 768px) {
-    min-height: 150px;
-  }
-  
-  @media (max-width: 480px) {
-    min-height: 120px;
-  }
-`;
-
-const HeroSiteName = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const HeroSiteNameHebrew = styled.div`
+const HeroTitle = styled.div<{ $isRTL: boolean }>`
   font-size: 3rem;
   font-weight: bold;
   color: white;
   line-height: 1.2;
-  font-family: "Inter", "Heebo", sans-serif !important;
+  font-family: ${props => props.$isRTL ? '"Heebo", sans-serif' : '"Inter", sans-serif'} !important;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   text-align: center;
-  margin-bottom: 0.3rem;
+  margin-bottom: 1rem;
   
   @media (max-width: 768px) {
     font-size: 2.5rem;
@@ -107,57 +85,6 @@ const HeroSiteNameHebrew = styled.div`
   
   @media (max-width: 480px) {
     font-size: 2rem;
-  }
-`;
-
-const HeroSiteNameEnglish = styled.div`
-  font-size: 3rem;
-  font-weight: bold;
-  color: white;
-  line-height: 1.2;
-  font-family: "Inter", "Heebo", sans-serif !important;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-  text-align: center;
-  
-  @media (max-width: 768px) {
-    font-size: 2.5rem;
-  }
-  
-  @media (max-width: 480px) {
-    font-size: 2rem;
-  }
-`;
-
-const HeroLogoContainer = styled.div`
-  position: absolute;
-  top: 2rem;
-  right: 6rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 3;
-
-  @media (max-width: 480px) {
-    right: 1rem;
-  }
-`;
-
-const HeroLogoImage = styled.img`
-  width: 130px;
-  height: 130px;
-  margin: 0;
-  object-fit: contain;
-  filter: brightness(1.3) 
-          contrast(1.4);
-  
-  @media (max-width: 768px) {
-    width: 150px;
-    height: 150px;
-  }
-  
-  @media (max-width: 480px) {
-    width: 120px;
-    height: 120px;
   }
 `;
 
@@ -279,18 +206,9 @@ const Hero: React.FC = () => {
         </HeroVideo>
       </HeroBackgroundContainer>
       <HeroContent $isRTL={isRTL}>
-        <HeroLogoSection>
-          <HeroLogoContainer>
-            <HeroLogoImage
-              src="/logo.png"
-              alt="אחוזת האלה - Ella Estate"
-            />
-          </HeroLogoContainer>
-          <HeroSiteName>
-            <HeroSiteNameHebrew>אחוזת האלה</HeroSiteNameHebrew>
-            <HeroSiteNameEnglish>Ella Estate</HeroSiteNameEnglish>
-          </HeroSiteName>
-        </HeroLogoSection>
+        <HeroTitle $isRTL={isRTL}>
+          {isRTL ? 'אחוזת האלה' : 'Ella Estate'}
+        </HeroTitle>
         <HeroSubtitle $isRTL={isRTL}>{t('hero.subtitle')}</HeroSubtitle>
         <HeroDescription $isRTL={isRTL}>{t('hero.description')}</HeroDescription>
         <CTAButton $isRTL={isRTL} onClick={scrollToNext}>
