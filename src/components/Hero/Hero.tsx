@@ -87,6 +87,64 @@ const HeroTitle = styled.div<{ $isRTL: boolean }>`
   }
 `;
 
+const HeroSiteNameEnglish = styled.div`
+  font-size: 3rem;
+  font-weight: bold;
+  color: white;
+  line-height: 1.2;
+  font-family: "Inter", "Heebo", sans-serif !important;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  
+  @media (max-width: 768px) {
+    font-size: 2.5rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 2rem;
+  }
+`;
+
+const HeroLogoContainer = styled.div`
+  position: absolute;
+  top: 2rem;
+  right: 6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+
+  @media (max-width: 768px) {
+    right: 2.5rem;
+    top: 0.7rem;
+  }
+
+  @media (max-width: 480px) {
+    right: 2.5rem;
+    top: 0.7rem;
+  }
+`;
+
+const HeroLogoImage = styled.img`
+  width: 130px;
+  height: 130px;
+  margin: 0;
+  object-fit: contain;
+  filter: brightness(1.3) 
+          contrast(1.4);
+  
+  @media (max-width: 768px) {
+    width: 90px;
+    height: 90px;
+  }
+  
+  @media (max-width: 480px) {
+    width: 90px;
+    height: 90px;
+>>>>>>> 20ca582bd79d93e09f5151540a5131c7f3d1441a
+  }
+`;
+
 const HeroSubtitle = styled.p<{ $isRTL: boolean }>`
   font-size: 2.2rem;
   font-weight: 500;
